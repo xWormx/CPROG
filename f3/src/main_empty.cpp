@@ -19,7 +19,6 @@ Lagringsklasser
 	typedef: Definitionen gäller ett nytt namn på en typ.
 			 Förutom ordet typedef ser det ut som en variabeldeklaration
 
-
 */
 
 #include <iostream>
@@ -44,8 +43,77 @@ extern int externValue;
 
 typedef int myInt;
 
+/*
+	Värdesemantik: 
+
+	struct Person{
+		int x;
+	};
+
+	Person p1, p2;
+
+	p1 = p2; <------ Man kan tilldela hela objekt, varvid alla värden kopieras
+	
+	om det finns pekare i structens/classens datamedlemmar blir det mer komplicerat, vilket
+	gås igenom senare när vi går igenom klasser!!!!!
+
+	värdesemantik som argument innebär att structar och classer skickas som värdesemantik till funktioner vilket innebär
+	att de kopieras som parametrar.
+
+	Detta går att undvikas om man skickar de som referenser istället.
+
+	Antinge med pekare:
+
+	void func(Person *p)
+	{
+		p->age++;			<-------- med Pekare används pil-operatorn
+	}
+
+	Eller via referens:
+
+	void func(Person& p)
+	{
+		p.age++;			<--------- med Referens används .-operatorn då referensen defacto är 
+						   			   ett objekt som refererar till ett annat redan existerande objekt
+	}
+
+*/
+
+struct Person
+{
+	int age;
+};
+
+Person InitPerson(int _age)
+{
+	Person p;
+	p.age = _age;
+
+	return p;
+}
+
+
+void ChangeByRef(Person &p)
+{
+	p.age++;
+}
+
+void ChangeByPointer(Person *p)
+{
+	p->age++;
+}
+
+
+
 int main(int argc, char* argv[]) 
 {
+	Person p = InitPerson(32);
+	std::cout << p.age << std::endl;
+
+	ChangeByRef(p);
+	ChangeByPointer(&p);
+	std::cout << p.age << "\n";
+
 	auto pi = 3.1415;
 
 	double number = pi + 3.14;
