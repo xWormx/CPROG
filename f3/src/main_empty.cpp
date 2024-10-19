@@ -23,6 +23,7 @@ Lagringsklasser
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "cstring"
 #include "externValue.h"
 #include "DynamicMem.h"
@@ -32,11 +33,6 @@ void affectNumber_A(int a)
 	static int staticNum = 0;
 	staticNum += a;
 	std::cout << "staticNum: " << staticNum << std::endl;
-}
-
-void affectNumber_B(int a)
-{
-	
 }
 
 extern int externValue;
@@ -81,17 +77,25 @@ typedef int myInt;
 
 struct Person
 {
+	 
+	Person(std::string _name, int _age) : age(_age), name(_name)
+	{
+	}
+	
+	void print()
+	{
+		std::cout << name << " is " << age << std::endl;
+	}
+	std::string name;
 	int age;
+	
 };
 
-Person InitPerson(int _age)
+Person InitPerson(int _age, std::string _name = "default")
 {
-	Person p;
-	p.age = _age;
-
+	Person p(_name, _age);
 	return p;
 }
-
 
 void ChangeByRef(Person &p)
 {
@@ -103,10 +107,52 @@ void ChangeByPointer(Person *p)
 	p->age++;
 }
 
+void addNew(std::vector<Person*> &vec)
+{
+	
+	std::string name;
+	std::cout << "Enter name: ";
+	std::cin >> name;
 
+	int age;
+	std::cout << "\nEnter age: ";
+	std::cin >> age;
+
+	Person *p = new Person(name, age);
+	vec.push_back(p);
+}
+
+void printPpl(std::vector<Person*> &vec)
+{
+	for(Person* p : vec)
+	{
+		p->print();
+	}
+}
 
 int main(int argc, char* argv[]) 
 {
+
+	std::vector<Person*> ppl;
+
+	char command;
+	do
+	{
+		std::cout << "Enter command: ";
+		std::cin >> command;
+		switch(command)
+		{
+			case 'n':
+				addNew(ppl);
+				break;
+			case 'p':
+				printPpl(ppl);
+				break;
+
+		}
+	} while (command != 'q');
+	
+
 	Person p = InitPerson(32);
 	std::cout << p.age << std::endl;
 
