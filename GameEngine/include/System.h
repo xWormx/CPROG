@@ -8,14 +8,14 @@
 #include "Component.h"
 #include "Sprite.h"
 
-class Application
+class System
 {
     public:
-        Application(int fps, SDL_Color bg = {255, 255, 0, 255});
+        System(int fps, SDL_Color bg = {255, 255, 0, 255});
         void add(Component* component);
         void addSprite(Sprite * sprite);
         void run();
-        ~Application();
+        ~System();
     
     private:
         void handleKeyDownEvents(const SDL_Event&);

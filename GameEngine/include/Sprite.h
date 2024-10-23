@@ -15,12 +15,15 @@ class Sprite : public InputComponent
         void draw() const;
         void keyDown(const SDL_Event&);        
         const SDL_Rect& getRect() const;
+        const SDL_Rect& getAreaToDraw() const;
+        void setAreaRectToDraw(int x, int y, int h, int w);
         void move(int x, int y);
         ~Sprite();
     protected:
         Sprite(int x, int y, int w, int h, std::string srcImage);
     private:
         SDL_Rect rect;
+        SDL_Rect areaToDraw;
         SDL_Texture* texture;
         
 };

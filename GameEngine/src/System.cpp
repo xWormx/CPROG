@@ -1,23 +1,23 @@
-#include "Application.h"
+#include "System.h"
 
-Application::Application(int fps, SDL_Color bg)
+System::System(int fps, SDL_Color bg)
 {
     backgroundColor = bg;   
     framesPerSecond = fps; 
-    std::cout << "Application running" << std::endl;
+    std::cout << "System running" << std::endl;
 }
 
-void Application::add(Component* component)
+void System::add(Component* component)
 {
     comps.push_back(component);
 }
 
-void Application::addSprite(Sprite *sprite)
+void System::addSprite(Sprite *sprite)
 {
     sprites.push_back(sprite);
 }
 
-void Application::handleKeyDownEvents(const SDL_Event& event)
+void System::handleKeyDownEvents(const SDL_Event& event)
 {
     for(Component *c : comps)
         c->keyDown(event);
@@ -26,7 +26,7 @@ void Application::handleKeyDownEvents(const SDL_Event& event)
         s->keyDown(event);
 }
 
-void Application::run()
+void System::run()
 {
     SDL_Event event;
     bool quit = false;
@@ -95,9 +95,9 @@ void Application::run()
         
 }
 
-Application::~Application()
+System::~System()
 {
     comps.clear();
 
-    std::cout << "Application shutdown" << std::endl;       
+    std::cout << "System shutdown" << std::endl;       
 }
