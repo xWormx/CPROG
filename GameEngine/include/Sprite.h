@@ -18,6 +18,8 @@ class Sprite : public InputComponent
         const SDL_Rect& getAreaToDraw() const;
         void setAreaRectToDraw(int x, int y, int h, int w);
         void move(int x, int y);
+        virtual void tick() = 0;
+
         ~Sprite();
     protected:
         Sprite(int x, int y, int w, int h, std::string srcImage);
