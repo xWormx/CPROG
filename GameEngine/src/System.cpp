@@ -23,7 +23,16 @@ void System::handleKeyDownEvents(const SDL_Event& event)
         c->keyDown(event);
 
     for(Sprite *s : sprites)
-        s->keyDown(event);
+        s->setKeyCodePressed(s->getKeyCodeFromEvent(event));
+}
+
+void System::handleKeyUpEvents(const SDL_Event& event)
+{
+    for(Component* c : comps)
+        c->keyUp(event);
+
+    for(Sprite* s : sprites)
+        s->setKeyCodePressed(SDLK_UNKNOWN);
 }
 
 void System::run()
@@ -58,14 +67,16 @@ void System::run()
                     break;
                 
                 case SDL_KEYUP:
-                    for(Component* c : comps)
-                        c->keyUp(event);
+                    handleKeyUpEvents(event);
                     break;
             }
         }
 
         for(Component* c : comps)
             c->tick();
+
+        for(Sprite* s : sprites)
+            s->tick();
 
         SDL_SetRenderDrawColor(engine.get_ren(), 
                                 backgroundColor.r,

@@ -11,7 +11,10 @@ class InputComponent
         virtual void mouseUp(const SDL_Event&){}
         virtual void mouseDown(const SDL_Event&){}
         SDL_Keycode getKeyCodeFromEvent(const SDL_Event&);
+        void setKeyCodePressed(const Sint32 keyCode);
+        Sint32 getKeyCodePressed();
     private:
+        Sint32 keyCodePressed;
 
 };
 
