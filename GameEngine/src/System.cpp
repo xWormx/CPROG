@@ -32,7 +32,7 @@ void System::handleKeyUpEvents(const SDL_Event& event)
         c->keyUp(event);
 
     for(Sprite* s : sprites)
-        s->setKeyCodePressed(SDLK_UNKNOWN);
+        s->setKeyCodeReleased(s->getKeyCodeFromEvent(event));
 }
 
 void System::run()

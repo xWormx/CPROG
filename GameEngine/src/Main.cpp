@@ -1,7 +1,7 @@
 #include "System.h"
 #include "Label.h"
 #include "Button.h"
-#include "SDL2/SDL.h"
+//#include "SDL2/SDL.h"
 
 #define FPS 60
 
@@ -36,13 +36,26 @@ class Player : public Sprite
             {
                 yPos++;
             }
+
+            static int tick = 0;
+            static int frame = 0;
+            
+            if(tick % 7 == 0)
+            {
+                frame ++;
+                if(frame > 3) frame = 0;
+                setSpriteDrawArea(124 * frame, 0, 124, 124);
+            } 
+
+            tick++;
+
             
             Sprite::setPosition(xPos, yPos);
         }
 
         bool keyPressed(const int keyCode)
         {
-            return keyCode == InputComponent::getKeyCodePressed();
+            return InputComponent::getKeyCodePressed(keyCode);
         }
 
     protected:
