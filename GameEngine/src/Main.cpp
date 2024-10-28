@@ -86,11 +86,30 @@ int main(int argv, char **argc)
     Button* b1 = Button::getInstance(200, 150, 100, 100, "b1");
 
     Player* player1 = Player::getInstance(200, 200, 100, 100, "PersonIdle.png");
+
+    
+   
     app.add(lbl);
     app.add(lbl2);
     app.add(b1);
     player1->setSpriteDrawArea(0, 0, 124, 124);
     app.addSprite(player1);
+    const int w = 20;
+    const int h = 12;
+    Player* tileMap[w * h];
+    for(int y = 0; y < h; y++ )
+    {
+        for(int x = 0; x < w; x++)
+        {
+            Player* tile = tileMap[x + (y * w)];
+            if(x % 2 == 0)
+                tile = Player::getInstance(x*(w), y * (h), w, h, "iconDown.png");
+            else
+                tile = Player::getInstance(x*(w), y * (h), w, h, "iconUp.png");
+            tile->setSpriteDrawArea(0, 0, 32, 32);
+            app.addSprite(tile);
+        }
+    }
     app.run();
 
  
