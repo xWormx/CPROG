@@ -14,12 +14,13 @@ class Sprite : public InputComponent
         virtual void draw() const = 0;     
         virtual void tick() = 0;
 
+        void setAreaRectToDraw(int x, int y, int h, int w);
+        void setPosition(int x, int y);
+
         const SDL_Rect& getRect() const;
         const SDL_Rect& getAreaToDraw() const;
         const SDL_Texture* getTexture() const;
-        void setAreaRectToDraw(int x, int y, int h, int w);
-        void setPosition(int x, int y);
-        
+
         ~Sprite();
     protected:
         Sprite(int x, int y, int w, int h, std::string srcImage);
@@ -27,6 +28,9 @@ class Sprite : public InputComponent
         SDL_Rect rect;
         SDL_Rect areaToDraw;
         SDL_Texture* texture;
+
+        Sprite(const Sprite&) = delete;
+        const Sprite& operator=(const Sprite&) = delete;
         
 };
 
