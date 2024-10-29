@@ -23,11 +23,6 @@ Sprite::Sprite(int x, int y, int w, int h, std::string srcImage) : rect{ x, y, w
     }
 }
 
-void Sprite::draw() const
-{
-    SDL_RenderCopy(engine.get_ren(), texture, &getAreaToDraw(), &getRect());
-}
-
 void Sprite::setPosition(int x, int y)
 {
     rect.x = x;
@@ -42,6 +37,11 @@ const SDL_Rect& Sprite::getRect() const
 const SDL_Rect& Sprite::getAreaToDraw() const
 {
     return areaToDraw;
+}
+
+const SDL_Texture* Sprite::getTexture() const
+{
+    return texture;
 }
 
 void Sprite::setAreaRectToDraw(int x, int y, int w, int h)

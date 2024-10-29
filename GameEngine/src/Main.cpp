@@ -1,11 +1,10 @@
 #include "System.h"
 #include "Label.h"
 #include "Button.h"
-//#include "SDL2/SDL.h"
-
+#include "StaticSprite.h"
 #define FPS 60
 
-class Player : public Sprite
+class Player : public StaticSprite
 {
     public: 
         static Player* getInstance(int x, int y, int h, int w, std::string srcImage)
@@ -15,7 +14,7 @@ class Player : public Sprite
 
         void setSpriteDrawArea(int x, int y, int w, int h)
         {
-            Sprite::setAreaRectToDraw(x, y, w, h);
+            setAreaRectToDraw(x, y, w, h);
         }
 
         void tick()
@@ -59,7 +58,7 @@ class Player : public Sprite
         }
 
     protected:
-        Player(int x, int y, int h, int w, std::string srcImage) : Sprite(x,y,w,h,srcImage)
+        Player(int x, int y, int h, int w, std::string srcImage) : StaticSprite(x,y,w,h,srcImage)
         {
             xPos = x;
             yPos = y;
@@ -71,8 +70,6 @@ class Player : public Sprite
         int xPos, yPos;
         int width;
         int height;
-
-        bool move;
 };
 
 int main(int argv, char **argc)
