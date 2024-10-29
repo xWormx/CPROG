@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-Sprite::Sprite(int x, int y, int w, int h, std::string srcImage) : rect{ x, y, w, h }
+Sprite::Sprite(int x, int y, int w, int h, std::string srcImage) : srcRect{ x, y, w, h }
 {
     std::string fullSrcPath = constants::gResPath + "images/" + srcImage;
     texture = IMG_LoadTexture(engine.get_ren(), fullSrcPath.c_str());
@@ -17,26 +17,22 @@ Sprite::Sprite(int x, int y, int w, int h, std::string srcImage) : rect{ x, y, w
             r.x = 0;
             r.y = 0;                
 
-            setAreaRectToDraw(r.x, r.y, r.w, r.h);
+            setSrcRect(r.x, r.y, r.w, r.h);
         }
 
     }
 }
 
-void Sprite::setPosition(int x, int y)
+
+
+const SDL_Rect& Sprite::getSrcRect() const
 {
-    rect.x = x;
-    rect.y = y;
+    return srcRect;
 }
 
-const SDL_Rect& Sprite::getRect() const
+const SDL_Rect& Sprite::getDestRect() const
 {
-    return rect;
-}
-
-const SDL_Rect& Sprite::getAreaToDraw() const
-{
-    return areaToDraw;
+    return destRect;
 }
 
 const SDL_Texture* Sprite::getTexture() const

@@ -2,9 +2,10 @@
 #include "Label.h"
 #include "Button.h"
 #include "StaticSprite.h"
+#include "MovableSprite.h"
 #define FPS 60
 
-class Player : public StaticSprite
+class Player : public MovableSprite
 {
     public: 
         static Player* getInstance(int x, int y, int h, int w, std::string srcImage)
@@ -14,7 +15,7 @@ class Player : public StaticSprite
 
         void setSpriteDrawArea(int x, int y, int w, int h)
         {
-            setAreaRectToDraw(x, y, w, h);
+            setSrcRect(x, y, w, h);
         }
 
         void tick()
@@ -49,7 +50,7 @@ class Player : public StaticSprite
             tick++;
 
             
-            Sprite::setPosition(xPos, yPos);
+            MovableSprite::setPosition(xPos, yPos);
         }
 
         bool keyPressed(const int keyCode)
@@ -58,7 +59,7 @@ class Player : public StaticSprite
         }
 
     protected:
-        Player(int x, int y, int h, int w, std::string srcImage) : StaticSprite(x,y,w,h,srcImage)
+        Player(int x, int y, int h, int w, std::string srcImage) : MovableSprite(x,y,w,h,srcImage)
         {
             xPos = x;
             yPos = y;
