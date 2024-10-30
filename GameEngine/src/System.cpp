@@ -35,16 +35,22 @@ void System::handleKeyUpEvents(const SDL_Event& event)
         s->setKeyCodeReleased(s->getKeyCodeFromEvent(event));
 }
 
-//void System::handleMouseDownEvents(const SDL_Event& event);
-//{
-//
-//}
-//
-//void System::handleMouseUpEvents(const SDL_Event& event);
-//{
-//    for(Sprite* s : sprite)
-//        s->
-//}
+void System::handleMouseDownEvents(const SDL_Event& event)
+{
+    for(Sprite* s : sprites)
+    {
+        s->setMousePressed(s->getMouseButtonFromEvent(event));
+    }
+}
+
+void System::handleMouseUpEvents(const SDL_Event& event)
+{
+    for(Sprite* s : sprites)
+    {
+        s->setMouseReleased(s->getMouseButtonFromEvent(event));
+    }
+        
+}
 
 void System::run()
 {
@@ -64,13 +70,11 @@ void System::run()
                 case SDL_QUIT: quit = true; break;
                 
                 case SDL_MOUSEBUTTONDOWN:
-                    for(Component* c : comps)
-                        c->mouseDown(event);
+                    handleMouseDownEvents(event);
                     break;
 
                 case SDL_MOUSEBUTTONUP:
-                    for(Component* c : comps)
-                        c->mouseUp(event);
+                    handleMouseUpEvents(event);
                     break;
                 
                 case SDL_KEYDOWN:

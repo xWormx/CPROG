@@ -15,7 +15,8 @@ class Player : public MovableSprite
 
         void tick()
         {
-            if(keyPressed('d'))
+
+            if(keyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
             {
                 xPos++;
             }
@@ -51,7 +52,7 @@ class Player : public MovableSprite
 
         bool keyPressed(const int keyCode)
         {
-            return InputComponent::getKeyCodePressed(keyCode);
+            return InputComponent::getKeyPressed(keyCode);
         }
 
     protected:
@@ -78,7 +79,7 @@ class UIElement : public StaticSprite
         }
         void tick()
         {
-            if(InputComponent::getKeyCodePressed('w'))
+            if(InputComponent::getKeyPressed('w'))
             {
             }
         }
@@ -93,7 +94,6 @@ class UIElement : public StaticSprite
 
 int main(int argv, char **argc)
 {
-    
     System app(FPS, {255, 150, 70, 255});
     
     int txtHeight = 16;

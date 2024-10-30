@@ -1,9 +1,15 @@
 #include "InputComponent.h"
 
-SDL_Keycode InputComponent::getKeyCodeFromEvent(const SDL_Event& event)
+SDL_Keycode InputComponent::getKeyCodeFromEvent(const SDL_Event& event) const
 {
     return event.key.keysym.sym;
 }
+
+Uint8 InputComponent::getMouseButtonFromEvent(const SDL_Event& event) const
+{
+    return event.button.button;
+}
+
 
 void InputComponent::setKeyCodePressed(const Sint32 keyCode)
 {
@@ -30,7 +36,7 @@ void InputComponent::setKeyCodeReleased(const Sint32 keyCode)
         
 }
 
-bool InputComponent::getKeyCodePressed(const int keyCode) const
+bool InputComponent::getKeyPressed(const int keyCode) const
 {
     int bitValue = 1;
 
@@ -42,3 +48,46 @@ bool InputComponent::getKeyCodePressed(const int keyCode) const
     
     return false;
 }
+
+void InputComponent::setMousePressed(const Uint32 button)
+{
+    int bitValue = 1;
+    switch(button)
+    {
+        case SDL_BUTTON_LEFT:
+        {
+            buttonBitPattern |= (bitValue << 8);
+        } break; 
+    }
+
+}
+void InputComponent::setMouseReleased(const Uint32 button)
+{
+    int bitValue = 1;
+    switch(button)
+    {
+        case SDL_BUTTON_LEFT:
+        {
+            buttonBitPattern &= ~(bitValue << 8);
+        } break; 
+    }
+
+}
+
+bool InputComponent::getMousePressed(const Uint8 button) const
+{
+    int bitValue = 1;
+
+    switch(button)
+    {
+        case SDL_BUTTON_LEFT:
+        {
+            return buttonBitPattern & (bitValue << 8);
+        }
+    }
+
+    return false;
+    
+}
+
+
