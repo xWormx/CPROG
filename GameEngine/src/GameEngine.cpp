@@ -14,7 +14,7 @@ GameEngine::GameEngine()
     {
 
         std::cout << "SDL successfully initialized!" << std::endl;
-        window = SDL_CreateWindow("CJ GameEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 400, 0);
+        window = SDL_CreateWindow("CJ GameEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, 0);
         if(window == NULL)
         {
             std::cout << "Create window failed!" << std::endl;
