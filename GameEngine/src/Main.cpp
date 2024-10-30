@@ -13,11 +13,6 @@ class Player : public MovableSprite
             return new Player(x, y, w, h, srcImage);
         }
 
-        void setSpriteDrawArea(int x, int y, int w, int h)
-        {
-            setSrcRect(x, y, w, h);
-        }
-
         void tick()
         {
             if(keyPressed('d'))
@@ -44,7 +39,8 @@ class Player : public MovableSprite
             {
                 frame ++;
                 if(frame > 3) frame = 0;
-                setSpriteDrawArea(124 * frame, 0, 124, 124);
+                int size = 124;
+                setSpriteRegion(size * frame, 0, size, size);
             } 
 
             tick++;
@@ -73,6 +69,28 @@ class Player : public MovableSprite
         int height;
 };
 
+class UIElement : public StaticSprite
+{
+    public:
+        static UIElement* getInstance(int x, int y, int w, int h, std::string srcImage)
+        {
+            return new UIElement(x, y, w, h, srcImage);
+        }
+        void tick()
+        {
+            if(InputComponent::getKeyCodePressed('w'))
+            {
+            }
+        }
+    protected:
+        UIElement(int x, int y, int w, int h, std::string srcImage) : StaticSprite(x,y,w,h,srcImage){}
+    
+    private:
+        int s;
+
+
+};
+
 int main(int argv, char **argc)
 {
     
@@ -84,13 +102,11 @@ int main(int argv, char **argc)
     Button* b1 = Button::getInstance(200, 150, 100, 100, "b1");
 
     Player* player1 = Player::getInstance(200, 200, 100, 100, "PersonIdle.png");
-
-    
    
     app.add(lbl);
     app.add(lbl2);
     app.add(b1);
-    player1->setSpriteDrawArea(0, 0, 124, 124);
+    player1->setSpriteRegion(0, 0, 124, 124);
     app.addSprite(player1);
     const int w = 20;
     const int h = 12;
@@ -104,7 +120,7 @@ int main(int argv, char **argc)
                 tile = Player::getInstance(x*(w), y * (h), w, h, "iconDown.png");
             else
                 tile = Player::getInstance(x*(w), y * (h), w, h, "iconUp.png");
-            tile->setSpriteDrawArea(0, 0, 32, 32);
+            tile->setSpriteRegion(0, 0, 32, 32);
             app.addSprite(tile);
         }
     }

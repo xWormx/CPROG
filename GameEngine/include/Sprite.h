@@ -11,18 +11,18 @@
 class Sprite : public InputComponent
 {
     public:
-        virtual void draw() const = 0;     
+        virtual void draw() const = 0; 
         virtual void tick() = 0;
 
-        void setSrcRect(int x, int y, int w, int h);
-        void setDestRect(int x, int y, int w, int h);
-
+        virtual void setSrcRect(int x, int y, int w, int h);
 
         const SDL_Rect& getSrcRect() const;
         const SDL_Rect& getDestRect() const;
         const SDL_Texture* getTexture() const;
 
         virtual ~Sprite(){}
+
+        friend class MovableSprite;
     protected:
         Sprite(int x, int y, int w, int h, std::string srcImage);
     private:

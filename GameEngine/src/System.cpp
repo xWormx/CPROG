@@ -35,6 +35,17 @@ void System::handleKeyUpEvents(const SDL_Event& event)
         s->setKeyCodeReleased(s->getKeyCodeFromEvent(event));
 }
 
+//void System::handleMouseDownEvents(const SDL_Event& event);
+//{
+//
+//}
+//
+//void System::handleMouseUpEvents(const SDL_Event& event);
+//{
+//    for(Sprite* s : sprite)
+//        s->
+//}
+
 void System::run()
 {
     SDL_Event event;

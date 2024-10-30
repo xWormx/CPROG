@@ -20,6 +20,8 @@ class System
     private:
         void handleKeyDownEvents(const SDL_Event&);
         void handleKeyUpEvents(const SDL_Event&);
+        void handleMouseDownEvents(const SDL_Event&);
+        void handleMouseUpEvents(const SDL_Event&);
         SDL_Color backgroundColor;
         std::vector<Component*> comps;
         std::vector<Sprite *> sprites;
