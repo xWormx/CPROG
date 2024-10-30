@@ -77,3 +77,8 @@ TTF_Font* GameEngine::get_font() const
 {
     return this->font;
 }
+
+SDL_Window* GameEngine::get_window() const
+{
+    return this->window;
+}

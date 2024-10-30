@@ -15,24 +15,7 @@ class Player : public MovableSprite
 
         void tick()
         {
-
-            if(keyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
-            {
-                xPos++;
-            }
-            if(keyPressed('a'))
-            {
-                xPos--;
-            }
-            if(keyPressed('w'))
-            {
-                yPos--;
-            }
-            if(keyPressed('s'))
-            {
-                yPos++;
-            }
-
+            
             static int tick = 0;
             static int frame = 0;
             
@@ -45,6 +28,35 @@ class Player : public MovableSprite
             } 
 
             tick++;
+
+            int w, h;
+            SDL_GetWindowSize(engine.get_window(), &w, &h);
+            static SDL_Rect viewPort = {0, 0, w, h};
+            int err = SDL_RenderSetViewport(engine.get_ren(), &viewPort);
+            if(err < 0)
+                std::cout << "Viewport error: " << SDL_GetError() << std::endl;
+                
+            if(keyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
+            {
+                if(viewPort.x > 0 && tick % 20 == 0)
+                    viewPort.x--;
+                
+                //xPos++;
+            }
+            if(keyPressed('a'))
+            {
+                //xPos--;
+                if(tick % 20 == 0)
+                    viewPort.x++;
+            }
+            if(keyPressed('w'))
+            {
+                yPos--;
+            }
+            if(keyPressed('s'))
+            {
+                yPos++;
+            }
 
             
             MovableSprite::setPosition(xPos, yPos);

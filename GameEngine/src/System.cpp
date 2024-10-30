@@ -111,6 +111,7 @@ void System::run()
             sprite->draw();
         }
 
+
         SDL_RenderPresent(engine.get_ren());
 
         int delay = nextTick - SDL_GetTicks();

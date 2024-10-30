@@ -14,8 +14,10 @@ class GameEngine
   public:
     GameEngine();
     ~GameEngine();
+    SDL_Window* get_window() const;
     SDL_Renderer* get_ren() const;
     TTF_Font* get_font() const;
+
   
   private:
     SDL_Window* window;
