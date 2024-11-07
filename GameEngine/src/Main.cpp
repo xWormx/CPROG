@@ -41,27 +41,32 @@ class Player : public MovableSprite
             //    if(viewPort.x > 0 && tick % 20 == 0)
             //        viewPort.x--;
                 
-                xPos++;
+                xPos += moveSpeed;
             }
             if(keyPressed('a'))
             {
-                xPos--;
+                xPos -= moveSpeed;
             //    if(tick % 20 == 0)
             //        viewPort.x++;
             }
             if(keyPressed('w'))
             {
-                yPos--;
+                yPos -= moveSpeed;
             }
             if(keyPressed('s'))
             {
-                yPos++;
+                yPos += moveSpeed;
             }
 
             
             MovableSprite::setPosition(xPos, yPos);
         }
 
+        void setMoveSpeed(int speed)
+        {
+            moveSpeed = speed;
+
+        }
         bool keyPressed(const int keyCode)
         {
             return InputComponent::getKeyPressed(keyCode);
@@ -80,7 +85,10 @@ class Player : public MovableSprite
         int xPos, yPos;
         int width;
         int height;
+        int moveSpeed = 0;
 };
+
+
 
 class UIElement : public StaticSprite
 {
@@ -115,6 +123,7 @@ int main(int argv, char **argc)
 
     Player* player1 = Player::getInstance(200, 200, 300, 300, "PersonIdle.png");
     player1->setSpriteRegion(0, 0, 124, 124);
+    player1->setMoveSpeed(5);
     
     const int mapW = 100;
     const int mapH = 100;
@@ -131,6 +140,7 @@ int main(int argv, char **argc)
             else
                 tile = Player::getInstance(x*(tileW), y * (tileH), tileW, tileH, "iconUp.png");
             tile->setSpriteRegion(0, 0, 32, 32);
+            tile->setMoveSpeed(-1);
             app.addSprite(tile);
         }
     }
