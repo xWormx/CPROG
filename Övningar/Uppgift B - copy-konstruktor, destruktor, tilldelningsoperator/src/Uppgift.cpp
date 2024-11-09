@@ -1,7 +1,13 @@
 /*
-Denna uppgift består av fem deluppgifter med var sin klass. Det är meningen att samtliga klasser skall ha värdesemantik. Din uppgift är att avgöra om det behövs en copy- konstruktor, en destruktor resp. en tilldelningsoperator för dessa klasser och i förekommande fall implementera dem. Om ingen copy-konstruktor, destruktor eller tilldelningsoperator behövs räcker det med att ange detta. Du behöver inte bry dig om C++11s move-konstruktor.
+Denna uppgift består av fem deluppgifter med var sin klass. Det är meningen att samtliga klasser 
+skall ha värdesemantik. 
+Din uppgift är att avgöra om det behövs en copy- konstruktor, en destruktor resp. en tilldelningsoperator 
+för dessa klasser och i förekommande fall implementera dem. 
+Om ingen copy-konstruktor, destruktor eller tilldelningsoperator behövs 
+räcker det med att ange detta. Du behöver inte bry dig om C++11s move-konstruktor.
 
-a) Klassen Vector skall fungera som en dynamisk vektor av heltal, vektorn skall som sagt ha värdesemantik:
+a) Klassen Vector skall fungera som en dynamisk vektor av heltal, vektorn skall som sagt ha 
+värdesemantik:
 class Vector {
 public:
     Vector(int n):siz( n ), data( new int[siz] ){}
@@ -13,7 +19,8 @@ private:
 }; // Vector
 
 
-b) Klassen WordList tänks fungera som ett slags ordförteckning. Orden lagras internt i standardbibliotekets vector, WordList omsluter bara denna vector:
+b) Klassen WordList tänks fungera som ett slags ordförteckning. 
+Orden lagras internt i standardbibliotekets vector, WordList omsluter bara denna vector:
 
 class WordList {
 public:
@@ -35,7 +42,9 @@ private:
 
 
 
-c) Objekt av klassen Managed innehåller bara en sträng, klassen håller dock även reda på alla sina objekt i varje ögonblick i en statisk vektor av pekare till objekten:
+c) Objekt av klassen Managed innehåller bara en sträng, 
+klassen håller dock även reda på alla sina objekt i varje ögonblick i en statisk vektor 
+av pekare till objekten:
 
 class Managed {
 public:
@@ -52,7 +61,9 @@ std::vector<Managed*> Managed::objects; // Definition
 
 
 
-d) Objekt av klassen Counted innehåller bara en sträng, men klassen ska hålla reda på hur många objekt av den som finns, med hjälp av den statiska variabeln count.
+d) Objekt av klassen Counted innehåller bara en sträng, 
+men klassen ska hålla reda på hur många objekt av den som finns, 
+med hjälp av den statiska variabeln count.
 
 class Counted {
 public:
@@ -75,7 +86,10 @@ int Counted::getCount() { return count; }
 
 
 
-e) Objekt av klassen Valued innehåller bara en sträng, men klassen håller reda på vilka värden på strängarna som finns i dess objekt, och hur många objekt som innehåller varje värde. Detta görs med hjälp av en map med strängen som nyckel och antalet som värde.
+e) Objekt av klassen Valued innehåller bara en sträng, 
+men klassen håller reda på vilka värden på strängarna som finns i dess objekt, 
+och hur många objekt som innehåller varje värde. 
+Detta görs med hjälp av en map med strängen som nyckel och antalet som värde.
 
 class Valued{
 public:
