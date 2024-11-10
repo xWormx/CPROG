@@ -82,3 +82,22 @@ SDL_Window* GameEngine::get_window() const
 {
     return this->window;
 }
+
+int GameEngine::GetWindowWidth() const 
+{
+    int width = 0;
+
+    SDL_GetWindowSize(window, &width, NULL);
+
+    return width;
+}
+
+
+int GameEngine::GetWindowHeight() const 
+{
+    int height = 0;
+
+    SDL_GetWindowSize(window, NULL, &height);
+
+    return height;
+}

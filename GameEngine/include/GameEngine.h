@@ -17,6 +17,8 @@ class GameEngine
     SDL_Window* get_window() const;
     SDL_Renderer* get_ren() const;
     TTF_Font* get_font() const;
+    int GetWindowWidth() const;
+    int GetWindowHeight() const ;
 
   
   private:
