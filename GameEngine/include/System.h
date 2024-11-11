@@ -14,6 +14,7 @@ class System
         System(int fps, SDL_Color bg = {255, 255, 0, 255});
         void add(Component* component);
         void addSprite(Sprite * sprite);
+        void removeSprite(Sprite * sprite);
         void run();
         ~System();
     
@@ -26,6 +27,7 @@ class System
         std::vector<Component*> comps;
         std::vector<Sprite *> sprites;
         std::vector<Sprite *> added;
+        std::vector<Sprite *> removed;
         int framesPerSecond;
 };
 

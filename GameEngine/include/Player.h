@@ -8,6 +8,7 @@
 #include "Particle.h"
 #include "System.h"
 
+
 class Player : public MovableSprite
 {
     public:
@@ -41,7 +42,8 @@ class Player : public MovableSprite
         bool isMoving;
         Player* playerRef = nullptr;
         UIElement* txtButtonRef = nullptr;
-        Particle* particle = nullptr;
+        std::vector<Particle*> particles;
+        //Particle* particle[50] = {};
         System* appRef;
 };
 

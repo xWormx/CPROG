@@ -29,12 +29,12 @@ int main(int argv, char **argc)
     Player* player2 = Player::getInstance(200, 200, 300, 300, "PersonIdle.png");
     player1->setSpriteRegion(0, 0, 124, 124);
     player1->setMoveSpeed(5);
-    
+ 
     const int mapW = 10;
     const int mapH = 10;
     const int tileW = 24;
     const int tileH = 24;
-
+/*
     Tile* tileMap[mapW * mapH];
     for(int y = 0; y < mapH; y++ )
     {
@@ -50,7 +50,7 @@ int main(int argv, char **argc)
             app.addSprite(tile);
         }
     }
-
+*/
 
     app.addSprite(player1);
     app.addSprite(player2);

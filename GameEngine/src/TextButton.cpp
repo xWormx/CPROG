@@ -71,15 +71,15 @@ void TextButton::setText(std::string s)
             throw std::runtime_error("Couldn't load surface for text" + error);
         }
 
+        if(textTexture)
+            SDL_DestroyTexture(textTexture);
+
         textTexture = SDL_CreateTextureFromSurface(engine.get_ren(), surface);
         if(textTexture == NULL)
         {   
             error = SDL_GetError();
             throw std::runtime_error("Couldn't texture from surface" + error);
         }
-
-        
-        //setSrcRect(0, 0, surface->w, surface->h);
 
         SDL_FreeSurface(surface);
 

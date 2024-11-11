@@ -54,12 +54,32 @@ void Player::tick()
     if(keyPressed('p'))
     {
         static unsigned int tick = 0;
-        static int posAdd = 0;
-        if(tick++ % 6 == 0)
+        static unsigned int i = 0;
+        unsigned int sz = 10;//(sizeof(particle) / sizeof(Particle*));
+        if(tick++ % 4 == 0)
         {
-            particle = Particle::getInstance(pos.x, pos.y, 60 , 60, "Particle.png", 5);
-            appRef->addSprite(particle);
+            int sx = engine.GetRandomNumberInRange(-5, 5);
+            int sy = engine.GetRandomNumberInRange(-8, 8);
+            Particle* p = Particle::getInstance(pos.x, pos.y, 60 , 60, "Particle.png", 30);
+            p->SetMoveSpeed(sx, sy);
+            p->SetAppRef(appRef);
 
+            appRef->addSprite(p);
+
+            if(i < sz)
+            {
+                //particle[i] = Particle::getInstance(pos.x, pos.y, 60 , 60, "Particle.png", 10);
+               
+
+                
+                //particle[i]->SetMoveSpeed(sx, sy);
+               
+                //appRef->addSprite(particle[i]);
+
+
+                i++;
+            }
+            
         }
 
     }

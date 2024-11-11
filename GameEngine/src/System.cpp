@@ -8,31 +8,26 @@ System::System(int fps, SDL_Color bg)
     std::cout << "System running" << std::endl;
 }
 
-void System::add(Component* component)
-{
-    comps.push_back(component);
-}
-
 void System::addSprite(Sprite *sprite)
 {
-    if(sprite)
+    if(sprite != NULL)
         added.push_back(sprite);
+}
+
+void System::removeSprite(Sprite* s)
+{
+    if(s != NULL)
+        removed.push_back(s);
 }
 
 void System::handleKeyDownEvents(const SDL_Event& event)
 {
-    for(Component *c : comps)
-        c->keyDown(event);
-
     for(Sprite *s : sprites)
         s->setKeyCodePressed(s->getKeyCodeFromEvent(event));
 }
 
 void System::handleKeyUpEvents(const SDL_Event& event)
 {
-    for(Component* c : comps)
-        c->keyUp(event);
-
     for(Sprite* s : sprites)
         s->setKeyCodeReleased(s->getKeyCodeFromEvent(event));
 }
@@ -89,16 +84,27 @@ void System::run()
             }
         }
 
-        for(Component* c : comps)
-            c->tick();
-
         for(Sprite* s : sprites)
             s->tick();
 
         for(Sprite* s : added)
             sprites.push_back(s);
-        
+
         added.clear();
+
+        for(Sprite* s : removed)
+        {
+            for(std::vector<Sprite*>::iterator i = sprites.begin(); i != sprites.end();)
+            {
+                if(*i == s)
+                {
+                    i = sprites.erase(i);
+                }    
+                else
+                    i++;
+            }
+        }
+        removed.clear();
 
         SDL_SetRenderDrawColor(engine.get_ren(), 
                                 backgroundColor.r,
@@ -107,11 +113,6 @@ void System::run()
                                 backgroundColor.r);
         SDL_RenderClear(engine.get_ren());
         
-        
-        for(Component* c : comps)
-        {
-            c->draw();
-        }
 
         for(Sprite* sprite : sprites)
         {
@@ -125,6 +126,7 @@ void System::run()
 
         if(delay > 0)
             SDL_Delay(delay);
+
     }
         
 }

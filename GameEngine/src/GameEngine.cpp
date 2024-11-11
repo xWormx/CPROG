@@ -4,8 +4,22 @@
 
 GameEngine engine;
 
+void GameEngine::SetupRandomGenerator()
+{
+    gen = std::mt19937(rd());
+}
+
+int GameEngine::GetRandomNumberInRange(int min, int max)
+{
+    std::uniform_int_distribution<> distr(min, max);
+
+    return distr(gen);
+}
+
 GameEngine::GameEngine()
 {
+    SetupRandomGenerator();
+
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         std::cout << "SDL_Init Failed" << std::endl;
