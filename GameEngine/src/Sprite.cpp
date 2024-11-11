@@ -1,5 +1,6 @@
 #include "Sprite.h"
 
+// FOR IMAGES
 Sprite::Sprite(int x, int y, int w, int h, std::string srcImage) : destRect{ x, y, w, h }
 {
     std::string fullSrcPath = constants::gResPath + "images/" + srcImage;
@@ -20,6 +21,11 @@ Sprite::Sprite(int x, int y, int w, int h, std::string srcImage) : destRect{ x, 
             setSrcRect(r.x, r.y, r.w, r.h);
         }
     }
+}
+
+// FOR TEXT
+Sprite::Sprite(int x, int y, int w, int h) : destRect{x,y,w,h}
+{
 }
 
 const SDL_Rect& Sprite::getSrcRect() const
@@ -43,4 +49,12 @@ void Sprite::setSrcRect(int x, int y, int w, int h)
     srcRect.y = y;
     srcRect.w = w;
     srcRect.h = h;
+}
+
+void Sprite::setDestRect(int x, int y, int w, int h)
+{
+    destRect.x = x;
+    destRect.y = y;
+    destRect.w = w;
+    destRect.h = h;
 }

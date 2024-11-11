@@ -3,7 +3,17 @@
 #include "Button.h"
 #include "StaticSprite.h"
 #include "MovableSprite.h"
+#include "TextButton.h"
+
 #define FPS 60
+
+
+struct Position
+{
+    int x, y;
+};
+
+
 
 class Player : public MovableSprite
 {
@@ -15,7 +25,7 @@ class Player : public MovableSprite
 
         void tick()
         {
-            
+            isMoving = false;
             static int tick = 0;
             static int frame = 0;
             
@@ -32,26 +42,30 @@ class Player : public MovableSprite
                 
             if(keyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
             {
-
-                
-                xPos += moveSpeed;
+                pos.x += moveSpeed;
+                isMoving = true;
             }
             if(keyPressed('a'))
             {
-                xPos -= moveSpeed;
-
+                pos.x -= moveSpeed;
+                isMoving = true;
             }
             if(keyPressed('w'))
             {
-                yPos -= moveSpeed;
+                pos.y-= moveSpeed;
+                isMoving = true;
             }
             if(keyPressed('s'))
             {
-                yPos += moveSpeed;
+                pos.y += moveSpeed;
+                isMoving = true;
             }
 
-            
-            MovableSprite::setPosition(xPos, yPos);
+            if((pos.x + (width/3)) < 0)
+                pos.x = -(width/3);
+
+                
+            MovableSprite::setPosition(pos.x, pos.y);
         }
 
         void setMoveSpeed(int speed)
@@ -64,59 +78,107 @@ class Player : public MovableSprite
             return InputComponent::getKeyPressed(keyCode);
         }
 
-    protected:
-        Player(int x, int y, int h, int w, std::string srcImage) : MovableSprite(x,y,w,h,srcImage)
+        int getMoveSpeed() { return moveSpeed; }
+        bool IsMoving() {return isMoving;}
+        const Position& GetPosition() { return pos; }
+        const int& GetWidth() { return width; }
+        void SetPlayerRef(Player* p)
         {
-            xPos = x;
-            yPos = y;
+            playerRef = p;
+        }
+        
+    protected:
+        Player(int x, int y, int h, int w, std::string srcImage) : MovableSprite(x,y,w,h,srcImage), pos{x, y}
+        {
             width = w;
             height = h;
         }
 
     private:
-        int xPos, yPos;
+        Position pos;
         int width;
         int height;
         int moveSpeed = 0;
+        bool isMoving;
+        TextButton* text;
+        Player* playerRef = nullptr;
 };
 
 
 
-class UIElement : public StaticSprite
+class Tile : public MovableSprite
 {
     public:
-        static UIElement* getInstance(int x, int y, int w, int h, std::string srcImage)
+        static Tile* getInstance(int x, int y, int w, int h, std::string srcImage)
         {
-            return new UIElement(x, y, w, h, srcImage);
+            return new Tile(x,y,w,h,srcImage);
+        }
+
+        void SetPlayerReference(Player* p)
+        {
+            playerRef = p;
+        }
+
+        void tick()
+        {
+            Position playerPos = playerRef->GetPosition();
+            if((playerPos.x + (playerRef->GetWidth() / 3)) < 5)
+            {
+                xPos+=5;
+                setPosition(xPos, yPos);
+            }    
+        }
+
+    protected:
+        Tile(int x, int y, int w, int h, std::string srcImage) : MovableSprite(x, y, w, h, srcImage), xPos(x), yPos(y), width(w), height(h)
+        {
+        }
+    private:
+        int xPos, yPos, width, height;
+        Player* playerRef;
+};
+
+
+class UIElement : public TextButton
+{
+    public:
+        static UIElement* getInstance(int x, int y, int w, int h, std::string txt, std::string srcImage)
+        {
+            return new UIElement(x, y, w, h, txt, srcImage);
         }
         void tick()
         {
             if(InputComponent::getKeyPressed('w'))
             {
+                setText("KICK");
+            }
+            else
+            {
+                setText("HOLLIMOLLLIII");
             }
         }
+
     protected:
-        UIElement(int x, int y, int w, int h, std::string srcImage) : StaticSprite(x,y,w,h,srcImage){}
+        UIElement(int x, int y, int w, int h, std::string txt, std::string srcImage) : TextButton(x, y, w, h, txt, srcImage)
+        {
+        }
     
     private:
         int s;
-
-
 };
 
 int main(int argv, char **argc)
 {
     System app(FPS, {255, 150, 70, 255});
-    /*
-    int txtHeight = 16;
-    Label* lbl = Label::getInstance(0, 0, 32, txtHeight, "HEJ");
-    Label* lbl2 = Label::getInstance(50, 50, 300, txtHeight, "MY WORLD IS THE GREATEST EVER!!");
-    Button* b1 = Button::getInstance(200, 150, 100, 100, "b1");
-    */
     
     int buttonW = 150, buttonH = 100;
-    UIElement* uiButton = UIElement::getInstance(engine.GetWindowWidth() / 2 - (buttonW * 2), engine.GetWindowHeight() / 2, buttonW, buttonH,"UIButton.png");
+    UIElement* uiButton = UIElement::getInstance(engine.GetWindowWidth() / 2 - (buttonW * 2), engine.GetWindowHeight() / 2, 
+                                                    buttonW, buttonH, 
+                                                    "HEJ", "UIButton.png");
+
+
     Player* player1 = Player::getInstance(200, 200, 300, 300, "PersonIdle.png");
+    Player* player2 = Player::getInstance(200, 200, 300, 300, "PersonIdle.png");
     player1->setSpriteRegion(0, 0, 124, 124);
     player1->setMoveSpeed(5);
     
@@ -124,27 +186,28 @@ int main(int argv, char **argc)
     const int mapH = 10;
     const int tileW = 24;
     const int tileH = 24;
-    Player* tileMap[mapW * mapH];
+
+    Tile* tileMap[mapW * mapH];
     for(int y = 0; y < mapH; y++ )
     {
         for(int x = 0; x < mapW; x++)
         {
-            Player* tile = tileMap[x + (y * mapW)];
+            Tile* tile = tileMap[x + (y * mapW)];
             if(x % 2 == 0)
-                tile = Player::getInstance(x*(tileW), y * (tileH), tileW, tileH, "iconDown.png");
+                tile = Tile::getInstance(x*(tileW), y * (tileH), tileW, tileH, "iconDown.png");
             else
-                tile = Player::getInstance(x*(tileW), y * (tileH), tileW, tileH, "iconUp.png");
+                tile = Tile::getInstance(x*(tileW), y * (tileH), tileW, tileH, "iconUp.png");
             tile->setSpriteRegion(0, 0, 32, 32);
-            tile->setMoveSpeed(-1);
+            tile->SetPlayerReference(player1);
             app.addSprite(tile);
         }
     }
 
-    //app.add(lbl);
-    //app.add(lbl2);
-    //app.add(b1);
+
     app.addSprite(player1);
+    app.addSprite(player2);
     app.addSprite(uiButton);
+
     
     app.run();
 

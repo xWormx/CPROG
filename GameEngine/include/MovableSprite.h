@@ -12,9 +12,6 @@ class MovableSprite : public Sprite
     protected:
         MovableSprite(int x, int y, int w, int h, std::string srcImage);
     private:
-        void setDestRect(int x, int y, int w, int h);
-        
-
 };
 
 
