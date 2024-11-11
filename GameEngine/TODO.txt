@@ -1,0 +1,5 @@
+* Göra klart partikel system
+    - ta bort och lägga till partiklar baserat på lifeTime
+    - Lägga till movement för particles
+    PROBLEM:
+        - particles can only be created at speed of (tick % 6 == 0) or higher than 6, not 5 or lower, which causes a seg fault ?!?!?

@@ -13,6 +13,7 @@ class TextButton : public Sprite
         void draw() const;
         void tick();
         void setText(std::string s);
+        void SetPosition(int x, int y);
 
         ~TextButton();
     protected:

@@ -25,6 +25,7 @@ class System
         SDL_Color backgroundColor;
         std::vector<Component*> comps;
         std::vector<Sprite *> sprites;
+        std::vector<Sprite *> added;
         int framesPerSecond;
 };
 

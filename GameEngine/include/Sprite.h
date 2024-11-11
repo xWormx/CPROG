@@ -23,6 +23,7 @@ class Sprite : public InputComponent
 
         friend class MovableSprite;
         friend class TextButton;
+        friend class Particle;
     protected:
         Sprite(int x, int y, int w, int h, std::string srcImage);
         Sprite(int x, int y, int w, int h);

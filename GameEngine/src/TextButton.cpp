@@ -98,6 +98,11 @@ void TextButton::draw() const
     SDL_RenderCopy(engine.get_ren(), textTexture, &getSrcRect(), &getDestRect());
 }
 
+void TextButton::SetPosition(int x, int y)
+{
+    setDestRect(x, y, getDestRect().w, getDestRect().h);
+}
+
 TextButton::~TextButton()
 {
 }

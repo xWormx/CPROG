@@ -1,5 +1,6 @@
 #include "System.h"
 
+
 System::System(int fps, SDL_Color bg)
 {
     backgroundColor = bg;   
@@ -14,7 +15,8 @@ void System::add(Component* component)
 
 void System::addSprite(Sprite *sprite)
 {
-    sprites.push_back(sprite);
+    if(sprite)
+        added.push_back(sprite);
 }
 
 void System::handleKeyDownEvents(const SDL_Event& event)
@@ -92,6 +94,11 @@ void System::run()
 
         for(Sprite* s : sprites)
             s->tick();
+
+        for(Sprite* s : added)
+            sprites.push_back(s);
+        
+        added.clear();
 
         SDL_SetRenderDrawColor(engine.get_ren(), 
                                 backgroundColor.r,
