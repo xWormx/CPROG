@@ -29,25 +29,17 @@ class Player : public MovableSprite
 
             tick++;
 
-            //int w, h;
-            //SDL_GetWindowSize(engine.get_window(), &w, &h);
-            //static SDL_Rect viewPort = {0, 0, w, h};
-            //int err = SDL_RenderSetViewport(engine.get_ren(), &viewPort);
-            //if(err < 0)
-            //    std::cout << "Viewport error: " << SDL_GetError() << std::endl;
                 
             if(keyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
             {
-            //    if(viewPort.x > 0 && tick % 20 == 0)
-            //        viewPort.x--;
+
                 
                 xPos += moveSpeed;
             }
             if(keyPressed('a'))
             {
                 xPos -= moveSpeed;
-            //    if(tick % 20 == 0)
-            //        viewPort.x++;
+
             }
             if(keyPressed('w'))
             {
