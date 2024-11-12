@@ -5,3 +5,4 @@
     - måste Particle *p specifikt deletas?
     PROBLEM:
         - particles can only be created at speed of (tick % 6 == 0), that is even numbers, odd number causes seg fault?!?!
+        - Where should the particle be deleted?

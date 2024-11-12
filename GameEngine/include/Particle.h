@@ -22,7 +22,7 @@ class Particle : public MovableSprite
         Position pos;
         Position startPosition;
         int speedX, speedY;
-        System *appRef;
+        System *appRef = nullptr;
 };
 
 

@@ -19,7 +19,7 @@ class Sprite : public InputComponent
         const SDL_Surface* getSurface() const;
         const SDL_Texture* getTexture() const;
     
-        virtual ~Sprite(){}
+        virtual ~Sprite();
 
         friend class MovableSprite;
         friend class TextButton;
@@ -30,7 +30,7 @@ class Sprite : public InputComponent
     private:
         SDL_Rect srcRect; // What part to draw
         SDL_Rect destRect; // Where to draw it
-        SDL_Texture* texture;     
+        SDL_Texture* texture = nullptr;     
 
         void setDestRect(int x, int y, int w, int h);
         void setSrcRect(int x, int y, int w, int h);

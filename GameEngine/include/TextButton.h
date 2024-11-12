@@ -22,7 +22,7 @@ class TextButton : public Sprite
     private:
     int x, y, width, height;
     std::string strText;
-    SDL_Texture* imgTexture = NULL, *textTexture = NULL;
+    SDL_Texture* imgTexture = nullptr, *textTexture = nullptr;
 };
 
 

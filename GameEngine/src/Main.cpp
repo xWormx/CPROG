@@ -1,8 +1,5 @@
+
 #include "System.h"
-
-
-
-
 #include "Label.h"
 #include "Button.h"
 #include "StaticSprite.h"
@@ -10,7 +7,9 @@
 #include "TextButton.h"
 #include "Player.h"
 #include "UIElement.h"
+
 #include "Tile.h"
+#include "TileMap.h"
 
 int main(int argv, char **argc)
 {
@@ -29,12 +28,13 @@ int main(int argv, char **argc)
     Player* player2 = Player::getInstance(200, 200, 300, 300, "PersonIdle.png");
     player1->setSpriteRegion(0, 0, 124, 124);
     player1->setMoveSpeed(5);
- 
+    player1->SetSpriteCollection(app.GetSpriteCollection());
+/*
     const int mapW = 10;
     const int mapH = 10;
     const int tileW = 24;
     const int tileH = 24;
-/*
+
     Tile* tileMap[mapW * mapH];
     for(int y = 0; y < mapH; y++ )
     {
@@ -51,10 +51,15 @@ int main(int argv, char **argc)
         }
     }
 */
+    TileMap* map1 = TileMap::getInstance(-50, 0, 60, 60);
+    map1->SetAppRef(&app);
+    map1->SetPlayerRef(player1);
+    map1->InitializeTiles();
 
     app.addSprite(player1);
     app.addSprite(player2);
     app.addSprite(uiButton);
+
 
     
     app.run();

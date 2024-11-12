@@ -13,6 +13,6 @@ void UIElement::tick()
     }
     else
     {
-        setText("HOLLIMOLLLIII");
+        setText("JANIS");
     }
 }

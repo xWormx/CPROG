@@ -20,7 +20,7 @@ class Tile : public MovableSprite
         Tile(int x, int y, int w, int h, std::string srcImage) : MovableSprite(x, y, w, h, srcImage), xPos(x), yPos(y), width(w), height(h) {}
     private:
         int xPos, yPos, width, height;
-        Player* playerRef;
+        Player* playerRef = nullptr;
 };
 
 #endif

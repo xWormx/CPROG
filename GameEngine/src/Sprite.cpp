@@ -4,6 +4,10 @@
 Sprite::Sprite(int x, int y, int w, int h, std::string srcImage) : destRect{ x, y, w, h }
 {
     std::string fullSrcPath = constants::gResPath + "images/" + srcImage;
+
+    if(texture != nullptr)
+        SDL_DestroyTexture(texture);
+    
     texture = IMG_LoadTexture(engine.get_ren(), fullSrcPath.c_str());
     if(texture != nullptr)
     {
@@ -57,4 +61,9 @@ void Sprite::setDestRect(int x, int y, int w, int h)
     destRect.y = y;
     destRect.w = w;
     destRect.h = h;
+}
+
+Sprite::~Sprite()
+{
+    SDL_DestroyTexture(texture);
 }

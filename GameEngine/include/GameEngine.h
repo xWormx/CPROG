@@ -24,10 +24,10 @@ class GameEngine
 
   
   private:
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-    SDL_Surface* backgroundSurface;
-    TTF_Font* font;
+    SDL_Window* window              = nullptr;
+    SDL_Renderer* renderer          = nullptr;
+    SDL_Surface* backgroundSurface  = nullptr;
+    TTF_Font* font                  = nullptr;
     std::random_device rd;
     std::mt19937 gen;
     void SetupRandomGenerator();

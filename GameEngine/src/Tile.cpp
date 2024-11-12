@@ -7,10 +7,33 @@ Tile * Tile::getInstance(int x, int y, int w, int h, std::string srcImage)
 
 void Tile::tick()
 {
-    Position playerPos = playerRef->GetPosition();
-    if ((playerPos.x + (playerRef->GetWidth() / 3)) < 5)
+    if(playerRef != nullptr)
     {
-        xPos += 5;
-        setPosition(xPos, yPos);
+        Player* p = playerRef;
+        if ((p->GetPosition().x + (p->GetWidth() / 3)) < 5)
+        {
+            xPos += 5;
+            setPosition(xPos, yPos);
+        }
+
+        if(p->GetPosition().x + (p->GetWidth() - p->GetWidth()/3) > engine.GetWindowWidth() - 5)
+        {
+            xPos -= 5;
+            setPosition(xPos, yPos);
+        }
+
+        if(p->GetPosition().y + 60 < 0)
+        {
+            yPos += 5;
+            setPosition(xPos, yPos);
+        }
+
+        if(p->GetPosition().y + p->GetHeight() > engine.GetWindowHeight() - 10)
+        {
+            
+            yPos -= 5;
+            setPosition(xPos, yPos);
+        }
+
     }
 }

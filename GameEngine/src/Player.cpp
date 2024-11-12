@@ -10,7 +10,7 @@ void Player::tick()
     isMoving = false;
     static int tick = 0;
     static int frame = 0;
-
+    
     if (tick % 7 == 0)
     {
         frame++;
@@ -19,7 +19,7 @@ void Player::tick()
         int size = 124;
         setSpriteRegion(size * frame, 0, size, size);
     }
-
+    
     tick++;
 
     if (keyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
@@ -43,19 +43,28 @@ void Player::tick()
         isMoving = true;
     }
 
+    // Restric movment to be inside window
     if ((pos.x + (width / 3)) < 0)
         pos.x = -(width / 3);
+    if(pos.x + (width - width/3) > engine.GetWindowWidth())
+        pos.x = engine.GetWindowWidth() - (width - (width/3)); 
+    if((pos.y + 80) < 0)
+        pos.y = -80;
+    if(pos.y + height > engine.GetWindowHeight())
+        pos.y = engine.GetWindowHeight() - height;
+
 
     if(txtButtonRef != NULL)
         txtButtonRef->SetPosition(pos);
     
     MovableSprite::setPosition(pos.x, pos.y);
+    Position p = {pos.x + width/4, pos.y};
+    if(txtButtonRef != nullptr)
+        txtButtonRef->SetPosition(p);
 
     if(keyPressed('p'))
     {
         static unsigned int tick = 0;
-        static unsigned int i = 0;
-        unsigned int sz = 10;//(sizeof(particle) / sizeof(Particle*));
         if(tick++ % 4 == 0)
         {
             int sx = engine.GetRandomNumberInRange(-5, 5);
@@ -65,23 +74,37 @@ void Player::tick()
             p->SetAppRef(appRef);
 
             appRef->addSprite(p);
-
-            if(i < sz)
-            {
-                //particle[i] = Particle::getInstance(pos.x, pos.y, 60 , 60, "Particle.png", 10);
-               
-
-                
-                //particle[i]->SetMoveSpeed(sx, sy);
-               
-                //appRef->addSprite(particle[i]);
-
-
-                i++;
-            }
-            
+        
         }
 
     }
 
+    if(spriteCollection != nullptr)
+    {
+        for(Sprite *s : *spriteCollection)
+        {
+            if(CheckCollision(s))
+            {
+            }
+            
+        }
+    }
+    
+        
+
+}
+
+const bool Player::CheckCollision(Sprite* other) const
+{
+    Player *otherPlayer = dynamic_cast<Player*>(other);
+    if(otherPlayer != nullptr && otherPlayer != this)
+    {
+        if(pos.x < otherPlayer->pos.x + otherPlayer->width && 
+            pos.x + width > otherPlayer->pos.x)
+        {   
+            return true;
+        }
+    }
+    
+    return false;
 }

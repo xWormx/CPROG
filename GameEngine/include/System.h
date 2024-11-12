@@ -15,6 +15,7 @@ class System
         void add(Component* component);
         void addSprite(Sprite * sprite);
         void removeSprite(Sprite * sprite);
+        const std::vector<Sprite*>& GetSpriteCollection() { return sprites; }
         void run();
         ~System();
     

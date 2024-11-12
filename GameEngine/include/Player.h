@@ -19,13 +19,16 @@ class Player : public MovableSprite
         int getMoveSpeed()                  { return moveSpeed; }
         const Position& GetPosition()       { return pos; }
         const int& GetWidth()               { return width; }
-        
+        const int& GetHeight()               { return height; }
+
+        const bool CheckCollision(Sprite* other) const;
         bool keyPressed(const int keyCode)  { return InputComponent::getKeyPressed(keyCode);}
         
         void setMoveSpeed(int speed)        { moveSpeed = speed; }
         void SetPlayerRef(Player* p)        { playerRef = p;}
         void SetUIElementRef(UIElement* tb) { txtButtonRef = tb; }
         void SetAppRef(System* app)         { appRef = app;}
+        void SetSpriteCollection(const std::vector<Sprite*>& collection) { spriteCollection = &collection; }
         
     protected:
         Player(int x, int y, int h, int w, std::string srcImage) : MovableSprite(x,y,w,h,srcImage), pos{x, y}
@@ -42,9 +45,11 @@ class Player : public MovableSprite
         bool isMoving;
         Player* playerRef = nullptr;
         UIElement* txtButtonRef = nullptr;
+        System* appRef = nullptr;
         std::vector<Particle*> particles;
+        const std::vector<Sprite*> *spriteCollection = nullptr;
         //Particle* particle[50] = {};
-        System* appRef;
+
 };
 
 

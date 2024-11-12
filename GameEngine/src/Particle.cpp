@@ -23,6 +23,7 @@ void Particle::tick()
         lifeTime = lifeTimeStart;
         pos = startPosition;
         appRef->removeSprite(this);
+        delete this;
     }
     else
     {
