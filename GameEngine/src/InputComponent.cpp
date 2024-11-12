@@ -41,7 +41,7 @@ bool InputComponent::getKeyPressed(const int keyCode) const
     int bitValue = 1;
 
     // Checking to see if the keyCodes corresponding bit is set.
-    if(keyCode > 0 && keyCode <= 32)        return keyCode_1_32   & (bitValue << (keyCode - 1));    
+    if(keyCode > 0 && keyCode <= 32)        return keyCode_1_32   & (bitValue << (keyCode - 1));       
     else if(keyCode > 32 && keyCode <= 64)  return keyCode_33_64  & (bitValue << (keyCode - 33));        
     else if(keyCode > 64 && keyCode <= 96)  return keyCode_65_96  & (bitValue << (keyCode - 65));
     else if(keyCode > 96 && keyCode <= 128) return keyCode_97_128 & (bitValue << (keyCode - 97));    

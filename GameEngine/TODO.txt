@@ -1,3 +1,6 @@
+TP = TillämpningsProgramDel
+GP = GenerellProgramDel
+
 * Göra klart partikel system
     - ta bort och lägga till partiklar baserat på lifeTime
     - Lägga till movement för particles
@@ -6,3 +9,8 @@
     PROBLEM:
         - particles can only be created at speed of (tick % 6 == 0), that is even numbers, odd number causes seg fault?!?!
         - Where should the particle be deleted?
+
+
+* Struktur på klasser
+    - Kan t ex TP ha en klass UIElement som ärver av Static Sprite och ha en Pekare till en Text-klass där
+        Text-klassen ärver av Sprite eller borde den ärva av båda?

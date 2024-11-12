@@ -98,6 +98,7 @@ void System::run()
             {
                 if(*i == s)
                 {
+                    delete *i;
                     i = sprites.erase(i);
                 }    
                 else

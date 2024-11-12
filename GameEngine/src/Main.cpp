@@ -11,12 +11,14 @@
 #include "Tile.h"
 #include "TileMap.h"
 
+#define FPS 60
+
 int main(int argv, char **argc)
 {
-    #define FPS 60
+    
     System app(FPS, {255, 150, 70, 255});
     
-    int buttonW = 150, buttonH = 100;
+    int buttonW = 150, buttonH = 30;
     UIElement* uiButton = UIElement::getInstance(engine.GetWindowWidth() / 2 - (buttonW * 2), engine.GetWindowHeight() / 2, 
                                                     buttonW, buttonH, 
                                                     "HEJ", "UIButton.png");
@@ -29,28 +31,7 @@ int main(int argv, char **argc)
     player1->setSpriteRegion(0, 0, 124, 124);
     player1->setMoveSpeed(5);
     player1->SetSpriteCollection(app.GetSpriteCollection());
-/*
-    const int mapW = 10;
-    const int mapH = 10;
-    const int tileW = 24;
-    const int tileH = 24;
 
-    Tile* tileMap[mapW * mapH];
-    for(int y = 0; y < mapH; y++ )
-    {
-        for(int x = 0; x < mapW; x++)
-        {
-            Tile* tile = tileMap[x + (y * mapW)];
-            if(x % 2 == 0)
-                tile = Tile::getInstance(x*(tileW), y * (tileH), tileW, tileH, "iconDown.png");
-            else
-                tile = Tile::getInstance(x*(tileW), y * (tileH), tileW, tileH, "iconUp.png");
-            tile->setSpriteRegion(0, 0, 32, 32);
-            tile->SetPlayerReference(player1);
-            app.addSprite(tile);
-        }
-    }
-*/
     TileMap* map1 = TileMap::getInstance(-50, 0, 60, 60);
     map1->SetAppRef(&app);
     map1->SetPlayerRef(player1);

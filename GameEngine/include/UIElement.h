@@ -16,7 +16,7 @@ class UIElement : public TextButton
             TextButton::SetPosition(p.x, p.y);
         }
     protected:
-        UIElement(int x, int y, int w, int h, std::string txt, std::string srcImage) : TextButton(x, y, w, h, txt, srcImage), pos{x,y} {}
+        UIElement(int x, int y, int w, int h, std::string txt, std::string srcImage);
     
     private:
         Position pos;

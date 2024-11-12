@@ -16,7 +16,6 @@ class Sprite : public InputComponent
      
         const SDL_Rect& getSrcRect() const;
         const SDL_Rect& getDestRect() const;
-        const SDL_Surface* getSurface() const;
         const SDL_Texture* getTexture() const;
     
         virtual ~Sprite();
