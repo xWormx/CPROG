@@ -13,7 +13,7 @@ class Player : public MovableSprite
 {
     public:
         static Player* getInstance(int x, int y, int h, int w, std::string srcImage); 
-        void tick();
+        void tick(System& system);
 
         bool IsMoving()                     { return isMoving;}
         int getMoveSpeed()                  { return moveSpeed; }

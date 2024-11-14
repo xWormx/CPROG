@@ -64,7 +64,7 @@ TextButton::TextButton(int x, int y, int w, int h, std::string s, std::string sr
     }
 }
 
-void TextButton::tick()
+void TextButton::tick(System& system)
 {
 
 }

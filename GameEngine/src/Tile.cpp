@@ -5,7 +5,7 @@ Tile * Tile::getInstance(int x, int y, int w, int h, std::string srcImage)
     return new Tile(x, y, w, h, srcImage);
 }
 
-void Tile::tick()
+void Tile::tick(System& system)
 {
     if(playerRef != nullptr)
     {

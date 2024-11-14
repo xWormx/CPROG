@@ -1,7 +1,12 @@
 
 #include "System.h"
+#include "StaticSprite.h"
+#include "MovableSprite.h"
+#include "TextButton.h"
 #include "Player.h"
 #include "UIElement.h"
+
+#include "Tile.h"
 #include "TileMap.h"
 
 #define FPS 60
@@ -33,8 +38,6 @@ int main(int argv, char **argc)
     app.addSprite(player1);
     app.addSprite(player2);
     app.addSprite(uiButton);
-
-
     
     app.run();
 

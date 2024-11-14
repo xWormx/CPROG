@@ -2,6 +2,7 @@
 #define STATICSPRITE_H
 
 #include "Sprite.h"
+#include "System.h"
 
 class StaticSprite : public Sprite
 {

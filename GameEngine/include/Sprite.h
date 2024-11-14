@@ -5,19 +5,22 @@
 #include "SDL2/SDL_Image.h"
 #include <string>
 #include "Constants.h"
+
 #include "GameEngine.h"
 #include "InputComponent.h"
-
+#include "System.h"
+class System;
 class Sprite : public InputComponent
 {
     public:
         virtual void draw() const = 0; 
-        virtual void tick() = 0;
+        virtual void tick(System& system) = 0;
      
         const SDL_Rect& getSrcRect() const;
         const SDL_Rect& getDestRect() const;
         const SDL_Texture* getTexture() const;
-    
+        const void DEBUGDrawLineFrame() const;
+        const bool DEBUGDidCollide(const Sprite& other) const;
         virtual ~Sprite();
 
         friend class MovableSprite;
@@ -35,6 +38,9 @@ class Sprite : public InputComponent
         void setSrcRect(int x, int y, int w, int h);
         Sprite(const Sprite&) = delete;
         const Sprite& operator=(const Sprite&) = delete;      
+
+        bool isColliding = false;
+        
 };
 
 

@@ -1,6 +1,7 @@
 #ifndef TILE_H
 #define TILE_H
 
+#include "System.h"
 #include "MovableSprite.h"
 #include "Player.h"
 
@@ -8,7 +9,7 @@ class Tile : public MovableSprite
 {
     public:
         static Tile* getInstance(int x, int y, int w, int h, std::string srcImage);
-        void tick();
+        void tick(System& system);
 
         void SetPlayerReference(Player* p)
         {

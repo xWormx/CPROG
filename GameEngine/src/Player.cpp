@@ -5,7 +5,7 @@ Player* Player::getInstance(int x, int y, int h, int w, std::string srcImage)
     return new Player(x, y, w, h, srcImage);
 }
 
-void Player::tick()
+void Player::tick(System& system)
 {
     isMoving = false;
     static int tick = 0;
@@ -79,16 +79,14 @@ void Player::tick()
 
     }
 
-    if(spriteCollection != nullptr)
-    {
-        for(Sprite *s : *spriteCollection)
+        for(Sprite *s : system.GetSpriteCollection())
         {
             if(CheckCollision(s))
             {
             }
             
         }
-    }
+    
     
         
 
@@ -99,9 +97,11 @@ const bool Player::CheckCollision(Sprite* other) const
     Player *otherPlayer = dynamic_cast<Player*>(other);
     if(otherPlayer != nullptr && otherPlayer != this)
     {
+        static int collisions = 0;
         if(pos.x < otherPlayer->pos.x + otherPlayer->width && 
             pos.x + width > otherPlayer->pos.x)
         {   
+            std::cout << "COLLISION: " << collisions++ << "\n";
             return true;
         }
     }
