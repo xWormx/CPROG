@@ -6,7 +6,7 @@ Particle* Particle::getInstance(int x, int y, int w, int h, std::string srcImage
     return new Particle(x,y,w,h,srcImage, lt);
 }
 
-Particle::Particle(int x, int y, int w, int h, std::string srcImage, int lt) : MovableSprite(x,y,w,h,srcImage), lifeTime(lt), lifeTimeStart(lt), pos{x,y}, startPosition{x,y}
+Particle::Particle(int x, int y, int w, int h, std::string srcImage, int lt) : MovableSprite(x,y,w,h,srcImage), lifeTime(lt), lifeTimeStart(lt), pos{x,y}, startPosition{x,y}, size{w,h}
 {
 }
 
@@ -18,8 +18,6 @@ void Particle::draw()
 void Particle::tick(System& system)
 {
     lifeTime--;
-
-    
 
     if(lifeTime < 0)
     {
@@ -50,4 +48,14 @@ void Particle::SetMoveSpeed(int x, int y)
 {
     speedX = x;
     speedY = y;
+}
+
+const Dimension& Particle::GetSize() const
+{
+    return size;
+}
+
+const Position& Particle::GetPosition() const
+{
+    return pos;
 }

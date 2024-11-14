@@ -1,5 +1,5 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef ENEMY_H
+#define ENEMY_H
 
 
 #include "MovableSprite.h"
@@ -7,12 +7,12 @@
 #include "UIElement.h"
 #include "Particle.h"
 #include "System.h"
+#include "Player.h"
 
-
-class Player : public MovableSprite
+class Enemy : public MovableSprite
 {
     public:
-        static Player* getInstance(int x, int y, int h, int w, std::string srcImage, int maxHP); 
+        static Enemy* getInstance(int x, int y, int h, int w, std::string srcImage, int maxHP); 
         void tick(System& system);
 
         bool IsMoving()                     { return isMoving;}
@@ -31,7 +31,7 @@ class Player : public MovableSprite
         void SetSpriteCollection(const std::vector<Sprite*>& collection) { spriteCollection = &collection; }
         
     protected:
-        Player(int x, int y, int h, int w, std::string srcImage, int maxHP);
+        Enemy(int x, int y, int h, int w, std::string srcImage, int maxHP);
 
 
     private:

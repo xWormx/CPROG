@@ -4,6 +4,7 @@
 #include "MovableSprite.h"
 #include "TextButton.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "UIElement.h"
 #include "Tile.h"
 #include "TileMap.h"
@@ -22,13 +23,14 @@ int main(int argv, char **argc)
                                                     "HEJ", "UIButton.png");
 
 
-    Player* player1 = Player::getInstance(200, 200, 300, 300, "PersonIdle.png");
+    Player* player1 = Player::getInstance(200, 200, 300, 300, "PersonIdle.png", 20);
     player1->SetUIElementRef(uiButton);
-    player1->SetAppRef(&app);
-    Player* player2 = Player::getInstance(200, 200, 300, 300, "PersonIdle.png");
+    player1->SetAppRef(&app);  
     player1->setSpriteRegion(0, 0, 124, 124);
     player1->setMoveSpeed(5);
     player1->SetSpriteCollection(app.GetSpriteCollection());
+
+    Enemy* enemy = Enemy::getInstance(200, 200, 300, 300, "PersonIdle.png", 20);
 
     TileMap* map1 = TileMap::getInstance(-50, 0, 60, 60);
     map1->SetAppRef(&app);
@@ -39,7 +41,7 @@ int main(int argv, char **argc)
    
     app.addSprite(t);
     app.addSprite(player1);
-    app.addSprite(player2);
+    app.addSprite(enemy);
     app.addSprite(uiButton);
     
     app.run();

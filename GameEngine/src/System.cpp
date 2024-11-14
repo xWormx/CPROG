@@ -6,18 +6,19 @@ System::System(int fps, SDL_Color bg)
 {
     backgroundColor = bg;   
     framesPerSecond = fps; 
+    removed.reserve(10);
     std::cout << "System running" << std::endl;
 }
 
 void System::addSprite(Sprite *sprite)
 {
-    if(sprite != NULL)
+    if(sprite != nullptr)
         added.push_back(sprite);
 }
 
 void System::removeSprite(Sprite* s)
 {
-    if(s != NULL)
+    if(s != nullptr)
         removed.push_back(s);
 }
 
@@ -66,12 +67,11 @@ void System::run()
             switch(event.type)
             {
                 case SDL_QUIT: 
-		{
-			quit = true; 
-		} break;
+		        {
+			        quit = true; 
+		        } break;
 		
 
-                
                 case SDL_MOUSEBUTTONDOWN:
                     handleMouseDownEvents(event);
                     break;

@@ -6,6 +6,8 @@
 #include "SDL2/SDL.h"
 #include "Sprite.h"
 #include "GameEngine.h"
+
+
 class Sprite;
 class System
 {

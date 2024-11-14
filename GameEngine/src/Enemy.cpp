@@ -1,14 +1,14 @@
-#include "Player.h"
+#include "Enemy.h"
 
-Player* Player::getInstance(int x, int y, int h, int w, std::string srcImage, int maxHP)
+Enemy* Enemy::getInstance(int x, int y, int h, int w, std::string srcImage, int maxHP)
 {
-    return new Player(x, y, w, h, srcImage, maxHP);
+    return new Enemy(x, y, w, h, srcImage, maxHP);
 }
-Player::Player(int x, int y, int h, int w, std::string srcImage, int maxHP) : MovableSprite(x,y,w,h,srcImage), pos{x, y}, maxHealth(maxHP), width(w), height(h)
+Enemy::Enemy(int x, int y, int h, int w, std::string srcImage, int maxHP) : MovableSprite(x,y,w,h,srcImage), pos{x, y}, maxHealth(maxHP), width(w), height(h)
 {
 }
 
-void Player::tick(System& system)
+void Enemy::tick(System& system)
 {
     isMoving = false;
     
@@ -69,8 +69,8 @@ void Player::tick(System& system)
        
         if(particleSpawnTick++ % 20 == 0)
         {
-            int px = engine.GetRandomNumberInRange(-8, 8);
-            int py = engine.GetRandomNumberInRange(-8, 8);
+            int px = engine.GetRandomNumberInRange(-12, 12);
+            int py = engine.GetRandomNumberInRange(-12, 12);
 
             int sx = engine.GetRandomNumberInRange(-5, 5);
             int sy = engine.GetRandomNumberInRange(-8, 8);
@@ -97,14 +97,14 @@ void Player::tick(System& system)
 
 }
 
-const bool Player::CheckCollision(Sprite* other) const
+const bool Enemy::CheckCollision(Sprite* other) const
 {
-    Player *otherPlayer = dynamic_cast<Player*>(other);
-    if(otherPlayer != nullptr && otherPlayer != this)
+    Enemy *otherEnemy = dynamic_cast<Enemy*>(other);
+    if(otherEnemy != nullptr && otherEnemy != this)
     {
         static int collisions = 0;
-        if(pos.x < otherPlayer->pos.x + otherPlayer->width && 
-            pos.x + width > otherPlayer->pos.x)
+        if(pos.x < otherEnemy->pos.x + otherEnemy->width && 
+            pos.x + width > otherEnemy->pos.x)
         {   
             std::cout << "COLLISION: " << collisions++ << "\n";
 
