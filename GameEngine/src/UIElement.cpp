@@ -9,7 +9,7 @@ UIElement::UIElement(int x, int y, int w, int h, std::string txt, std::string sr
 {
 }
 
-void UIElement::tick()
+void UIElement::tick(System& system)
 {
     if (InputComponent::getKeyPressed('w'))
     {

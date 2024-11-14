@@ -13,7 +13,7 @@ class TileMap
         void SetPlayerRef(Player* player) { playerRef = player;}
         void LoadTileImageMap(std::string srcFile);
         void InitializeTiles();
-        void tick();
+        void tick(System& system);
         void draw();
         ~TileMap();
 

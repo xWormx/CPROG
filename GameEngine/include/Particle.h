@@ -8,7 +8,7 @@ class Particle : public MovableSprite
 {
     public:
         static Particle* getInstance(int x, int y, int w, int h, std::string srcImage, int lt); 
-        void tick();
+        void tick(System& system);
         void draw();
         void SetAppRef(System* app);
 

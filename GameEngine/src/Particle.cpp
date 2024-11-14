@@ -15,7 +15,7 @@ void Particle::draw()
     SDL_RenderCopy(engine.get_ren(), texture, &getSrcRect(), &getDestRect());
 }
 
-void Particle::tick()
+void Particle::tick(System& system)
 {
     lifeTime--;
     if(lifeTime < 0)

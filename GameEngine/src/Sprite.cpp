@@ -26,6 +26,31 @@ Sprite::Sprite(int x, int y, int w, int h, std::string srcImage) : destRect{ x, 
         }
     }
 }
+const void Sprite::DEBUGDrawLineFrame() const
+{
+    SDL_Point points[5] = {{destRect.x, destRect.y}, 
+                            {destRect.x, destRect.y + destRect.h},
+                            {destRect.x + destRect.w, destRect.y + destRect.h},
+                            {destRect.x + destRect.w, destRect.y},
+                            {destRect.x, destRect.y}};
+    SDL_RenderDrawLines(engine.get_ren(), points, sizeof(points)/sizeof(SDL_Point));
+}
+
+const bool Sprite::DEBUGDidCollide(const Sprite& other) const
+{
+    // y goes downwards so bottom is y + h;
+    int left = destRect.x, right = destRect.x + destRect.w,
+        top = destRect.y, bottom = destRect.y + destRect.h;
+    
+    int otherLeft = other.destRect.x, otherRight  = other.destRect.x + other.destRect.w,
+        otherTop  = other.destRect.y, otherBottom = other.destRect.y + other.destRect.h;
+
+    if(left < otherRight && right > otherLeft &&
+        top < otherBottom && bottom > otherTop )
+        return true;
+    
+    return false;
+}
 
 // FOR TEXT
 Sprite::Sprite(int x, int y, int w, int h) : destRect{x,y,w,h}

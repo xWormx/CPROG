@@ -11,7 +11,7 @@ class TextButton : public Sprite
         static TextButton* getInstance(int x, int y, int w, int h, std::string s, std::string srcImage);
         void setFont(std::string strFont);
         void draw() const;
-        void tick();
+        void tick(System& system);
         void setText(std::string s);
         void SetPosition(int x, int y);
 

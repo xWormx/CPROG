@@ -85,7 +85,7 @@ void System::run()
         }
 
         for(Sprite* s : sprites)
-            s->tick();
+            s->tick(*this);
 
         for(Sprite* s : added)
             sprites.push_back(s);
@@ -118,6 +118,30 @@ void System::run()
         for(Sprite* sprite : sprites)
         {
             sprite->draw();
+            
+            bool didCollide = false;
+            
+            for(Sprite* collider : sprites)
+            {
+                if(sprite != collider)
+                {
+                    if(sprite->DEBUGDidCollide(*collider))
+                    {
+                        didCollide = true;
+                        break;
+                    }
+                    
+                }
+                
+            }
+            
+            if(didCollide)
+                SDL_SetRenderDrawColor(engine.get_ren(), 0xff, 0x00, 0x00, 0xff);
+            else
+                SDL_SetRenderDrawColor(engine.get_ren(), 0x00, 0xff, 0x00, 0xff);
+            
+            sprite->DEBUGDrawLineFrame();
+            
         }
 
 
@@ -134,7 +158,5 @@ void System::run()
 
 System::~System()
 {
-    comps.clear();
-
     std::cout << "System shutdown" << std::endl;       
 }

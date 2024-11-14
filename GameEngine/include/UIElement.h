@@ -1,6 +1,7 @@
 #ifndef UIELEMENT_H
 #define UIELEMENT_H
 
+#include "System.h"
 #include "TextButton.h"
 #include "Position.h"
 
@@ -8,7 +9,7 @@ class UIElement : public TextButton
 {
     public:
         static UIElement* getInstance(int x, int y, int w, int h, std::string txt, std::string srcImage);
-        void tick();
+        void tick(System& system);
 
         const Position& GetPosition() const { return pos; } 
         void SetPosition(Position p)

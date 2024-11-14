@@ -1,7 +1,5 @@
 
 #include "System.h"
-#include "Label.h"
-#include "Button.h"
 #include "StaticSprite.h"
 #include "MovableSprite.h"
 #include "TextButton.h"
@@ -40,8 +38,6 @@ int main(int argv, char **argc)
     app.addSprite(player1);
     app.addSprite(player2);
     app.addSprite(uiButton);
-
-
     
     app.run();
 
