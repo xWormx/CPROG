@@ -25,6 +25,7 @@ class Sprite : public InputComponent
 
         friend class MovableSprite;
         friend class TextButton;
+        friend class TextFragment;
         friend class Particle;
     protected:
         Sprite(int x, int y, int w, int h, std::string srcImage);
@@ -36,6 +37,8 @@ class Sprite : public InputComponent
 
         void setDestRect(int x, int y, int w, int h);
         void setSrcRect(int x, int y, int w, int h);
+        void SetAlpha(Uint8 alpha) const;
+
         Sprite(const Sprite&) = delete;
         const Sprite& operator=(const Sprite&) = delete;      
 

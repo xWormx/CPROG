@@ -18,6 +18,9 @@ void Particle::draw()
 void Particle::tick(System& system)
 {
     lifeTime--;
+
+    
+
     if(lifeTime < 0)
     {
         lifeTime = lifeTimeStart;
@@ -26,6 +29,12 @@ void Particle::tick(System& system)
     }
     else
     {
+        if(lifeTime > 0)
+        {
+            double alphaReal = 255.f * (static_cast<double>(lifeTime) / lifeTimeStart);
+            unsigned int alphaTrunkated = static_cast<unsigned int>(alphaReal); 
+            Sprite::SetAlpha(alphaTrunkated);
+        }
         pos.x += speedX;
         pos.y += speedY;
         setPosition(pos.x, pos.y);    

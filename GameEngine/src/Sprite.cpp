@@ -24,8 +24,16 @@ Sprite::Sprite(int x, int y, int w, int h, std::string srcImage) : destRect{ x, 
 
             setSrcRect(r.x, r.y, r.w, r.h);
         }
+        SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
     }
 }
+
+// FOR TEXTFRAGMENT
+Sprite::Sprite(int x, int y, int w, int h) : destRect{x,y,w,h}
+{
+
+}
+
 const void Sprite::DEBUGDrawLineFrame() const
 {
     SDL_Point points[5] = {{destRect.x, destRect.y}, 
@@ -50,11 +58,6 @@ const bool Sprite::DEBUGDidCollide(const Sprite& other) const
         return true;
     
     return false;
-}
-
-// FOR TEXT
-Sprite::Sprite(int x, int y, int w, int h) : destRect{x,y,w,h}
-{
 }
 
 const SDL_Rect& Sprite::getSrcRect() const
@@ -86,6 +89,11 @@ void Sprite::setDestRect(int x, int y, int w, int h)
     destRect.y = y;
     destRect.w = w;
     destRect.h = h;
+}
+
+void Sprite::SetAlpha(Uint8 alpha) const
+{
+    SDL_SetTextureAlphaMod(texture, alpha);
 }
 
 Sprite::~Sprite()

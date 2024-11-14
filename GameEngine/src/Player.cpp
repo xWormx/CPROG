@@ -69,7 +69,7 @@ void Player::tick(System& system)
         {
             int sx = engine.GetRandomNumberInRange(-5, 5);
             int sy = engine.GetRandomNumberInRange(-8, 8);
-            Particle* p = Particle::getInstance(pos.x, pos.y, 60 , 60, "Particle.png", 30);
+            Particle* p = Particle::getInstance(pos.x, pos.y, 30 , 30, "Particle.png", 30);
             p->SetMoveSpeed(sx, sy);
             p->SetAppRef(appRef);
 
