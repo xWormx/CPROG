@@ -17,6 +17,6 @@ void UIElement::tick()
     }
     else
     {
-        setText("BRO");
+        setText("JANIS");
     }
 }
