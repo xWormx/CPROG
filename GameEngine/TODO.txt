@@ -1,3 +1,5 @@
+
+
 TP = TillämpningsProgramDel
 GP = GenerellProgramDel
 
@@ -14,3 +16,7 @@ GP = GenerellProgramDel
 * Struktur på klasser
     - Kan t ex TP ha en klass UIElement som ärver av Static Sprite och ha en Pekare till en Text-klass där
         Text-klassen ärver av Sprite eller borde den ärva av båda?
+
+* Separerar TextButton.h till: Text.h och Button.h
+    - Då kan en TP-klass ta som argument t ex UI-Elment(text, button) kanske men om den inte är av GP så kan den se ut
+      hur som helst i princip.

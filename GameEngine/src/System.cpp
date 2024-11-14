@@ -1,5 +1,6 @@
 #include "System.h"
 
+#define DEBUG 1
 
 System::System(int fps, SDL_Color bg)
 {
@@ -118,7 +119,8 @@ void System::run()
         for(Sprite* sprite : sprites)
         {
             sprite->draw();
-            
+
+           #if DEBUG 
             bool didCollide = false;
             
             for(Sprite* collider : sprites)
@@ -141,7 +143,7 @@ void System::run()
                 SDL_SetRenderDrawColor(engine.get_ren(), 0x00, 0xff, 0x00, 0xff);
             
             sprite->DEBUGDrawLineFrame();
-            
+            #endif
         }
 
 
