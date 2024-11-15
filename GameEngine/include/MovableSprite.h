@@ -3,6 +3,7 @@
 
 #include "Sprite.h"
 #include "System.h"
+
 class MovableSprite : public Sprite
 {
     public:

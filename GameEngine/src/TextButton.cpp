@@ -56,7 +56,6 @@ TextButton::TextButton(int x, int y, int w, int h, std::string s, std::string sr
 
         SDL_FreeSurface(surface);
 
-
     }
     catch(const std::exception& e)
     {
@@ -99,6 +98,7 @@ void TextButton::setText(std::string s)
              error = SDL_GetError();
              throw std::runtime_error("Couldn't query texture" + error);
         }
+        
         textSrcRect.x = 0;
         textSrcRect.y = 0;
         textSrcRect.w = r.w;

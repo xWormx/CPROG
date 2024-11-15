@@ -37,7 +37,7 @@ int main(int argv, char **argc)
     map1->SetPlayerRef(player1);
     map1->InitializeTiles();
 
-    TextFragment* t = TextFragment::getInstance(0, 0, 80, 200, "YOOOO", {0xff,0,0xbb,0xff});
+    TextFragment* t = TextFragment::getInstance(0, 0, 200, 80, "YOOOO", {0xff,0,0xbb,0xff});
    
     app.addSprite(t);
     app.addSprite(player1);

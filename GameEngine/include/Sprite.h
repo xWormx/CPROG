@@ -9,6 +9,7 @@
 #include "GameEngine.h"
 #include "InputComponent.h"
 #include "System.h"
+
 class System;
 class Sprite : public InputComponent
 {

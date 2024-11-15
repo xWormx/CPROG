@@ -67,7 +67,7 @@ void Player::tick(System& system)
     if(keyPressed('p'))
     {
        
-        if(particleSpawnTick++ % 20 == 0)
+        if(particleSpawnTick++ % 2 == 0)
         {
             int px = engine.GetRandomNumberInRange(-8, 8);
             int py = engine.GetRandomNumberInRange(-8, 8);
@@ -76,12 +76,10 @@ void Player::tick(System& system)
             int sy = engine.GetRandomNumberInRange(-8, 8);
             Particle* p = Particle::getInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
             p->SetMoveSpeed(sx, sy);
-            p->SetAppRef(appRef);
 
             system.addSprite(p);
         
         }
-
     }
 
         for(Sprite *s : system.GetSpriteCollection())
@@ -91,10 +89,6 @@ void Player::tick(System& system)
             }
             
         }
-    
-    
-        
-
 }
 
 const bool Player::CheckCollision(Sprite* other) const

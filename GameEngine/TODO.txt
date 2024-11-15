@@ -11,6 +11,7 @@ GP = GenerellProgramDel
     PROBLEM:
         - particles can only be created at speed of (tick % 6 == 0), that is even numbers, odd number causes seg fault?!?!
         - Where should the particle be deleted?
+        LÖSNING: Problemet var att appRef i enemy var nullPtr, den sattes i player1 i main och inte i player2/enemy
 
 
 * Struktur på klasser

@@ -67,7 +67,7 @@ void Enemy::tick(System& system)
     if(keyPressed('p'))
     {
        
-        if(particleSpawnTick++ % 20 == 0)
+        if(particleSpawnTick++ % 5 == 0)
         {
             int px = engine.GetRandomNumberInRange(-12, 12);
             int py = engine.GetRandomNumberInRange(-12, 12);
@@ -76,7 +76,6 @@ void Enemy::tick(System& system)
             int sy = engine.GetRandomNumberInRange(-8, 8);
             Particle* p = Particle::getInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
             p->SetMoveSpeed(sx, sy);
-            p->SetAppRef(appRef);
 
             system.addSprite(p);
         
