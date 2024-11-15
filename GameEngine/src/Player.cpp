@@ -67,7 +67,7 @@ void Player::tick(System& system)
     if(keyPressed('p'))
     {
        
-        if(particleSpawnTick++ % 20 == 0)
+        if(particleSpawnTick++ % 1 == 0)
         {
             int px = engine.GetRandomNumberInRange(-8, 8);
             int py = engine.GetRandomNumberInRange(-8, 8);
@@ -106,7 +106,7 @@ const bool Player::CheckCollision(Sprite* other) const
         if(pos.x < otherPlayer->pos.x + otherPlayer->width && 
             pos.x + width > otherPlayer->pos.x)
         {   
-            std::cout << "COLLISION: " << collisions++ << "\n";
+            //std::cout << "COLLISION: " << collisions++ << "\n";
 
             return true;
         }
@@ -118,7 +118,7 @@ const bool Player::CheckCollision(Sprite* other) const
         if(pos.x < particle->GetPosition().x + particle->GetSize().w && 
             pos.x + width > particle->GetPosition().x)
         {   
-            std::cout << "Particle hit Person!\n";
+            //std::cout << "Particle hit Person!\n";
             return true;
         }
     }

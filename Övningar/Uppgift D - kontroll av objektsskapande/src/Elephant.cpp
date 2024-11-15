@@ -9,6 +9,11 @@ Elephant::Elephant(std::string n, int w, int t1) : Animal(n,w), trunkLength(t1)
 {
 }
 
+Elephant::~Elephant()
+{
+    
+}
+
 int Elephant::getTrunkLength() const
 {
     return trunkLength;
