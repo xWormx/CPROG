@@ -25,10 +25,8 @@ int main(int argv, char **argc)
 
     Player* player1 = Player::getInstance(200, 200, 300, 300, "PersonIdle.png", 20);
     player1->SetUIElementRef(uiButton);
-    player1->SetAppRef(&app);  
     player1->setSpriteRegion(0, 0, 124, 124);
     player1->setMoveSpeed(5);
-    player1->SetSpriteCollection(app.GetSpriteCollection());
 
     Enemy* enemy = Enemy::getInstance(200, 200, 300, 300, "PersonIdle.png", 20);
 

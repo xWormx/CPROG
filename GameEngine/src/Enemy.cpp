@@ -101,7 +101,6 @@ const bool Enemy::CheckCollision(Sprite* other) const
     Enemy *otherEnemy = dynamic_cast<Enemy*>(other);
     if(otherEnemy != nullptr && otherEnemy != this)
     {
-        static int collisions = 0;
         if(pos.x < otherEnemy->pos.x + otherEnemy->width && 
             pos.x + width > otherEnemy->pos.x)
         {   

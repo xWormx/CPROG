@@ -2,11 +2,12 @@
 #define PLAYER_H
 
 
+#include "System.h"
 #include "MovableSprite.h"
 #include "Position.h"
 #include "UIElement.h"
 #include "Particle.h"
-#include "System.h"
+#include "HPSlot.h"
 
 
 class Player : public MovableSprite
@@ -25,10 +26,8 @@ class Player : public MovableSprite
         bool keyPressed(const int keyCode)  { return InputComponent::getKeyPressed(keyCode);}
         
         void setMoveSpeed(int speed)        { moveSpeed = speed; }
-        void SetPlayerRef(Player* p)        { playerRef = p;}
         void SetUIElementRef(UIElement* tb) { txtButtonRef = tb; }
-        void SetAppRef(System* app)         { appRef = app;}
-        void SetSpriteCollection(const std::vector<Sprite*>& collection) { spriteCollection = &collection; }
+        
         
     protected:
         Player(int x, int y, int h, int w, std::string srcImage, int maxHP);
@@ -45,10 +44,10 @@ class Player : public MovableSprite
         bool isMoving;
         Player* playerRef = nullptr;
         UIElement* txtButtonRef = nullptr;
-        System* appRef = nullptr;
         std::vector<Particle*> particles;
-        const std::vector<Sprite*> *spriteCollection = nullptr;
-        //Particle* particle[50] = {};
+
+        bool healthInitialized;
+        std::vector<HPSlot*> healthBar;
 
 };
 

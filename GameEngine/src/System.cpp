@@ -63,7 +63,7 @@ void System::run()
 
         while(SDL_PollEvent(&event))
         {
-            //
+            
             switch(event.type)
             {
                 case SDL_QUIT: 
@@ -121,6 +121,7 @@ void System::run()
                                 backgroundColor.g,
                                 backgroundColor.b,
                                 backgroundColor.r);
+
         SDL_RenderClear(engine.get_ren());
         
 

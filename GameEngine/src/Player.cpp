@@ -10,6 +10,39 @@ Player::Player(int x, int y, int h, int w, std::string srcImage, int maxHP) : Mo
 
 void Player::tick(System& system)
 {
+
+
+    if(!healthInitialized)
+    {
+        for(int i = 0; i < maxHealth; i++)
+        {
+            int hpW = 35, hpH = 20;
+
+            HPSlot* s = HPSlot::getInstance(pos.x + (i*hpW), pos.y, hpW, hpH, "HPSlot.png");
+            
+            healthBar.push_back(s);
+            system.addSprite(s);
+        }
+        healthInitialized = true;
+    }
+    else
+    {
+        int i = 0;
+        int rows = 1;
+        for(HPSlot* slot : healthBar)
+        {
+            if(pos.x + (i * slot->GetSize().w) > pos.x + width)
+            {
+                rows++;
+                i = 0;
+            }
+            slot->setPosition(pos.x + (i * slot->GetSize().w), pos.y - (rows * slot->GetSize().h));
+            i++;
+
+        }
+    }
+
+
     isMoving = false;
     
     static int frame = 0;
@@ -86,8 +119,7 @@ void Player::tick(System& system)
         {
             if(CheckCollision(s))
             {
-            }
-            
+            }   
         }
 }
 
