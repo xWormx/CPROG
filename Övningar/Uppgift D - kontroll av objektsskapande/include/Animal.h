@@ -9,14 +9,15 @@
 class Animal
 {
     public:
-        Animal(std::string n, int w);
         virtual ~Animal();
-        std::string getName() constM
+        std::string getName() const;
         int getWeight() const;
-    
+
+    protected:
+        Animal(std::string n, int w);
     private:
         std::string name;
-        in weight;
+        int weight;
 };
 
 
