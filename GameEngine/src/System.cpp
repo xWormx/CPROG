@@ -100,6 +100,9 @@ void System::run()
 
         for(Sprite* s : removed)
         {
+            if(removed.size() > 1)
+                std::cout <<  "removing more than 1 element this tick!\n";
+                
             for(std::vector<Sprite*>::iterator i = sprites.begin(); i != sprites.end();)
             {
                 if(*i == s)

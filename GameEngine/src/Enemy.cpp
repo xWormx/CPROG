@@ -105,7 +105,7 @@ const bool Enemy::CheckCollision(Sprite* other) const
         if(pos.x < otherEnemy->pos.x + otherEnemy->width && 
             pos.x + width > otherEnemy->pos.x)
         {   
-            std::cout << "COLLISION: " << collisions++ << "\n";
+            //std::cout << "COLLISION: " << collisions++ << "\n";
 
             return true;
         }
@@ -117,7 +117,7 @@ const bool Enemy::CheckCollision(Sprite* other) const
         if(pos.x < particle->GetPosition().x + particle->GetSize().w && 
             pos.x + width > particle->GetPosition().x)
         {   
-            std::cout << "Particle hit Person!\n";
+            //std::cout << "Particle hit Person!\n";
             return true;
         }
     }

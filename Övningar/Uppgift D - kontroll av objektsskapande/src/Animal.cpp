@@ -10,7 +10,7 @@ std::string Animal::getName() const
     return name;
 }
 
-int Animal::getWeigth() const
+int Animal::getWeight() const
 {
     return weight;
 }
