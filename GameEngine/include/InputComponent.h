@@ -29,9 +29,6 @@ class InputComponent
         Sint32 keyCode_97_128 = 0;
 
         Uint32 buttonBitPattern = 0;
-
-
-
 };
 
 #endif

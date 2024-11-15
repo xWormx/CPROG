@@ -1,0 +1,61 @@
+
+
+TP = TillämpningsProgramDel
+GP = GenerellProgramDel
+
+* Göra klart partikel system
+    - ta bort och lägga till partiklar baserat på lifeTime
+    - Lägga till movement för particles
+    - Ta bort particles som skapas i player på något sätt.
+    - måste Particle *p specifikt deletas?
+    PROBLEM:
+        - particles can only be created at speed of (tick % 6 == 0), that is even numbers, odd number causes seg fault?!?!
+        - Where should the particle be deleted?
+
+
+* Struktur på klasser
+    - Kan t ex TP ha en klass UIElement som ärver av Static Sprite och ha en Pekare till en Text-klass där
+        Text-klassen ärver av Sprite eller borde den ärva av båda?
+
+* Separerar TextButton.h till: Text.h och Button.h
+    - Då kan en TP-klass ta som argument t ex UI-Elment(text, button) kanske men om den inte är av GP så kan den se ut
+      hur som helst i princip.
+
+
+
+
+_________________________________________________________________________________________________________________________________________________
+
+Krav och kriterier på 'Spelet' som skall byggas med Spelmotorn
+Du ska själv välja vilket spel du vill skapa i din spelmotor. Det ska dock vara av typen arkadspel d.v.s. ett tvådimensionellt spel med 
+rörliga figurer ("sprites") av vilka en styrs av användaren. Klassiska spel som SpaceInvaders, Breakout och PacMan, eller plattformsspel 
+som Mario och Sonic är exempel på sådana spel. Här är några länkar som kan ge inspiration:
+
+http://www.2dplay.com/
+https://www.old-games.com/games/arcade-action
+http://en.wikipedia.org/wiki/Space_Invaders 
+http://en.wikipedia.org/wiki/Breakout_(arcade_game)
+http://en.wikipedia.org/wiki/Arkanoid
+http://en.wikipedia.org/wiki/Pac_man 
+Spelet skall ha följande egenskaper(krav):
+
+*   Spelet ska simulera en värld som innehåller olika typer av objekt. Objekten ska ha olika beteenden och röra sig i världen och agera på 
+    olika sätt när de möter andra objekt.
+
+*   Det måste finnas minst två olika typer av objekt och det ska finnas flera instanser av minst en av dessa, t.ex. ett spelarobjekt och 
+    många instanser av fiendeobjekt.
+
+*   Ett beteende som måste finnas med är att figurerna ska röra sig över skärmen. Rörelsen kan följa ett mönster och/eller vara slumpmässig.
+
+*   Det räcker att grafiken är tvådimensionell (för enkelhetens skull).
+
+*   Världen (spelplanen) kan antas vara lika stor som fönstret (du kan göra en större spelplan med panorering, men det blir lite krångligare).
+
+*   En figur ska styras av spelaren, med tangentbordet eller med musen. Du kan även göra ett spel där man spelar två stycken genom att dela på 
+    tangentbordet (varje spelare använder olika tangenter). Då styr man var sin figur.
+
+*   Det ska hända olika saker när objekten möter varandra, de ska påverka varandra på något sätt, t.ex. kan ett av objekten tas bort, eller så 
+    kan objekten förvandlas på något sätt, eller så kan ett nytt objekt skapas. Ett exempel på att skapa/ta bort objekt är när man i "Space Invaders" 
+    trycker på skjuta- knappen, t.ex en musknapp, då avfyras ett laserskott och skottet blir då en ny figur som skapas och placeras i världen, på en 
+    position vid laserkanonens mynning. Skottet rör sig framåt (uppåt) och om det träffar ett fiendeskepp tas både skottet och skeppet bort, om skottet 
+    kommer utanför spelplanen, dvs det missar, tas endast skottet bort.

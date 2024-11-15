@@ -1,36 +1,35 @@
 #include "System.h"
 
+#define DEBUG 1
+
 System::System(int fps, SDL_Color bg)
 {
     backgroundColor = bg;   
     framesPerSecond = fps; 
+    removed.reserve(10);
     std::cout << "System running" << std::endl;
-}
-
-void System::add(Component* component)
-{
-    comps.push_back(component);
 }
 
 void System::addSprite(Sprite *sprite)
 {
-    sprites.push_back(sprite);
+    if(sprite != nullptr)
+        added.push_back(sprite);
+}
+
+void System::removeSprite(Sprite* s)
+{
+    if(s != nullptr)
+        removed.push_back(s);
 }
 
 void System::handleKeyDownEvents(const SDL_Event& event)
 {
-    for(Component *c : comps)
-        c->keyDown(event);
-
     for(Sprite *s : sprites)
         s->setKeyCodePressed(s->getKeyCodeFromEvent(event));
 }
 
 void System::handleKeyUpEvents(const SDL_Event& event)
 {
-    for(Component* c : comps)
-        c->keyUp(event);
-
     for(Sprite* s : sprites)
         s->setKeyCodeReleased(s->getKeyCodeFromEvent(event));
 }
@@ -67,8 +66,12 @@ void System::run()
             //
             switch(event.type)
             {
-                case SDL_QUIT: quit = true; break;
-                
+                case SDL_QUIT: 
+		        {
+			        quit = true; 
+		        } break;
+		
+
                 case SDL_MOUSEBUTTONDOWN:
                     handleMouseDownEvents(event);
                     break;
@@ -78,7 +81,7 @@ void System::run()
                     break;
                 
                 case SDL_KEYDOWN:
-                    handleKeyDownEvents(event);
+                    handleKeyDownEvents(event); 
                     break;
                 
                 case SDL_KEYUP:
@@ -87,11 +90,28 @@ void System::run()
             }
         }
 
-        for(Component* c : comps)
-            c->tick();
-
         for(Sprite* s : sprites)
-            s->tick();
+            s->tick(*this);
+
+        for(Sprite* s : added)
+            sprites.push_back(s);
+
+        added.clear();
+
+        for(Sprite* s : removed)
+        {
+            for(std::vector<Sprite*>::iterator i = sprites.begin(); i != sprites.end();)
+            {
+                if(*i == s)
+                {
+                    delete *i;
+                    i = sprites.erase(i);
+                }    
+                else
+                    i++;
+            }
+        }
+        removed.clear();
 
         SDL_SetRenderDrawColor(engine.get_ren(), 
                                 backgroundColor.r,
@@ -100,15 +120,35 @@ void System::run()
                                 backgroundColor.r);
         SDL_RenderClear(engine.get_ren());
         
-        
-        for(Component* c : comps)
-        {
-            c->draw();
-        }
 
         for(Sprite* sprite : sprites)
         {
             sprite->draw();
+
+           #if DEBUG 
+            bool didCollide = false;
+            
+            for(Sprite* collider : sprites)
+            {
+                if(sprite != collider)
+                {
+                    if(sprite->DEBUGDidCollide(*collider))
+                    {
+                        didCollide = true;
+                        break;
+                    }
+                    
+                }
+                
+            }
+            
+            if(didCollide)
+                SDL_SetRenderDrawColor(engine.get_ren(), 0xff, 0x00, 0x00, 0xff);
+            else
+                SDL_SetRenderDrawColor(engine.get_ren(), 0x00, 0xff, 0x00, 0xff);
+            
+            sprite->DEBUGDrawLineFrame();
+            #endif
         }
 
 
@@ -118,13 +158,12 @@ void System::run()
 
         if(delay > 0)
             SDL_Delay(delay);
+
     }
         
 }
 
 System::~System()
 {
-    comps.clear();
-
     std::cout << "System shutdown" << std::endl;       
 }

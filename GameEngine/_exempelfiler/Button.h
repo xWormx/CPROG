@@ -21,8 +21,8 @@ protected:
 
 private:
     std::string text;
-    SDL_Texture* texture;
-    SDL_Texture *iconUp, *iconDown, *currentIcon;
+    SDL_Texture* texture = nullptr;
+    SDL_Texture *iconUp = nullptr, *iconDown = nullptr, *currentIcon = nullptr;
 };
 
 

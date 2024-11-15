@@ -1,19 +1,22 @@
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#ifndef SYSTEM_H
+#define SYSTEM_H
 
 #include <iostream>
 #include <vector>
 #include "SDL2/SDL.h"
-#include "GameEngine.h"
-#include "Component.h"
 #include "Sprite.h"
+#include "GameEngine.h"
 
+
+class Sprite;
 class System
 {
     public:
         System(int fps, SDL_Color bg = {255, 255, 0, 255});
-        void add(Component* component);
-        void addSprite(Sprite * sprite);
+        
+        void addSprite(Sprite* sprite);
+        void removeSprite(Sprite* sprite);
+        const std::vector<Sprite*>& GetSpriteCollection() { return sprites; }
         void run();
         ~System();
     
@@ -23,8 +26,9 @@ class System
         void handleMouseDownEvents(const SDL_Event&);
         void handleMouseUpEvents(const SDL_Event&);
         SDL_Color backgroundColor;
-        std::vector<Component*> comps;
         std::vector<Sprite *> sprites;
+        std::vector<Sprite *> added;
+        std::vector<Sprite *> removed;
         int framesPerSecond;
 };
 

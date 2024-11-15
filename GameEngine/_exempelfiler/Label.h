@@ -21,7 +21,7 @@ class Label : public Component
         Label(int x, int y, int w, int h, std::string txt);
     private:
         std::string text;
-        SDL_Texture *texture;
+        SDL_Texture *texture = nullptr;
 };
 
 

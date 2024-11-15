@@ -11,6 +11,7 @@ Button::Button(int x, int y, int w, int h, std::string txt) : Component(x,y,w,h)
     std::string srcIconDown = constants::gResPath + "images/iconDown.png";
     std::string srcIconUp = constants::gResPath + "images/iconUp.png";
 
+
     iconUp = IMG_LoadTexture(engine.get_ren(), srcIconUp.c_str());
     if(iconUp == NULL)
         std::cout << "iconUp failed to load" << std::endl;
@@ -23,7 +24,9 @@ Button::Button(int x, int y, int w, int h, std::string txt) : Component(x,y,w,h)
 
 Button::~Button()
 {
-
+    SDL_DestroyTexture(texture);
+    SDL_DestroyTexture(iconUp);
+    SDL_DestroyTexture(iconDown);
 }
 
 Button* Button::getInstance(int x, int y, int w, int h, std::string txt)

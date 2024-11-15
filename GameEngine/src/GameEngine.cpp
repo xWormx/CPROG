@@ -4,8 +4,22 @@
 
 GameEngine engine;
 
+void GameEngine::SetupRandomGenerator()
+{
+    gen = std::mt19937(rd());
+}
+
+int GameEngine::GetRandomNumberInRange(int min, int max)
+{
+    std::uniform_int_distribution<> distr(min, max);
+
+    return distr(gen);
+}
+
 GameEngine::GameEngine()
 {
+    SetupRandomGenerator();
+
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         std::cout << "SDL_Init Failed" << std::endl;
@@ -81,4 +95,23 @@ TTF_Font* GameEngine::get_font() const
 SDL_Window* GameEngine::get_window() const
 {
     return this->window;
+}
+
+int GameEngine::GetWindowWidth() const 
+{
+    int width = 0;
+
+    SDL_GetWindowSize(window, &width, NULL);
+
+    return width;
+}
+
+
+int GameEngine::GetWindowHeight() const 
+{
+    int height = 0;
+
+    SDL_GetWindowSize(window, NULL, &height);
+
+    return height;
 }
