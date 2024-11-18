@@ -2,13 +2,14 @@
 #include "System.h"
 #include "StaticSprite.h"
 #include "MovableSprite.h"
-#include "TextButton.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "UIElement.h"
+//#include "UIElement.h"
 #include "Tile.h"
 #include "TileMap.h"
 #include "TextFragment.h"
+#include "Button.h"
+#include "TextButton.h"
 
 #define FPS 60
 
@@ -16,32 +17,35 @@ int main(int argv, char **argc)
 {
     
     System app(FPS, {255, 150, 70, 255});
-    
-    int buttonW = 150, buttonH = 30;
-    UIElement* uiButton = UIElement::getInstance(engine.GetWindowWidth() / 2 - (buttonW * 2), engine.GetWindowHeight() / 2, 
-                                                    buttonW, buttonH, 
-                                                    "HEJ", "UIButton.png");
 
+    int w = 100, h = 30;
+    TextFragment* t = TextFragment::getInstance(100, 100, w, h, "YOOOO", {0xff,0,0xbb,0xff});
+    Button* b = Button::getInstance(100, 100, w, h, "UIButton.png");
 
-    Player* player1 = Player::getInstance(200, 200, 300, 300, "PersonIdle.png", 20);
-    player1->SetUIElementRef(uiButton);
+    TextButton* textButton = TextButton::getInstance(t, b);
+
+    Player* player1 = Player::getInstance(100, 200, 64, 100, "PersonIdle_Small.png", 20);
+    app.addCollider(player1);
+    player1->SetCollider(true, {200, 200, 64, 100});
+    player1->SetTextButtonRef(textButton);
     player1->setSpriteRegion(0, 0, 124, 124);
     player1->setMoveSpeed(5);
 
-    Enemy* enemy = Enemy::getInstance(200, 200, 300, 300, "PersonIdle.png", 20);
+    Enemy* enemy = Enemy::getInstance(600, 200, 150, 150, "PersonIdle.png", 20);
+    app.addCollider(enemy);
+    enemy->SetCollider(true, {200, 200, 300, 300});
 
     TileMap* map1 = TileMap::getInstance(-50, 0, 60, 60);
     map1->SetAppRef(&app);
     map1->SetPlayerRef(player1);
     map1->InitializeTiles();
 
-    TextFragment* t = TextFragment::getInstance(0, 0, 200, 80, "YOOOO", {0xff,0,0xbb,0xff});
-   
     app.addSprite(t);
+    app.addSprite(b);
     app.addSprite(player1);
     app.addSprite(enemy);
-    app.addSprite(uiButton);
-    
+    app.addSprite(textButton);
+
     app.run();
 
  

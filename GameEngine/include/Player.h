@@ -5,10 +5,10 @@
 #include "System.h"
 #include "MovableSprite.h"
 #include "Position.h"
-#include "UIElement.h"
+#include "TextButton.h"
 #include "Particle.h"
 #include "HPSlot.h"
-
+#include "Enemy.h"
 
 class Player : public MovableSprite
 {
@@ -23,11 +23,14 @@ class Player : public MovableSprite
         const int& GetHeight()               { return height; }
 
         const bool CheckCollision(Sprite* other) const;
+        
+        void OnCollision(Sprite* other);
         bool keyPressed(const int keyCode)  { return InputComponent::getKeyPressed(keyCode);}
         
         void setMoveSpeed(int speed)        { moveSpeed = speed; }
-        void SetUIElementRef(UIElement* tb) { txtButtonRef = tb; }
+        void SetTextButtonRef(TextButton* tb) { txtButtonRef = tb; }
         
+
         
     protected:
         Player(int x, int y, int h, int w, std::string srcImage, int maxHP);
@@ -35,15 +38,21 @@ class Player : public MovableSprite
 
     private:
         Position pos;
+        Dimension size;
         int maxHealth;
         int width;
         int height;
         int moveSpeed = 0;   
-        unsigned int frameTick = 0;
+
+        // Animation
+        unsigned int animationFrame = 0;
+        unsigned int animationFrameTick = 0;
         unsigned int particleSpawnTick = 0;
+        
         bool isMoving;
+        
         Player* playerRef = nullptr;
-        UIElement* txtButtonRef = nullptr;
+        TextButton* txtButtonRef = nullptr;
         std::vector<Particle*> particles;
 
         bool healthInitialized;

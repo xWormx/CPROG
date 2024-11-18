@@ -34,24 +34,32 @@ Sprite::Sprite(int x, int y, int w, int h) : destRect{x,y,w,h}
 
 }
 
-const void Sprite::DEBUGDrawLineFrame() const
+const void Sprite::DEBUGDrawSpriteBounds() const
 {
+    SDL_SetRenderDrawColor(engine.get_ren(), 0x00, 0xbb, 0xff, 0xff);
+
     SDL_Point points[5] = {{destRect.x, destRect.y}, 
                             {destRect.x, destRect.y + destRect.h},
                             {destRect.x + destRect.w, destRect.y + destRect.h},
                             {destRect.x + destRect.w, destRect.y},
                             {destRect.x, destRect.y}};
+    
     SDL_RenderDrawLines(engine.get_ren(), points, sizeof(points)/sizeof(SDL_Point));
+}
+
+const void Sprite::DEBUGDrawColliderBounds() const
+{
+    SDL_RenderDrawRect(engine.get_ren(), &collider.GetBounds());
 }
 
 const bool Sprite::DEBUGDidCollide(const Sprite& other) const
 {
     // y goes downwards so bottom is y + h;
-    int left = destRect.x, right = destRect.x + destRect.w,
-        top = destRect.y, bottom = destRect.y + destRect.h;
+    int left = collider.GetBounds().x, right = collider.GetBounds().x + collider.GetBounds().w,
+        top = collider.GetBounds().y, bottom = collider.GetBounds().y + collider.GetBounds().h;
     
-    int otherLeft = other.destRect.x, otherRight  = other.destRect.x + other.destRect.w,
-        otherTop  = other.destRect.y, otherBottom = other.destRect.y + other.destRect.h;
+    int otherLeft = other.collider.GetBounds().x, otherRight  = other.collider.GetBounds().x + other.collider.GetBounds().w,
+        otherTop  = other.collider.GetBounds().y, otherBottom = other.collider.GetBounds().y + other.collider.GetBounds().h;
 
     if(left < otherRight && right > otherLeft &&
         top < otherBottom && bottom > otherTop )
@@ -89,6 +97,12 @@ void Sprite::setDestRect(int x, int y, int w, int h)
     destRect.y = y;
     destRect.w = w;
     destRect.h = h;
+}
+
+void Sprite::SetCollider(const bool& colliderState, SDL_Rect bounds)
+{
+    CanCollide(colliderState);
+    SetColliderBounds(bounds);
 }
 
 void Sprite::SetAlpha(Uint8 alpha) const

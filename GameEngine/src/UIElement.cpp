@@ -1,4 +1,4 @@
-#include "UIElement.h"
+/*#include "UIElement.h"
 
 UIElement* UIElement::getInstance(int x, int y, int w, int h, std::string txt, std::string srcImage)
 {
@@ -20,3 +20,4 @@ void UIElement::tick(System& system)
         setText("BRO");
     }
 }
+*/

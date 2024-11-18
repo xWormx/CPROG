@@ -1,4 +1,4 @@
-#ifndef UIELEMENT_H
+/*#ifndef UIELEMENT_H
 #define UIELEMENT_H
 
 #include "System.h"
@@ -25,4 +25,4 @@ class UIElement : public TextButton
 };
 
 
-#endif
+#endif*/

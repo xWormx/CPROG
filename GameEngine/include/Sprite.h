@@ -9,6 +9,7 @@
 #include "GameEngine.h"
 #include "InputComponent.h"
 #include "System.h"
+#include "Collider2D.h"
 
 class System;
 class Sprite : public InputComponent
@@ -20,13 +21,22 @@ class Sprite : public InputComponent
         const SDL_Rect& getSrcRect() const;
         const SDL_Rect& getDestRect() const;
         const SDL_Texture* getTexture() const;
-        const void DEBUGDrawLineFrame() const;
+        const SDL_Rect& GetColliderBounds() {return collider.GetBounds();}
+
+        void SetCollider(const bool& colliderState, SDL_Rect bounds);
+        void SetColliderBounds(const SDL_Rect& bounds){collider.SetBounds(bounds);}
+        void CanCollide(const bool& colliderState) { collider.SetCollideState(colliderState); }
+        virtual void OnCollision(Sprite* other){}
+
+        const void DEBUGDrawSpriteBounds() const;
+        const void DEBUGDrawColliderBounds() const;
         const bool DEBUGDidCollide(const Sprite& other) const;
         virtual ~Sprite();
 
         friend class MovableSprite;
         friend class TextButton;
         friend class TextFragment;
+        friend class Button;
         friend class Particle;
     protected:
         Sprite(int x, int y, int w, int h, std::string srcImage);
@@ -35,6 +45,8 @@ class Sprite : public InputComponent
         SDL_Rect srcRect; // What part to draw
         SDL_Rect destRect; // Where to draw it
         SDL_Texture* texture = nullptr;     
+
+        Collider2D collider;
 
         void setDestRect(int x, int y, int w, int h);
         void setSrcRect(int x, int y, int w, int h);

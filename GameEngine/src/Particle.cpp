@@ -35,7 +35,8 @@ void Particle::tick(System& system)
         }
         pos.x += speedX;
         pos.y += speedY;
-        setPosition(pos.x, pos.y);    
+        setPosition(pos.x, pos.y);
+        SetColliderBounds({pos.x, pos.y, size.w, size.h});
     }
 }
 

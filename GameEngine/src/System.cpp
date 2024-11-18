@@ -22,6 +22,13 @@ void System::removeSprite(Sprite* s)
         removed.push_back(s);
 }
 
+void System::addCollider(Sprite *sprite)
+{
+    if(sprite != nullptr)
+        colliderSprites.push_back(sprite);
+}
+
+
 void System::handleKeyDownEvents(const SDL_Event& event)
 {
     for(Sprite *s : sprites)
@@ -98,22 +105,39 @@ void System::run()
 
         added.clear();
 
-        for(Sprite* s : removed)
+        for(Sprite* s : colliderSprites)
         {
-            if(removed.size() > 1)
-                std::cout <<  "removing more than 1 element this tick!\n";
-                
+            for(Sprite* other : colliderSprites)
+            {
+                if(s != other && IsColliding(s->GetColliderBounds(), other->GetColliderBounds()))
+                    s->OnCollision(other);
+            }
+        }
+            
+
+        for(Sprite* s : removed)
+        {       
             for(std::vector<Sprite*>::iterator i = sprites.begin(); i != sprites.end();)
             {
                 if(*i == s)
                 {
-                    delete *i;
                     i = sprites.erase(i);
                 }    
                 else
                     i++;
             }
+
+            for(std::vector<Sprite*>::iterator j = colliderSprites.begin(); j != colliderSprites.end();)
+            {
+                if(*j == s)
+                    j = colliderSprites.erase(j);
+                else
+                    j++;
+            }
+
+            delete s;
         }
+
         removed.clear();
 
         SDL_SetRenderDrawColor(engine.get_ren(), 
@@ -124,26 +148,28 @@ void System::run()
 
         SDL_RenderClear(engine.get_ren());
         
-
-        for(Sprite* sprite : sprites)
+ #if DEBUG 
+        for(Sprite* s : sprites)
         {
-            sprite->draw();
+            s->draw();
+            s->DEBUGDrawSpriteBounds();
+        }
 
-           #if DEBUG 
+        for(Sprite* s : colliderSprites)
+        {
+            // O(n^2) kollisionsdetektering just nu....
+          
             bool didCollide = false;
             
-            for(Sprite* collider : sprites)
+            for(Sprite* collider : colliderSprites)
             {
-                if(sprite != collider)
+                if(s != collider)
                 {
-                    if(sprite->DEBUGDidCollide(*collider))
+                    if(s->DEBUGDidCollide(*collider))
                     {
                         didCollide = true;
-                        break;
-                    }
-                    
+                    }   
                 }
-                
             }
             
             if(didCollide)
@@ -151,10 +177,10 @@ void System::run()
             else
                 SDL_SetRenderDrawColor(engine.get_ren(), 0x00, 0xff, 0x00, 0xff);
             
-            sprite->DEBUGDrawLineFrame();
-            #endif
+            s->DEBUGDrawColliderBounds();
+           
         }
-
+ #endif
 
         SDL_RenderPresent(engine.get_ren());
 
@@ -165,6 +191,22 @@ void System::run()
 
     }
         
+}
+
+const bool System::IsColliding(const SDL_Rect& A, const SDL_Rect& B) const
+{
+    // y goes downwards so bottom is y + h;
+    int left = A.x, right = A.x + A.w,
+        top = A.y, bottom = A.y + A.h;
+    
+    int otherLeft = B.x, otherRight  = B.x + B.w,
+        otherTop  = B.y, otherBottom = B.y + B.h;
+
+    if(left < otherRight && right > otherLeft &&
+        top < otherBottom && bottom > otherTop )
+        return true;
+    
+    return false;
 }
 
 System::~System()

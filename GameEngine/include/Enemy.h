@@ -8,6 +8,9 @@
 #include "Particle.h"
 #include "System.h"
 #include "Player.h"
+#include "Dimension.h"
+
+class Player;
 
 class Enemy : public MovableSprite
 {
@@ -21,21 +24,24 @@ class Enemy : public MovableSprite
         const int& GetWidth()               { return width; }
         const int& GetHeight()               { return height; }
 
+        void OnCollision(Sprite* other);
         const bool CheckCollision(Sprite* other) const;
         bool keyPressed(const int keyCode)  { return InputComponent::getKeyPressed(keyCode);}
         
         void setMoveSpeed(int speed)        { moveSpeed = speed; }
         void SetPlayerRef(Player* p)        { playerRef = p;}
-        void SetUIElementRef(UIElement* tb) { txtButtonRef = tb; }
+        void SetUIElementRef(TextButton* tb) { txtButtonRef = tb; }
         void SetAppRef(System* app)         { appRef = app;}
         void SetSpriteCollection(const std::vector<Sprite*>& collection) { spriteCollection = &collection; }
         
+
     protected:
         Enemy(int x, int y, int h, int w, std::string srcImage, int maxHP);
 
 
     private:
         Position pos;
+        Dimension size;
         int maxHealth;
         int width;
         int height;
@@ -44,7 +50,7 @@ class Enemy : public MovableSprite
         unsigned int particleSpawnTick = 0;
         bool isMoving;
         Player* playerRef = nullptr;
-        UIElement* txtButtonRef = nullptr;
+        TextButton* txtButtonRef = nullptr;
         System* appRef = nullptr;
         std::vector<Particle*> particles;
         const std::vector<Sprite*> *spriteCollection = nullptr;

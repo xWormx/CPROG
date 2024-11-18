@@ -4,7 +4,7 @@ Enemy* Enemy::getInstance(int x, int y, int h, int w, std::string srcImage, int 
 {
     return new Enemy(x, y, w, h, srcImage, maxHP);
 }
-Enemy::Enemy(int x, int y, int h, int w, std::string srcImage, int maxHP) : MovableSprite(x,y,w,h,srcImage), pos{x, y}, maxHealth(maxHP), width(w), height(h)
+Enemy::Enemy(int x, int y, int h, int w, std::string srcImage, int maxHP) : MovableSprite(x,y,w,h,srcImage), pos{x, y}, size{w,h}, maxHealth(maxHP)
 {
 }
 
@@ -46,21 +46,22 @@ void Enemy::tick(System& system)
     }
 
     // Restric movment to be inside window
-    if ((pos.x + (width / 3)) < 0)
-        pos.x = -(width / 3);
-    if(pos.x + (width - width/3) > engine.GetWindowWidth())
-        pos.x = engine.GetWindowWidth() - (width - (width/3)); 
+    if ((pos.x + (size.w / 3)) < 0)
+        pos.x = -(size.w / 3);
+    if(pos.x + (size.w - size.w/3) > engine.GetWindowWidth())
+        pos.x = engine.GetWindowWidth() - (size.w - (size.w/3)); 
     if((pos.y + 80) < 0)
         pos.y = -80;
-    if(pos.y + height > engine.GetWindowHeight())
-        pos.y = engine.GetWindowHeight() - height;
+    if(pos.y + size.h > engine.GetWindowHeight())
+        pos.y = engine.GetWindowHeight() - size.h;
 
 
     if(txtButtonRef != NULL)
         txtButtonRef->SetPosition(pos);
     
     MovableSprite::setPosition(pos.x, pos.y);
-    Position p = {pos.x + width/4, pos.y};
+    SetColliderBounds({pos.x, pos.y, size.w, size.h});
+    Position p = {pos.x + size.w/4, pos.y};
     if(txtButtonRef != nullptr)
         txtButtonRef->SetPosition(p);
 
@@ -83,17 +84,15 @@ void Enemy::tick(System& system)
 
     }
 
-        for(Sprite *s : system.GetSpriteCollection())
-        {
-            if(CheckCollision(s))
-            {
-            }
-            
-        }
-    
-    
-        
+}
 
+void Enemy::OnCollision(Sprite* other)
+{
+    Player* p = dynamic_cast<Player*>(other);
+    if(p != nullptr)
+    {
+        std::cout << "Enemy collided with Player, from enemy!\n";
+    }
 }
 
 const bool Enemy::CheckCollision(Sprite* other) const
