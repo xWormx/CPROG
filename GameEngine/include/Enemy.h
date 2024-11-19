@@ -23,7 +23,6 @@ class Enemy : public MovableSprite
         const Dimension& GetSize()          { return size; }
 
         void OnCollision(Sprite* other, System& system);
-        bool KeyPressed(const int keyCode)  { return InputComponent::GetKeyPressed(keyCode);}
         
         void SetMoveSpeed(int speed)        { moveSpeed = speed; }
         void SetPlayerRef(Player* p)        { playerRef = p;}

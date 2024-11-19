@@ -43,40 +43,26 @@ void Player::Tick(System& system)
         }
     }
 
-    UpdateHealth(system);
-
-
     isMoving = false;
-    
-    //static int frame = 0;
-    //
-    //if (frameTick++ % 12 == 0)
-    //{
-    //    frame++;
-    //    if (frame > 3)
-    //        frame = 0;
-    //    int size = 124;
-    //    setSpriteRegion(size * frame, 0, size, size);
-    //}
-    
+    UpdateHealth(system);
     AnimateSprite({0,0}, {32, 80}, 3, 2);
 
-    if (KeyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
+    if (system.GetKeyPressed('d') || system.GetMousePressed(SDL_BUTTON_LEFT))
     {
         pos.x += moveSpeed;
         isMoving = true;
     }
-    if (KeyPressed('a'))
+    if (system.GetKeyPressed('a'))
     {
         pos.x -= moveSpeed;
         isMoving = true;
     }
-    if (KeyPressed('w'))
+    if (system.GetKeyPressed('w'))
     {
         pos.y -= moveSpeed;
         isMoving = true;
     }
-    if (KeyPressed('s'))
+    if (system.GetKeyPressed('s'))
     {
         pos.y += moveSpeed;
         isMoving = true;
@@ -103,8 +89,11 @@ void Player::Tick(System& system)
     Position p = {pos.x - size.w/4, pos.y};
     if(txtButtonRef != nullptr)
         txtButtonRef->SetPosition({p.x, p.y - txtButtonRef->GetSize().h});
-
-    if(KeyPressed('p'))
+    if(system.GetKeyPressedOnce('a'))
+    {
+        std::cout << "ONCE\n";
+    }
+    if(system.GetKeyPressed('p'))
     {
        
         if(particleSpawnTick++ % 1 == 0)

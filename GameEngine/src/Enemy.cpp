@@ -24,22 +24,22 @@ void Enemy::Tick(System& system)
     }
     
 
-    if (KeyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
+    if (system.GetKeyPressed('d') || system.GetMousePressed(SDL_BUTTON_LEFT))
     {
         pos.x += moveSpeed;
         isMoving = true;
     }
-    if (KeyPressed('a'))
+    if (system.GetKeyPressed('a'))
     {
         pos.x -= moveSpeed;
         isMoving = true;
     }
-    if (KeyPressed('w'))
+    if (system.GetKeyPressed('w'))
     {
         pos.y -= moveSpeed;
         isMoving = true;
     }
-    if (KeyPressed('s'))
+    if (system.GetKeyPressed('s'))
     {
         pos.y += moveSpeed;
         isMoving = true;
@@ -65,25 +65,24 @@ void Enemy::Tick(System& system)
     if(txtButtonRef != nullptr)
         txtButtonRef->SetPosition(p);
 
-    if(KeyPressed('p'))
+    if(system.GetKeyPressedOnce('o'))
     {
-       
+        // Behövs bara om partiklarna ska spawna av sig självt?
         if(particleSpawnTick++ % 5 == 0)
         {
-            int px = engine.GetRandomNumberInRange(-12, 12);
-            int py = engine.GetRandomNumberInRange(-12, 12);
-
-            int sx = engine.GetRandomNumberInRange(-8, -7);
-            int sy = engine.GetRandomNumberInRange(-1, 1);
-            Particle* p = Particle::GetInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
-            p->SetCollider(true, {pos.x, pos.y, 30, 30});
-            p->SetMoveSpeed(sx, sy);
-            p->SetTag("enemyParticle");
-            system.AddCollider(p);
-            system.AddSprite(p);
-        
+            
         }
+        int px = engine.GetRandomNumberInRange(-12, 12);
+        int py = engine.GetRandomNumberInRange(-12, 12);
+        int sx = engine.GetRandomNumberInRange(-8, -7);
+        int sy = engine.GetRandomNumberInRange(-1, 1);
 
+        Particle* p = Particle::GetInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
+        p->SetCollider(true, {pos.x, pos.y, 30, 30});
+        p->SetMoveSpeed(sx, sy);
+        p->SetTag("enemyParticle");
+        system.AddCollider(p);
+        system.AddSprite(p);
     }
 
 }

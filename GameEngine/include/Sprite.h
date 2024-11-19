@@ -12,7 +12,7 @@
 #include "Collider2D.h"
 
 class System;
-class Sprite : public InputComponent
+class Sprite
 {
     public:
         virtual void Draw() const = 0; 

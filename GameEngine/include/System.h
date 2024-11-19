@@ -6,7 +6,7 @@
 #include "SDL2/SDL.h"
 #include "Sprite.h"
 #include "GameEngine.h"
-
+#include "InputComponent.h"
 
 class Sprite;
 class System
@@ -14,14 +14,17 @@ class System
     public:
         System(int fps, SDL_Color bg = {255, 255, 0, 255});
         
+        void Run();
         void AddSprite(Sprite* sprite);
         void RemoveSprite(Sprite* sprite);
         void AddCollider(Sprite* sprite);
+        
         const std::vector<Sprite*>& GetSpriteCollection() { return sprites; }
-        void Run();
+        bool GetKeyPressedOnce(const int keyCode) const { return inputComponent.GetKeyPressedOnce(keyCode); }
+        bool GetKeyPressed(const int keyCode) const { return inputComponent.GetKeyPressed(keyCode); }
+        bool GetMousePressed(const int keyCode) const { return inputComponent.getMousePressed(keyCode); }
 
         void AppendTextInput(std::string& str);
-
         const bool& TextInputRecieved() {return textInputRecieved; }
         ~System();
     
@@ -40,6 +43,8 @@ class System
 
         bool textInputRecieved;
         std::string strTextInput;
+
+        InputComponent inputComponent;
 };
 
 

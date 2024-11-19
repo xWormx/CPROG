@@ -12,7 +12,7 @@ TextButton::TextButton(TextFragment *t, Button *b) : MovableSprite(b->GetPositio
 
 void TextButton::Tick(System& system)
 {
-    if(InputComponent::GetKeyPressed('w'))
+    if(system.GetKeyPressed('w'))
         setText("w");
     else
         setText("Not clicking!");

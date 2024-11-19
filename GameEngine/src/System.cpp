@@ -6,7 +6,7 @@ System::System(int fps, SDL_Color bg)
 {
     backgroundColor = bg;   
     framesPerSecond = fps; 
-    removed.reserve(10);
+    //removed.reserve(10);
     std::cout << "System running" << std::endl;
 }
 
@@ -57,30 +57,24 @@ void System::AddCollider(Sprite *sprite)
 
 void System::HandleKeyDownEvents(const SDL_Event& event)
 {
-    for(Sprite *s : sprites)
-        s->setKeyCodePressed(s->getKeyCodeFromEvent(event));
+    inputComponent.setKeyCodePressed(inputComponent.getKeyCodeFromEvent(event));
 }
 
 void System::HandleKeyUpEvents(const SDL_Event& event)
 {
-    for(Sprite* s : sprites)
-        s->setKeyCodeReleased(s->getKeyCodeFromEvent(event));
+    inputComponent.setKeyCodeReleased(inputComponent.getKeyCodeFromEvent(event)); 
 }
 
 void System::HandleMouseDownEvents(const SDL_Event& event)
 {
-    for(Sprite* s : sprites)
-    {
-        s->setMousePressed(s->GetMouseButttonFromEvent(event));
-    }
+    
+    inputComponent.setMousePressed(inputComponent.GetMouseButtonFromEvent(event));
 }
 
 void System::HandleMouseUpEvents(const SDL_Event& event)
 {
-    for(Sprite* s : sprites)
-    {
-        s->SetMouseReleased(s->GetMouseButttonFromEvent(event));
-    }
+    
+    inputComponent.SetMouseReleased(inputComponent.GetMouseButtonFromEvent(event));
         
 }
 
@@ -96,6 +90,7 @@ void System::Run()
         Uint32 nextTick = SDL_GetTicks() + tickInterval;
         textInputRecieved = false;
         strTextInput.clear();
+        inputComponent.ClearSingleInputKeys();
 
         while(SDL_PollEvent(&event))
         {

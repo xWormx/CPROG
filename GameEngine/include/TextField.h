@@ -8,7 +8,7 @@
 class TextField : public Sprite
 {
     public:
-        static TextField* GetInstance(int x, int y, int w, int h, SDL_Color c);
+        static TextField* GetInstance(int x, int y, SDL_Color c);
 
         void Tick(System& system);
         void Draw() const;
@@ -18,13 +18,13 @@ class TextField : public Sprite
 
 
     protected:
-        TextField(int x, int y, int w, int h, SDL_Color c);
+        TextField(int x, int y, SDL_Color c);
     
     private:
         Position pos;
         Dimension size;
         SDL_Color color;
-        std::string currentText = "test";
+        std::string currentText = " ";
         SDL_Texture* textTexture = nullptr;
 };
 

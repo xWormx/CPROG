@@ -4,7 +4,6 @@
 #include "MovableSprite.h"
 #include "Player.h"
 #include "Enemy.h"
-//#include "UIElement.h"
 #include "Tile.h"
 #include "TileMap.h"
 #include "TextFragment.h"
@@ -49,14 +48,12 @@ int main(int argv, char **argc)
     map1->SetPlayerRef(player1);
     map1->InitializeTiles();
 
-    TextField* textField = TextField::GetInstance(200, 200, 64, 64, {0xff, 0xff, 0xff, 0xff});
+    TextField* textField = TextField::GetInstance(200, 200, {0xff, 0xff, 0xff, 0xff});
+    TextField* nameField = TextField::GetInstance(200, 250, {0xff, 0xff, 0xff, 0xff});
 
     app.AddSprite(textField);
-
+    app.AddSprite(nameField);
     app.AddSprite(textButton);
-    //app.AddSprite(b);
-    //app.AddSprite(t);
-    
     app.AddSprite(player1);
     app.AddSprite(enemy);
 
