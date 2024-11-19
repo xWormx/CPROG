@@ -48,6 +48,8 @@ int main(int argv, char **argc)
     map1->SetPlayerRef(player1);
     map1->InitializeTiles();
 
+    // Ska TextField ta emot Sprite för att rama in textfältet? eller
+    // hur ska det lösas med inramningen?
     TextField* textField = TextField::GetInstance(200, 200, {0xff, 0xff, 0xff, 0xff});
     TextField* nameField = TextField::GetInstance(200, 250, {0xff, 0xff, 0xff, 0xff});
 
