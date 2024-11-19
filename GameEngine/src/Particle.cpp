@@ -10,9 +10,9 @@ Particle::Particle(int x, int y, int w, int h, std::string srcImage, int lt) : M
 {
 }
 
-void Particle::draw()
+void Particle::Draw()
 {
-    SDL_RenderCopy(engine.Get_ren(), texture, &getSrcRect(), &getDestRect());
+    SDL_RenderCopy(engine.Get_ren(), texture, &GetSrcRect(), &GetDestRect());
 }
 
 void Particle::Tick(System& system)

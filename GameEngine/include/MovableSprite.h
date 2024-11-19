@@ -9,7 +9,7 @@
 class MovableSprite : public Sprite
 {
     public:
-        void draw() const;
+        void Draw() const;
         void setPosition(int x, int y);
         void AnimateSprite(Position frameStart, Dimension frameSize, unsigned int maxFrames, unsigned int animSpeed);
         void setSpriteRegion(int x, int y, int w, int h);

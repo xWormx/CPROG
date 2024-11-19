@@ -11,9 +11,9 @@ MovableSprite::MovableSprite(int x, int y, int w, int h) : Sprite(x,y,w,h)
 
 }
 
-void MovableSprite::draw() const
+void MovableSprite::Draw() const
 {
-    SDL_RenderCopy(engine.Get_ren(), texture, &getSrcRect(), &getDestRect());
+    SDL_RenderCopy(engine.Get_ren(), texture, &GetSrcRect(), &GetDestRect());
 }
 
 void MovableSprite::setSpriteRegion(int x, int y, int w, int h)
@@ -37,7 +37,7 @@ void MovableSprite::AnimateSprite(Position frameStart, Dimension frameSize, unsi
 
 void MovableSprite::setPosition(int x, int y)
 {
-    setDestRect(x, y, getDestRect().w, getDestRect().h);
+    setDestRect(x, y, GetDestRect().w, GetDestRect().h);
 }
 
 

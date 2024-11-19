@@ -73,12 +73,12 @@ const bool Sprite::CompareTag(const std::string& otherSpriteTag) const
     return spriteTag == otherSpriteTag;
 }
 
-const SDL_Rect& Sprite::getSrcRect() const
+const SDL_Rect& Sprite::GetSrcRect() const
 {
     return srcRect;
 }
 
-const SDL_Rect& Sprite::getDestRect() const
+const SDL_Rect& Sprite::GetDestRect() const
 {
     return destRect;
 }

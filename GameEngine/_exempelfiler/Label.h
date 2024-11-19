@@ -11,7 +11,7 @@ class Label : public Component
 {
     public:
         static Label* GetInstance(int x, int y, int w, int h, std::string txt);
-        void draw() const;
+        void Draw() const;
         void Tick();
         std::string getText() const;
         void setText(std::string newText);

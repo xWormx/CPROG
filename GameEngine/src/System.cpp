@@ -89,10 +89,13 @@ void System::Run()
     SDL_Event event;
     bool quit = false;
     Uint32 tickInterval = 1000 / framesPerSecond;
-
+    
+    SDL_StartTextInput();
     while(!quit)
     {
         Uint32 nextTick = SDL_GetTicks() + tickInterval;
+        textInputRecieved = false;
+        strTextInput.clear();
 
         while(SDL_PollEvent(&event))
         {
@@ -100,10 +103,16 @@ void System::Run()
             switch(event.type)
             {
                 case SDL_QUIT: 
-		        {
-			        quit = true; 
-		        } break;
-		
+		            {
+			            quit = true; 
+		            } break;
+
+                case SDL_TEXTINPUT:
+                    {
+                        textInputRecieved = true;    
+                        strTextInput += event.text.text;
+
+                    } break;
 
                 case SDL_MOUSEBUTTONDOWN:
                     HandleMouseDownEvents(event);
@@ -176,7 +185,7 @@ void System::Run()
  #if DEBUG 
         for(Sprite* s : sprites)
         {
-            s->draw();
+            s->Draw();
             s->DEBUGDrawSpriteBounds();
         }
 
@@ -215,7 +224,14 @@ void System::Run()
             SDL_Delay(delay);
 
     }
+
+    SDL_StopTextInput();
         
+}
+
+void System::AppendTextInput(std::string& str)
+{
+    str += strTextInput;
 }
 
 const bool System::IsColliding(const SDL_Rect& A, const SDL_Rect& B) const

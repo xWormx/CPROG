@@ -14,7 +14,7 @@ class TextButton : public MovableSprite
     public:
         static TextButton* GetInstance(TextFragment *t, Button *b);
         void setFont(std::string strFont);
-        void draw() const;
+        void Draw() const;
         void Tick(System& system);
         void setText(std::string s);
         void SetPosition(Position p);

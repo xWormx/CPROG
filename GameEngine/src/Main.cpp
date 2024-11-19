@@ -10,6 +10,7 @@
 #include "TextFragment.h"
 #include "Button.h"
 #include "TextButton.h"
+#include "TextField.h"
 
 #define FPS 60
 
@@ -48,6 +49,9 @@ int main(int argv, char **argc)
     map1->SetPlayerRef(player1);
     map1->InitializeTiles();
 
+    TextField* textField = TextField::GetInstance(200, 200, 64, 64, {0xff, 0xff, 0xff, 0xff});
+
+    app.AddSprite(textField);
 
     app.AddSprite(textButton);
     //app.AddSprite(b);

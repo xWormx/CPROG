@@ -12,7 +12,7 @@ class TextFragment : public MovableSprite
     public:
         static TextFragment* GetInstance(int x, int y, int w, int h, std::string text, SDL_Color c);
 
-        void draw() const;
+        void Draw() const;
         void Tick(System& system);
         void SetText(std::string s);
         void SetPosition(Position p);

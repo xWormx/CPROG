@@ -10,7 +10,7 @@ class Particle : public MovableSprite
     public:
         static Particle* GetInstance(int x, int y, int w, int h, std::string srcImage, int lt); 
         void Tick(System& system);
-        void draw();
+        void Draw();
 
         void SetAppRef(System* app);
         void SetMoveSpeed(int x, int y);

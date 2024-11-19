@@ -40,9 +40,9 @@ TextFragment::TextFragment(int x, int y, int w, int h, std::string text, SDL_Col
     srcRect.y = 0;
 }
 
-void TextFragment::draw() const
+void TextFragment::Draw() const
 {
-    SDL_RenderCopy(engine.Get_ren(), textTexture, &getSrcRect(), &getDestRect());
+    SDL_RenderCopy(engine.Get_ren(), textTexture, &GetSrcRect(), &GetDestRect());
 }
 
 void TextFragment::Tick(System& system)
@@ -98,5 +98,5 @@ void TextFragment::SetPosition(Position p)
 {
     pos.x = p.x;
     pos.y = p.y;
-    setDestRect(p.x, p.y, getDestRect().w, getDestRect().h);
+    setDestRect(p.x, p.y, GetDestRect().w, GetDestRect().h);
 }

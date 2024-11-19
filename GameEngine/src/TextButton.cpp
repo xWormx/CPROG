@@ -26,11 +26,11 @@ void TextButton::setText(std::string s)
     text->SetText(s);
 }
 
-void TextButton::draw() const
+void TextButton::Draw() const
 {
-    SDL_RenderCopy(engine.Get_ren(), button->texture, &button->getSrcRect(), &button->getDestRect());
+    SDL_RenderCopy(engine.Get_ren(), button->texture, &button->GetSrcRect(), &button->GetDestRect());
 
-    SDL_RenderCopy(engine.Get_ren(), text->GetTexture(), &text->getSrcRect(), &text->getDestRect());
+    SDL_RenderCopy(engine.Get_ren(), text->GetTexture(), &text->GetSrcRect(), &text->GetDestRect());
 }
 
 void TextButton::SetPosition(Position p)
@@ -38,7 +38,7 @@ void TextButton::SetPosition(Position p)
     
     text->SetPosition(p);
     button->SetPosition(p);
-    setDestRect(p.x, p.y, getDestRect().w, getDestRect().h);
+    setDestRect(p.x, p.y, GetDestRect().w, GetDestRect().h);
 }
 
 TextButton::~TextButton()

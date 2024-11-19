@@ -20,5 +20,5 @@ void Button::SetPosition(Position p)
 {
     pos.x = p.x;
     pos.y = p.y;
-    setDestRect(p.x, p.y, getDestRect().w, getDestRect().h);
+    setDestRect(p.x, p.y, GetDestRect().w, GetDestRect().h);
 }

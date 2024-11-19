@@ -34,7 +34,7 @@ Button* Button::GetInstance(int x, int y, int w, int h, std::string txt)
     return new Button(x, y, w, h, txt);
 }
 
-void Button::draw() const
+void Button::Draw() const
 {
     SDL_RenderCopy(engine.Get_ren(), currentIcon, NULL, &getRect());
     SDL_RenderCopy(engine.Get_ren(), texture, NULL, &getRect());

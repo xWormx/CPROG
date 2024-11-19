@@ -15,13 +15,13 @@ class System;
 class Sprite : public InputComponent
 {
     public:
-        virtual void draw() const = 0; 
+        virtual void Draw() const = 0; 
         virtual void Tick(System& system) = 0;
      
         const bool CompareTag(const std::string& otherSpriteTag) const;
 
-        const SDL_Rect& getSrcRect() const;
-        const SDL_Rect& getDestRect() const;
+        const SDL_Rect& GetSrcRect() const;
+        const SDL_Rect& GetDestRect() const;
         const SDL_Texture* getTexture() const;
         const SDL_Rect& GetColliderBounds() {return collider.GetBounds();}
 
@@ -39,6 +39,7 @@ class Sprite : public InputComponent
         friend class MovableSprite;
         friend class TextButton;
         friend class TextFragment;
+        friend class TextField;
         friend class Button;
         friend class Particle;
     protected:

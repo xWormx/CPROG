@@ -19,6 +19,10 @@ class System
         void AddCollider(Sprite* sprite);
         const std::vector<Sprite*>& GetSpriteCollection() { return sprites; }
         void Run();
+
+        void AppendTextInput(std::string& str);
+
+        const bool& TextInputRecieved() {return textInputRecieved; }
         ~System();
     
     private:
@@ -33,6 +37,9 @@ class System
         std::vector<Sprite *> removed;
         std::vector<Sprite *> colliderSprites;
         int framesPerSecond;
+
+        bool textInputRecieved;
+        std::string strTextInput;
 };
 
 

@@ -11,7 +11,7 @@ class Button : public Component
 public:
     static Button* GetInstance(int x, int y, int w, int h, std::string txt);
     ~Button();
-    void draw() const;
+    void Draw() const;
     void keyDown(const SDL_Event&);
     void Tick();
     void setPosition(SDL_Point newPosition);

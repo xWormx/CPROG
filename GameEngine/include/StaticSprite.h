@@ -7,7 +7,7 @@
 class StaticSprite : public Sprite
 {
     public:
-        void draw() const;
+        void Draw() const;
     protected:
         StaticSprite(int x, int y, int w, int h, std::string srcImage);
     private:

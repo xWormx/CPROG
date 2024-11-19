@@ -14,7 +14,7 @@ class TileMap
         void LoadTileImageMap(std::string srcFile);
         void InitializeTiles();
         void Tick(System& system);
-        void draw();
+        void Draw();
         ~TileMap();
 
     protected:
