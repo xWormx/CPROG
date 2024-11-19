@@ -1,6 +1,6 @@
 #include "HPSlot.h"
 
-HPSlot* HPSlot::getInstance(int x, int y, int w, int h, std::string srcImage)
+HPSlot* HPSlot::GetInstance(int x, int y, int w, int h, std::string srcImage)
 {
     return new HPSlot(x,y,w,h,srcImage);
 }
@@ -10,7 +10,7 @@ HPSlot::HPSlot(int x, int y, int w, int h, std::string srcImage) : MovableSprite
 
 }
 
-void HPSlot::tick(System& system)
+void HPSlot::Tick(System& system)
 {
     
 }

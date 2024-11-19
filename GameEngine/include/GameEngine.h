@@ -15,9 +15,9 @@ class GameEngine
   public:
     GameEngine();
     ~GameEngine();
-    SDL_Window* get_window() const;
-    SDL_Renderer* get_ren() const;
-    TTF_Font* get_font() const;
+    SDL_Window* Get_window() const;
+    SDL_Renderer* Get_ren() const;
+    TTF_Font* Get_font() const;
     int GetWindowWidth() const;
     int GetWindowHeight() const;
     int GetRandomNumberInRange(int min, int max);

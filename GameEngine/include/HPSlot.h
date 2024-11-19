@@ -10,8 +10,8 @@
 class HPSlot : public MovableSprite
 {
     public: 
-        static HPSlot* getInstance(int x, int y, int w, int h, std::string srcImage);
-        void tick(System& system);
+        static HPSlot* GetInstance(int x, int y, int w, int h, std::string srcImage);
+        void Tick(System& system);
 
         const Position& GetPosition() const {return pos;}
         const Dimension& GetSize() const {return size;}

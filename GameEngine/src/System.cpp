@@ -10,55 +10,81 @@ System::System(int fps, SDL_Color bg)
     std::cout << "System running" << std::endl;
 }
 
-void System::addSprite(Sprite *sprite)
+void System::AddSprite(Sprite *sprite)
 {
     if(sprite != nullptr)
+    {
+        // Se till så att inte samma pekare läggs till 2 gånger
+        // vilket kan hända med textButton som tar Text* och Button* som argument.
+        for(Sprite *existingSprite : sprites)
+            if(sprite == existingSprite)
+                return;
+
         added.push_back(sprite);
+    }
+
+
 }
 
-void System::removeSprite(Sprite* s)
-{
-    if(s != nullptr)
-        removed.push_back(s);
-}
-
-void System::addCollider(Sprite *sprite)
+void System::RemoveSprite(Sprite* sprite)
 {
     if(sprite != nullptr)
+    {
+        for(Sprite* existingSprite : removed)
+        {
+            if(sprite == existingSprite)
+                return;
+        }
+
+        removed.push_back(sprite);
+    }
+        
+}
+
+void System::AddCollider(Sprite *sprite)
+{
+    if(sprite != nullptr)
+    {
+        for(Sprite *existingSprite : colliderSprites)
+            if(sprite == existingSprite)
+                return;
+
         colliderSprites.push_back(sprite);
+    }
+    
 }
 
 
-void System::handleKeyDownEvents(const SDL_Event& event)
+void System::HandleKeyDownEvents(const SDL_Event& event)
 {
     for(Sprite *s : sprites)
         s->setKeyCodePressed(s->getKeyCodeFromEvent(event));
 }
 
-void System::handleKeyUpEvents(const SDL_Event& event)
+void System::HandleKeyUpEvents(const SDL_Event& event)
 {
     for(Sprite* s : sprites)
         s->setKeyCodeReleased(s->getKeyCodeFromEvent(event));
 }
 
-void System::handleMouseDownEvents(const SDL_Event& event)
+void System::HandleMouseDownEvents(const SDL_Event& event)
 {
     for(Sprite* s : sprites)
     {
-        s->setMousePressed(s->getMouseButtonFromEvent(event));
+        s->setMousePressed(s->GetMouseButttonFromEvent(event));
     }
 }
 
-void System::handleMouseUpEvents(const SDL_Event& event)
+void System::HandleMouseUpEvents(const SDL_Event& event)
 {
     for(Sprite* s : sprites)
     {
-        s->setMouseReleased(s->getMouseButtonFromEvent(event));
+        s->SetMouseReleased(s->GetMouseButttonFromEvent(event));
     }
         
 }
 
-void System::run()
+void System::Run()
 {
     SDL_Event event;
     bool quit = false;
@@ -80,40 +106,39 @@ void System::run()
 		
 
                 case SDL_MOUSEBUTTONDOWN:
-                    handleMouseDownEvents(event);
+                    HandleMouseDownEvents(event);
                     break;
 
                 case SDL_MOUSEBUTTONUP:
-                    handleMouseUpEvents(event);
+                    HandleMouseUpEvents(event);
                     break;
                 
                 case SDL_KEYDOWN:
-                    handleKeyDownEvents(event); 
+                    HandleKeyDownEvents(event); 
                     break;
                 
                 case SDL_KEYUP:
-                    handleKeyUpEvents(event);
+                    HandleKeyUpEvents(event);
                     break;
             }
         }
 
         for(Sprite* s : sprites)
-            s->tick(*this);
-
-        for(Sprite* s : added)
-            sprites.push_back(s);
-
-        added.clear();
+            s->Tick(*this);
 
         for(Sprite* s : colliderSprites)
         {
             for(Sprite* other : colliderSprites)
             {
                 if(s != other && IsColliding(s->GetColliderBounds(), other->GetColliderBounds()))
-                    s->OnCollision(other);
+                    s->OnCollision(other, *this);
             }
         }
-            
+
+        for(Sprite* s : added)
+            sprites.push_back(s);
+
+        added.clear();
 
         for(Sprite* s : removed)
         {       
@@ -140,13 +165,13 @@ void System::run()
 
         removed.clear();
 
-        SDL_SetRenderDrawColor(engine.get_ren(), 
+        SDL_SetRenderDrawColor(engine.Get_ren(), 
                                 backgroundColor.r,
                                 backgroundColor.g,
                                 backgroundColor.b,
                                 backgroundColor.r);
 
-        SDL_RenderClear(engine.get_ren());
+        SDL_RenderClear(engine.Get_ren());
         
  #if DEBUG 
         for(Sprite* s : sprites)
@@ -173,16 +198,16 @@ void System::run()
             }
             
             if(didCollide)
-                SDL_SetRenderDrawColor(engine.get_ren(), 0xff, 0x00, 0x00, 0xff);
+                SDL_SetRenderDrawColor(engine.Get_ren(), 0xff, 0x00, 0x00, 0xff);
             else
-                SDL_SetRenderDrawColor(engine.get_ren(), 0x00, 0xff, 0x00, 0xff);
+                SDL_SetRenderDrawColor(engine.Get_ren(), 0x00, 0xff, 0x00, 0xff);
             
             s->DEBUGDrawColliderBounds();
            
         }
  #endif
 
-        SDL_RenderPresent(engine.get_ren());
+        SDL_RenderPresent(engine.Get_ren());
 
         int delay = nextTick - SDL_GetTicks();
 

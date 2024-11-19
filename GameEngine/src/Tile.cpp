@@ -1,22 +1,22 @@
 #include "Tile.h"
 
-Tile * Tile::getInstance(int x, int y, int w, int h, std::string srcImage)
+Tile * Tile::GetInstance(int x, int y, int w, int h, std::string srcImage)
 {
     return new Tile(x, y, w, h, srcImage);
 }
 
-void Tile::tick(System& system)
+void Tile::Tick(System& system)
 {
     if(playerRef != nullptr)
     {
         Player* p = playerRef;
-        if ((p->GetPosition().x + (p->GetWidth() / 3)) < 5)
+        if ((p->GetPosition().x + (p->GetSize().w / 3)) < 5)
         {
             xPos += 5;
             setPosition(xPos, yPos);
         }
 
-        if(p->GetPosition().x + (p->GetWidth() - p->GetWidth()/3) > engine.GetWindowWidth() - 5)
+        if(p->GetPosition().x + (p->GetSize().w - p->GetSize().w/3) > engine.GetWindowWidth() - 5)
         {
             xPos -= 5;
             setPosition(xPos, yPos);
@@ -28,7 +28,7 @@ void Tile::tick(System& system)
             setPosition(xPos, yPos);
         }
 
-        if(p->GetPosition().y + p->GetHeight() > engine.GetWindowHeight() - 10)
+        if(p->GetPosition().y + p->GetSize().h > engine.GetWindowHeight() - 10)
         {
             
             yPos -= 5;

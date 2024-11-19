@@ -1,6 +1,6 @@
 #include "Tilemap.h"
 
-TileMap* TileMap::getInstance(int x, int y, int tileW, int tileH)
+TileMap* TileMap::GetInstance(int x, int y, int tileW, int tileH)
 {
     
     return new TileMap(x, y, tileW, tileH);
@@ -26,16 +26,16 @@ void TileMap::InitializeTiles()
             {
                 case '0':
                     {
-                        t = Tile::getInstance(mapPosition.x + (x * tileSize.w), mapPosition.y + (y * tileSize.h), tileSize.w, tileSize.h, "UIButton.png" ); 
+                        t = Tile::GetInstance(mapPosition.x + (x * tileSize.w), mapPosition.y + (y * tileSize.h), tileSize.w, tileSize.h, "UIButton.png" ); 
                     } break;
                 case '1':    
                     {
-                        t = Tile::getInstance(mapPosition.x + (x * tileSize.w), mapPosition.y + (y * tileSize.h), tileSize.w, tileSize.h, "iconDown.png" ); 
+                        t = Tile::GetInstance(mapPosition.x + (x * tileSize.w), mapPosition.y + (y * tileSize.h), tileSize.w, tileSize.h, "iconDown.png" ); 
                     } break;
             }
             
             t->SetPlayerReference(playerRef);
-            appRef->addSprite(t);
+            appRef->AddSprite(t);
 
         }
     }

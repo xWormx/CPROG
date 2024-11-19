@@ -9,8 +9,8 @@
 class Button : public MovableSprite
 {
     public:
-        static Button* getInstance(int x, int y, int w, int h, std::string srcImage);
-        void tick(System& system);
+        static Button* GetInstance(int x, int y, int w, int h, std::string srcImage);
+        void Tick(System& system);
 
         const Position& GetPosition() { return pos; } 
         const Dimension& GetSize() { return size; } 

@@ -8,8 +8,8 @@
 class Tile : public MovableSprite
 {
     public:
-        static Tile* getInstance(int x, int y, int w, int h, std::string srcImage);
-        void tick(System& system);
+        static Tile* GetInstance(int x, int y, int w, int h, std::string srcImage);
+        void Tick(System& system);
 
         void SetPlayerReference(Player* p)
         {

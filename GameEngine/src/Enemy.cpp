@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy* Enemy::getInstance(int x, int y, int h, int w, std::string srcImage, int maxHP)
+Enemy* Enemy::GetInstance(int x, int y, int h, int w, std::string srcImage, int maxHP)
 {
     return new Enemy(x, y, w, h, srcImage, maxHP);
 }
@@ -8,7 +8,7 @@ Enemy::Enemy(int x, int y, int h, int w, std::string srcImage, int maxHP) : Mova
 {
 }
 
-void Enemy::tick(System& system)
+void Enemy::Tick(System& system)
 {
     isMoving = false;
     
@@ -24,22 +24,22 @@ void Enemy::tick(System& system)
     }
     
 
-    if (keyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
+    if (KeyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
     {
         pos.x += moveSpeed;
         isMoving = true;
     }
-    if (keyPressed('a'))
+    if (KeyPressed('a'))
     {
         pos.x -= moveSpeed;
         isMoving = true;
     }
-    if (keyPressed('w'))
+    if (KeyPressed('w'))
     {
         pos.y -= moveSpeed;
         isMoving = true;
     }
-    if (keyPressed('s'))
+    if (KeyPressed('s'))
     {
         pos.y += moveSpeed;
         isMoving = true;
@@ -65,7 +65,7 @@ void Enemy::tick(System& system)
     if(txtButtonRef != nullptr)
         txtButtonRef->SetPosition(p);
 
-    if(keyPressed('p'))
+    if(KeyPressed('p'))
     {
        
         if(particleSpawnTick++ % 5 == 0)
@@ -73,12 +73,14 @@ void Enemy::tick(System& system)
             int px = engine.GetRandomNumberInRange(-12, 12);
             int py = engine.GetRandomNumberInRange(-12, 12);
 
-            int sx = engine.GetRandomNumberInRange(-5, 5);
-            int sy = engine.GetRandomNumberInRange(-8, 8);
-            Particle* p = Particle::getInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
+            int sx = engine.GetRandomNumberInRange(-8, -7);
+            int sy = engine.GetRandomNumberInRange(-1, 1);
+            Particle* p = Particle::GetInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
+            p->SetCollider(true, {pos.x, pos.y, 30, 30});
             p->SetMoveSpeed(sx, sy);
-
-            system.addSprite(p);
+            p->SetTag("enemyParticle");
+            system.AddCollider(p);
+            system.AddSprite(p);
         
         }
 
@@ -86,39 +88,6 @@ void Enemy::tick(System& system)
 
 }
 
-void Enemy::OnCollision(Sprite* other)
+void Enemy::OnCollision(Sprite* other, System& system)
 {
-    Player* p = dynamic_cast<Player*>(other);
-    if(p != nullptr)
-    {
-        std::cout << "Enemy collided with Player, from enemy!\n";
-    }
-}
-
-const bool Enemy::CheckCollision(Sprite* other) const
-{
-    Enemy *otherEnemy = dynamic_cast<Enemy*>(other);
-    if(otherEnemy != nullptr && otherEnemy != this)
-    {
-        if(pos.x < otherEnemy->pos.x + otherEnemy->width && 
-            pos.x + width > otherEnemy->pos.x)
-        {   
-            //std::cout << "COLLISION: " << collisions++ << "\n";
-
-            return true;
-        }
-    }
-
-    Particle *particle = dynamic_cast<Particle*>(other);
-    if(particle != nullptr)
-    {
-        if(pos.x < particle->GetPosition().x + particle->GetSize().w && 
-            pos.x + width > particle->GetPosition().x)
-        {   
-            //std::cout << "Particle hit Person!\n";
-            return true;
-        }
-    }
-    
-    return false;
 }

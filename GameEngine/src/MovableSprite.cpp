@@ -13,7 +13,7 @@ MovableSprite::MovableSprite(int x, int y, int w, int h) : Sprite(x,y,w,h)
 
 void MovableSprite::draw() const
 {
-    SDL_RenderCopy(engine.get_ren(), texture, &getSrcRect(), &getDestRect());
+    SDL_RenderCopy(engine.Get_ren(), texture, &getSrcRect(), &getDestRect());
 }
 
 void MovableSprite::setSpriteRegion(int x, int y, int w, int h)

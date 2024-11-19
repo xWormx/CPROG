@@ -5,7 +5,7 @@ SDL_Keycode InputComponent::getKeyCodeFromEvent(const SDL_Event& event) const
     return event.key.keysym.sym;
 }
 
-Uint8 InputComponent::getMouseButtonFromEvent(const SDL_Event& event) const
+Uint8 InputComponent::GetMouseButttonFromEvent(const SDL_Event& event) const
 {
     return event.button.button;
 }
@@ -36,7 +36,7 @@ void InputComponent::setKeyCodeReleased(const Sint32 keyCode)
         
 }
 
-bool InputComponent::getKeyPressed(const int keyCode) const
+bool InputComponent::GetKeyPressed(const int keyCode) const
 {
     int bitValue = 1;
 
@@ -61,7 +61,7 @@ void InputComponent::setMousePressed(const Uint32 button)
     }
 
 }
-void InputComponent::setMouseReleased(const Uint32 button)
+void InputComponent::SetMouseReleased(const Uint32 button)
 {
     int bitValue = 1;
     switch(button)

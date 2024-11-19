@@ -1,7 +1,7 @@
 #include "Particle.h"
 
 
-Particle* Particle::getInstance(int x, int y, int w, int h, std::string srcImage, int lt) 
+Particle* Particle::GetInstance(int x, int y, int w, int h, std::string srcImage, int lt) 
 {
     return new Particle(x,y,w,h,srcImage, lt);
 }
@@ -12,10 +12,10 @@ Particle::Particle(int x, int y, int w, int h, std::string srcImage, int lt) : M
 
 void Particle::draw()
 {
-    SDL_RenderCopy(engine.get_ren(), texture, &getSrcRect(), &getDestRect());
+    SDL_RenderCopy(engine.Get_ren(), texture, &getSrcRect(), &getDestRect());
 }
 
-void Particle::tick(System& system)
+void Particle::Tick(System& system)
 {
     lifeTime--;
 
@@ -23,7 +23,7 @@ void Particle::tick(System& system)
     {
         lifeTime = lifeTimeStart;
         pos = startPosition;
-        system.removeSprite(this);
+        system.RemoveSprite(this);
     }
     else
     {
@@ -38,6 +38,11 @@ void Particle::tick(System& system)
         setPosition(pos.x, pos.y);
         SetColliderBounds({pos.x, pos.y, size.w, size.h});
     }
+}
+
+void Particle::OnCollision(Sprite* other, System& system)
+{
+
 }
 
 void Particle::SetAppRef(System *app)
@@ -59,4 +64,9 @@ const Dimension& Particle::GetSize() const
 const Position& Particle::GetPosition() const
 {
     return pos;
+}
+
+void Particle::DestroySelf()
+{
+    lifeTime = -1;
 }

@@ -8,8 +8,8 @@
 class UIElement : public TextButton
 {
     public:
-        static UIElement* getInstance(int x, int y, int w, int h, std::string txt, std::string srcImage);
-        void tick(System& system);
+        static UIElement* GetInstance(int x, int y, int w, int h, std::string txt, std::string srcImage);
+        void Tick(System& system);
 
         const Position& GetPosition() const { return pos; } 
         void SetPosition(Position p)

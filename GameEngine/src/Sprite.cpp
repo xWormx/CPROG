@@ -8,7 +8,7 @@ Sprite::Sprite(int x, int y, int w, int h, std::string srcImage) : destRect{ x, 
     if(texture != nullptr)
         SDL_DestroyTexture(texture);
     
-    texture = IMG_LoadTexture(engine.get_ren(), fullSrcPath.c_str());
+    texture = IMG_LoadTexture(engine.Get_ren(), fullSrcPath.c_str());
     if(texture != nullptr)
     {
         SDL_Rect r;
@@ -36,7 +36,7 @@ Sprite::Sprite(int x, int y, int w, int h) : destRect{x,y,w,h}
 
 const void Sprite::DEBUGDrawSpriteBounds() const
 {
-    SDL_SetRenderDrawColor(engine.get_ren(), 0x00, 0xbb, 0xff, 0xff);
+    SDL_SetRenderDrawColor(engine.Get_ren(), 0x00, 0xbb, 0xff, 0xff);
 
     SDL_Point points[5] = {{destRect.x, destRect.y}, 
                             {destRect.x, destRect.y + destRect.h},
@@ -44,12 +44,12 @@ const void Sprite::DEBUGDrawSpriteBounds() const
                             {destRect.x + destRect.w, destRect.y},
                             {destRect.x, destRect.y}};
     
-    SDL_RenderDrawLines(engine.get_ren(), points, sizeof(points)/sizeof(SDL_Point));
+    SDL_RenderDrawLines(engine.Get_ren(), points, sizeof(points)/sizeof(SDL_Point));
 }
 
 const void Sprite::DEBUGDrawColliderBounds() const
 {
-    SDL_RenderDrawRect(engine.get_ren(), &collider.GetBounds());
+    SDL_RenderDrawRect(engine.Get_ren(), &collider.GetBounds());
 }
 
 const bool Sprite::DEBUGDidCollide(const Sprite& other) const
@@ -68,6 +68,11 @@ const bool Sprite::DEBUGDidCollide(const Sprite& other) const
     return false;
 }
 
+const bool Sprite::CompareTag(const std::string& otherSpriteTag) const
+{
+    return spriteTag == otherSpriteTag;
+}
+
 const SDL_Rect& Sprite::getSrcRect() const
 {
     return srcRect;
@@ -81,6 +86,28 @@ const SDL_Rect& Sprite::getDestRect() const
 const SDL_Texture* Sprite::getTexture() const
 {
     return texture;
+}
+
+Sprite::~Sprite()
+{
+    if(texture != nullptr)
+        SDL_DestroyTexture(texture);
+}
+
+void Sprite::SetTag(std::string tagName)
+{
+    spriteTag = tagName;
+}
+
+void Sprite::SetCollider(const bool& colliderState, SDL_Rect bounds)
+{
+    CanCollide(colliderState);
+    SetColliderBounds(bounds);
+}
+
+void Sprite::SetAlpha(Uint8 alpha) const
+{
+    SDL_SetTextureAlphaMod(texture, alpha);
 }
 
 void Sprite::setSrcRect(int x, int y, int w, int h)
@@ -97,20 +124,4 @@ void Sprite::setDestRect(int x, int y, int w, int h)
     destRect.y = y;
     destRect.w = w;
     destRect.h = h;
-}
-
-void Sprite::SetCollider(const bool& colliderState, SDL_Rect bounds)
-{
-    CanCollide(colliderState);
-    SetColliderBounds(bounds);
-}
-
-void Sprite::SetAlpha(Uint8 alpha) const
-{
-    SDL_SetTextureAlphaMod(texture, alpha);
-}
-
-Sprite::~Sprite()
-{
-    SDL_DestroyTexture(texture);
 }

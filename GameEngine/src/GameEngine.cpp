@@ -82,17 +82,17 @@ GameEngine::~GameEngine()
     SDL_Quit();
 }
 
-SDL_Renderer* GameEngine::get_ren() const
+SDL_Renderer* GameEngine::Get_ren() const
 {
     return this->renderer;
 }
 
-TTF_Font* GameEngine::get_font() const
+TTF_Font* GameEngine::Get_font() const
 {
     return this->font;
 }
 
-SDL_Window* GameEngine::get_window() const
+SDL_Window* GameEngine::Get_window() const
 {
     return this->window;
 }

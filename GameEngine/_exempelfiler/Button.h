@@ -9,11 +9,11 @@ class Button : public Component
 {
 
 public:
-    static Button* getInstance(int x, int y, int w, int h, std::string txt);
+    static Button* GetInstance(int x, int y, int w, int h, std::string txt);
     ~Button();
     void draw() const;
     void keyDown(const SDL_Event&);
-    void tick();
+    void Tick();
     void setPosition(SDL_Point newPosition);
     void move(SDL_Point step);
 protected:

@@ -1,7 +1,7 @@
 #include "Button.h"
 
 
-Button* Button::getInstance(int x, int y, int w, int h, std::string srcImage)
+Button* Button::GetInstance(int x, int y, int w, int h, std::string srcImage)
 {
     return new Button(x,y,w,h,srcImage);
 }
@@ -11,12 +11,14 @@ Button::Button(int x, int y, int w, int h, std::string srcImage) : MovableSprite
 
 }
 
-void Button::tick(System& system)
+void Button::Tick(System& system)
 {
     
 }
 
 void Button::SetPosition(Position p)
 {
+    pos.x = p.x;
+    pos.y = p.y;
     setDestRect(p.x, p.y, getDestRect().w, getDestRect().h);
 }

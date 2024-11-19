@@ -8,15 +8,19 @@
 class Particle : public MovableSprite
 {
     public:
-        static Particle* getInstance(int x, int y, int w, int h, std::string srcImage, int lt); 
-        void tick(System& system);
+        static Particle* GetInstance(int x, int y, int w, int h, std::string srcImage, int lt); 
+        void Tick(System& system);
         void draw();
 
         void SetAppRef(System* app);
         void SetMoveSpeed(int x, int y);
 
+        void OnCollision(Sprite* other, System& system);
+
         const Dimension& GetSize() const;
         const Position& GetPosition() const;
+
+        void DestroySelf();
 
     protected:
         Particle(int x, int y, int w, int h, std::string srcImage, int lt);

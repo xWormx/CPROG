@@ -12,7 +12,7 @@ class Component
         virtual void mouseDown(const SDL_Event&){}
         virtual void mouseUp(const SDL_Event&){}
         virtual void draw() const = 0;
-        virtual void tick() = 0;
+        virtual void Tick() = 0;
         virtual void setPosition(SDL_Point newPosition){}
         SDL_Rect* getRect();
     protected:

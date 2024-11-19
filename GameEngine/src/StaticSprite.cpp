@@ -6,5 +6,5 @@ StaticSprite::StaticSprite(int x, int y, int w, int h, std::string srcImage) : S
 
 void StaticSprite::draw() const
 {
-    SDL_RenderCopy(engine.get_ren(), const_cast<SDL_Texture*>(getTexture()), &getSrcRect(), &getDestRect());
+    SDL_RenderCopy(engine.Get_ren(), const_cast<SDL_Texture*>(getTexture()), &getSrcRect(), &getDestRect());
 }

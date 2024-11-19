@@ -13,23 +13,22 @@
 class Player : public MovableSprite
 {
     public:
-        static Player* getInstance(int x, int y, int h, int w, std::string srcImage, int maxHP); 
-        void tick(System& system);
+        static Player* GetInstance(int x, int y, int h, int w, std::string srcImage, int maxHP); 
+        void Tick(System& system);
 
         bool IsMoving()                     { return isMoving;}
-        int getMoveSpeed()                  { return moveSpeed; }
+        int GetMoveSpeed()                  { return moveSpeed; }
         const Position& GetPosition()       { return pos; }
-        const int& GetWidth()               { return width; }
-        const int& GetHeight()               { return height; }
+        const Dimension& GetSize()          { return size; }
 
-        const bool CheckCollision(Sprite* other) const;
+        void OnCollision(Sprite* other, System& system);
+        bool KeyPressed(const int keyCode)  { return InputComponent::GetKeyPressed(keyCode);}
         
-        void OnCollision(Sprite* other);
-        bool keyPressed(const int keyCode)  { return InputComponent::getKeyPressed(keyCode);}
-        
-        void setMoveSpeed(int speed)        { moveSpeed = speed; }
+        void SetMoveSpeed(int speed)        { moveSpeed = speed; }
         void SetTextButtonRef(TextButton* tb) { txtButtonRef = tb; }
-        
+
+        void TakeDamage(int damage);
+        void UpdateHealth(System& system);
 
         
     protected:
@@ -40,8 +39,6 @@ class Player : public MovableSprite
         Position pos;
         Dimension size;
         int maxHealth;
-        int width;
-        int height;
         int moveSpeed = 0;   
 
         // Animation
@@ -51,11 +48,11 @@ class Player : public MovableSprite
         
         bool isMoving;
         
-        Player* playerRef = nullptr;
         TextButton* txtButtonRef = nullptr;
-        std::vector<Particle*> particles;
 
         bool healthInitialized;
+        int currentHealth;
+        int damageTaken;
         std::vector<HPSlot*> healthBar;
 
 };

@@ -1,26 +1,26 @@
 #include "Player.h"
 
-Player* Player::getInstance(int x, int y, int h, int w, std::string srcImage, int maxHP)
+Player* Player::GetInstance(int x, int y, int h, int w, std::string srcImage, int maxHP)
 {
     return new Player(x, y, w, h, srcImage, maxHP);
 }
 
-Player::Player(int x, int y, int h, int w, std::string srcImage, int maxHP) : MovableSprite(x,y,w,h,srcImage), pos{x, y}, size{w,h}, maxHealth(maxHP)
+Player::Player(int x, int y, int h, int w, std::string srcImage, int maxHP) : MovableSprite(x,y,w,h,srcImage), pos{x, y}, size{w,h}, maxHealth(maxHP), currentHealth(maxHP), damageTaken(0)
 {
 }
 
-void Player::tick(System& system)
+void Player::Tick(System& system)
 {
     if(!healthInitialized)
     {
         for(int i = 0; i < maxHealth; i++)
         {
-            int hpW = 35, hpH = 20;
+            int hpW = 20, hpH = 12;
 
-            HPSlot* s = HPSlot::getInstance(pos.x + (i*hpW), pos.y, hpW, hpH, "HPSlot.png");
+            HPSlot* s = HPSlot::GetInstance(pos.x + (i*hpW), pos.y, hpW, hpH, "HPSlot.png");
             
             healthBar.push_back(s);
-            system.addSprite(s);
+            system.AddSprite(s);
         }
         healthInitialized = true;
     }
@@ -28,18 +28,22 @@ void Player::tick(System& system)
     {
         int i = 0;
         int rows = 1;
+        int offset = 100;
+        int startYPos = txtButtonRef->GetPosition().y;
         for(HPSlot* slot : healthBar)
         {
-            if(pos.x + (i * slot->GetSize().w) > pos.x + size.w)
+            if((pos.x - offset) + (i * slot->GetSize().w) > ((pos.x + size.w) + offset))
             {
                 rows++;
                 i = 0;
             }
-            slot->setPosition(pos.x + (i * slot->GetSize().w), pos.y - (rows * slot->GetSize().h));
+            slot->setPosition((pos.x - offset) + (i * slot->GetSize().w), startYPos - (rows * slot->GetSize().h));
             i++;
 
         }
     }
+
+    UpdateHealth(system);
 
 
     isMoving = false;
@@ -57,22 +61,22 @@ void Player::tick(System& system)
     
     AnimateSprite({0,0}, {32, 80}, 3, 2);
 
-    if (keyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
+    if (KeyPressed('d') || InputComponent::getMousePressed(SDL_BUTTON_LEFT))
     {
         pos.x += moveSpeed;
         isMoving = true;
     }
-    if (keyPressed('a'))
+    if (KeyPressed('a'))
     {
         pos.x -= moveSpeed;
         isMoving = true;
     }
-    if (keyPressed('w'))
+    if (KeyPressed('w'))
     {
         pos.y -= moveSpeed;
         isMoving = true;
     }
-    if (keyPressed('s'))
+    if (KeyPressed('s'))
     {
         pos.y += moveSpeed;
         isMoving = true;
@@ -100,7 +104,7 @@ void Player::tick(System& system)
     if(txtButtonRef != nullptr)
         txtButtonRef->SetPosition({p.x, p.y - txtButtonRef->GetSize().h});
 
-    if(keyPressed('p'))
+    if(KeyPressed('p'))
     {
        
         if(particleSpawnTick++ % 1 == 0)
@@ -110,52 +114,51 @@ void Player::tick(System& system)
 
             int sx = engine.GetRandomNumberInRange(-10, -5);
             int sy = engine.GetRandomNumberInRange(-3, 3);
-            Particle* p = Particle::getInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
+            Particle* p = Particle::GetInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
             p->SetCollider(true, {pos.x, pos.y, 30, 30});
             p->SetMoveSpeed(sx, sy);
-            system.addCollider(p);
-
-
-            system.addSprite(p);
+            p->SetTag("particle");
+            system.AddCollider(p);
+            system.AddSprite(p);
         
         }
     }
 }
 
-void Player::OnCollision(Sprite* other)
+// Ge varje psrite en std::string tag, och så kan man kolla mot taggen i OnCollision, som i unity typ.
+void Player::OnCollision(Sprite* other, System& system)
 {
-    Enemy* enemy = dynamic_cast<Enemy*>(other);
-    if(enemy != nullptr)
+
+    if(other->CompareTag("enemySmall"))
     {
-        std::cout << "OnCollision: Player & Enemy from Player\n";
+        std::cout << "Player collided with enemySmall\n";
+    }
+
+    if(other->CompareTag("enemyParticle"))
+    {
+        TakeDamage(1);
+        system.RemoveSprite(other);
+
     }
 }
 
-const bool Player::CheckCollision(Sprite* other) const
+void Player::TakeDamage(int damage)
 {
-    Player *otherPlayer = dynamic_cast<Player*>(other);
-    if(otherPlayer != nullptr && otherPlayer != this)
-    {
-        static int collisions = 0;
-        if(pos.x < otherPlayer->pos.x + otherPlayer->size.w && 
-            pos.x + size.w > otherPlayer->pos.x)
-        {   
-            std::cout << "COLLISION: " << collisions++ << "\n";
+    damageTaken += damage;
+}
 
-            return true;
+void Player::UpdateHealth(System& system)
+{
+    for(int i = 0; i < damageTaken; i++)
+    {
+        if(healthBar.size() > 0)
+        {
+            HPSlot* hs = healthBar.back();
+            healthBar.pop_back();
+            system.RemoveSprite(hs);
+            currentHealth -= damageTaken;    
         }
     }
 
-    Particle *particle = dynamic_cast<Particle*>(other);
-    if(particle != nullptr)
-    {
-        if(pos.x < particle->GetPosition().x + particle->GetSize().w && 
-            pos.x + size.w > particle->GetPosition().x)
-        {   
-            std::cout << "Particle hit Person!\n";
-            return true;
-        }
-    }
-    
-    return false;
+    damageTaken = 0;
 }

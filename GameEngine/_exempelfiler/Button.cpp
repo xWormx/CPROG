@@ -4,20 +4,20 @@
 
 Button::Button(int x, int y, int w, int h, std::string txt) : Component(x,y,w,h)
 {
-    SDL_Surface* surf = TTF_RenderText_Solid(engine.get_font(), txt.c_str(), {0,0,0});
-    texture = SDL_CreateTextureFromSurface(engine.get_ren(), surf);
+    SDL_Surface* surf = TTF_RenderText_Solid(engine.Get_font(), txt.c_str(), {0,0,0});
+    texture = SDL_CreateTextureFromSurface(engine.Get_ren(), surf);
     SDL_FreeSurface(surf);
     
     std::string srcIconDown = constants::gResPath + "images/iconDown.png";
     std::string srcIconUp = constants::gResPath + "images/iconUp.png";
 
 
-    iconUp = IMG_LoadTexture(engine.get_ren(), srcIconUp.c_str());
+    iconUp = IMG_LoadTexture(engine.Get_ren(), srcIconUp.c_str());
     if(iconUp == NULL)
         std::cout << "iconUp failed to load" << std::endl;
     currentIcon = iconUp;
 
-    iconDown = IMG_LoadTexture(engine.get_ren(), srcIconDown.c_str());    
+    iconDown = IMG_LoadTexture(engine.Get_ren(), srcIconDown.c_str());    
     if(iconDown == NULL)
         std::cout << "iconDown failed to load" << std::endl;
 }
@@ -29,15 +29,15 @@ Button::~Button()
     SDL_DestroyTexture(iconDown);
 }
 
-Button* Button::getInstance(int x, int y, int w, int h, std::string txt)
+Button* Button::GetInstance(int x, int y, int w, int h, std::string txt)
 {
     return new Button(x, y, w, h, txt);
 }
 
 void Button::draw() const
 {
-    SDL_RenderCopy(engine.get_ren(), currentIcon, NULL, &getRect());
-    SDL_RenderCopy(engine.get_ren(), texture, NULL, &getRect());
+    SDL_RenderCopy(engine.Get_ren(), currentIcon, NULL, &getRect());
+    SDL_RenderCopy(engine.Get_ren(), texture, NULL, &getRect());
 }
 
 void Button::keyDown(const SDL_Event& event)
@@ -52,7 +52,7 @@ void Button::keyDown(const SDL_Event& event)
     std::cout << "button '"<< key << "' was pressed" << std::endl;
 }
 
-void Button::tick()
+void Button::Tick()
 {
 
 }

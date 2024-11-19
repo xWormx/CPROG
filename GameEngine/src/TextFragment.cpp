@@ -1,14 +1,14 @@
 #include "TextFragment.h"
 
 
-TextFragment* TextFragment::getInstance(int x, int y, int w, int h, std::string text, SDL_Color c)
+TextFragment* TextFragment::GetInstance(int x, int y, int w, int h, std::string text, SDL_Color c)
 {
     return new TextFragment(x, y, w, h, text, c);
 }
 
-TextFragment::TextFragment(int x, int y, int w, int h, std::string text, SDL_Color c) : MovableSprite(x,y,w,h), strText(text)
+TextFragment::TextFragment(int x, int y, int w, int h, std::string text, SDL_Color c) : MovableSprite(x,y,w,h), strText(text), color(c)
 {
-    SDL_Surface *surface = TTF_RenderText_Solid(engine.get_font(), text.c_str(), c);
+    SDL_Surface *surface = TTF_RenderText_Solid(engine.Get_font(), text.c_str(), c);
 
     std::string error;
     if(surface == NULL)
@@ -20,7 +20,7 @@ TextFragment::TextFragment(int x, int y, int w, int h, std::string text, SDL_Col
     if(textTexture == nullptr)
         SDL_DestroyTexture(textTexture);
 
-    textTexture = SDL_CreateTextureFromSurface(engine.get_ren(), surface);
+    textTexture = SDL_CreateTextureFromSurface(engine.Get_ren(), surface);
     if(textTexture == nullptr)
     {
         error = SDL_GetError();
@@ -38,15 +38,14 @@ TextFragment::TextFragment(int x, int y, int w, int h, std::string text, SDL_Col
 
     srcRect.x = 0;
     srcRect.y = 0;
-
 }
 
 void TextFragment::draw() const
 {
-    SDL_RenderCopy(engine.get_ren(), textTexture, &getSrcRect(), &getDestRect());
+    SDL_RenderCopy(engine.Get_ren(), textTexture, &getSrcRect(), &getDestRect());
 }
 
-void TextFragment::tick(System& system)
+void TextFragment::Tick(System& system)
 {
     
 }
@@ -57,7 +56,7 @@ void TextFragment::SetText(std::string s)
     try
     {
         std::string error;
-        SDL_Surface* surface = TTF_RenderText_Solid(engine.get_font(), strText.c_str(), SDL_Color{255,255,255,255});    
+        SDL_Surface* surface = TTF_RenderText_Solid(engine.Get_font(), strText.c_str(), color);    
         if(surface == NULL)
         {
             error = SDL_GetError();
@@ -67,7 +66,7 @@ void TextFragment::SetText(std::string s)
         if(textTexture != nullptr)
             SDL_DestroyTexture(textTexture);
 
-        textTexture = SDL_CreateTextureFromSurface(engine.get_ren(), surface);
+        textTexture = SDL_CreateTextureFromSurface(engine.Get_ren(), surface);
         if(textTexture == NULL)
         {   
             error = SDL_GetError();
@@ -97,5 +96,7 @@ void TextFragment::SetText(std::string s)
 
 void TextFragment::SetPosition(Position p)
 {
+    pos.x = p.x;
+    pos.y = p.y;
     setDestRect(p.x, p.y, getDestRect().w, getDestRect().h);
 }

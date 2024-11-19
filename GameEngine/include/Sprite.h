@@ -16,17 +16,20 @@ class Sprite : public InputComponent
 {
     public:
         virtual void draw() const = 0; 
-        virtual void tick(System& system) = 0;
+        virtual void Tick(System& system) = 0;
      
+        const bool CompareTag(const std::string& otherSpriteTag) const;
+
         const SDL_Rect& getSrcRect() const;
         const SDL_Rect& getDestRect() const;
         const SDL_Texture* getTexture() const;
         const SDL_Rect& GetColliderBounds() {return collider.GetBounds();}
 
+        void SetTag(std::string tagName);
         void SetCollider(const bool& colliderState, SDL_Rect bounds);
         void SetColliderBounds(const SDL_Rect& bounds){collider.SetBounds(bounds);}
         void CanCollide(const bool& colliderState) { collider.SetCollideState(colliderState); }
-        virtual void OnCollision(Sprite* other){}
+        virtual void OnCollision(Sprite* other, System& system){}
 
         const void DEBUGDrawSpriteBounds() const;
         const void DEBUGDrawColliderBounds() const;
@@ -42,6 +45,8 @@ class Sprite : public InputComponent
         Sprite(int x, int y, int w, int h, std::string srcImage);
         Sprite(int x, int y, int w, int h);
     private:
+        std::string spriteTag;
+
         SDL_Rect srcRect; // What part to draw
         SDL_Rect destRect; // Where to draw it
         SDL_Texture* texture = nullptr;     

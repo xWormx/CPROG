@@ -14,12 +14,12 @@ class InputComponent
         void setKeyCodePressed(const Sint32 keyCode);
         void setKeyCodeReleased(const Sint32 keyCode);
         void setMousePressed(const Uint32 button);
-        void setMouseReleased(const Uint32 button);
+        void SetMouseReleased(const Uint32 button);
 
         SDL_Keycode getKeyCodeFromEvent(const SDL_Event&) const;
-        Uint8 getMouseButtonFromEvent(const SDL_Event&) const;
+        Uint8 GetMouseButttonFromEvent(const SDL_Event&) const;
         
-        bool getKeyPressed(const int keyCode) const;
+        bool GetKeyPressed(const int keyCode) const;
         bool getMousePressed(const Uint8 button) const;
 
     private:

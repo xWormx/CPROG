@@ -12,13 +12,14 @@
 class TextButton : public MovableSprite
 {
     public:
-        static TextButton* getInstance(TextFragment *t, Button *b);
+        static TextButton* GetInstance(TextFragment *t, Button *b);
         void setFont(std::string strFont);
         void draw() const;
-        void tick(System& system);
+        void Tick(System& system);
         void setText(std::string s);
         void SetPosition(Position p);
 
+        const Position& GetPosition() {return button->GetPosition();}
         const Dimension& GetSize() { return button->GetSize(); }
 
         ~TextButton();

@@ -1,6 +1,6 @@
 /*#include "UIElement.h"
 
-UIElement* UIElement::getInstance(int x, int y, int w, int h, std::string txt, std::string srcImage)
+UIElement* UIElement::GetInstance(int x, int y, int w, int h, std::string txt, std::string srcImage)
 {
     return new UIElement(x, y, w, h, txt, srcImage);
 }
@@ -9,9 +9,9 @@ UIElement::UIElement(int x, int y, int w, int h, std::string txt, std::string sr
 {
 }
 
-void UIElement::tick(System& system)
+void UIElement::Tick(System& system)
 {
-    if (InputComponent::getKeyPressed('w'))
+    if (InputComponent::GetKeyPressed('w'))
     {
         setText("KICK");
     }
