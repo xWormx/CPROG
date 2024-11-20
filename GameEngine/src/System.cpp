@@ -10,9 +10,28 @@ System::System(int fps, SDL_Color bg)
     std::cout << "System running" << std::endl;
 }
 
+void System::AddLevel(Level *level)
+{
+    levels.push_back(level);
+    // Laddar första leveln som default när den läggs till.
+    if(levels.size() == 1)
+        LoadLevel(1);
+}
+
+void System::LoadLevel(unsigned int levelIndex)
+{
+    for(Level* l : levels)
+    {
+        if(l->GetLevelIndex() == levelIndex)
+            currentLevel = l;
+    }
+}
+
 void System::AddSprite(Sprite *sprite)
 {
-    if(sprite != nullptr)
+
+    currentLevel->AddSprite(sprite);
+    /* if(sprite != nullptr)
     {
         // Se till så att inte samma pekare läggs till 2 gånger
         // vilket kan hända med textButton som tar Text* och Button* som argument.
@@ -21,24 +40,27 @@ void System::AddSprite(Sprite *sprite)
                 return;
 
         added.push_back(sprite);
-    }
 
-
+        if(sprite->Collider2DIsValid())
+        {
+            AddCollider(sprite);
+        }
+    } */
 }
 
 void System::RemoveSprite(Sprite* sprite)
 {
-    if(sprite != nullptr)
+    currentLevel->RemoveSprite(sprite);
+    /* if(sprite != nullptr)
     {
         for(Sprite* existingSprite : removed)
         {
             if(sprite == existingSprite)
                 return;
         }
-
         removed.push_back(sprite);
     }
-        
+     */    
 }
 
 void System::AddCollider(Sprite *sprite)
@@ -127,7 +149,40 @@ void System::Run()
             }
         }
 
-        for(Sprite* s : sprites)
+        currentLevel->Update(*this); 
+        /*
+         
+        for(Sprite* s : currentLevel->GetSprites())
+            s->Tick(*this);
+
+        for(Sprite* s : currentLevel->GetColliderSprites())
+        {
+            for(Sprite* other : currentLevel->GetColliderSprites())
+            {
+                if(s != other && IsColliding(s->GetColliderBounds(), other->GetColliderBounds()))
+                    s->OnCollision(other, *this);
+            }
+        }
+
+        for(Sprite* s : currentLevel->GetAddedSprites())
+            sprites.push_back(s);
+
+        added.clear();
+
+        for(Sprite* s : removed)
+        {       
+            for(std::vector<Sprite*>::iterator i = sprites.begin(); i != sprites.end();)
+            {
+                if(*i == s)
+                {
+                    i = sprites.erase(i);
+                }    
+                else
+                    i++;
+            }
+
+        */
+ /*        for(Sprite* s : sprites)
             s->Tick(*this);
 
         for(Sprite* s : colliderSprites)
@@ -167,7 +222,7 @@ void System::Run()
             delete s;
         }
 
-        removed.clear();
+        removed.clear(); */
 
         SDL_SetRenderDrawColor(engine.Get_ren(), 
                                 backgroundColor.r,
@@ -178,19 +233,19 @@ void System::Run()
         SDL_RenderClear(engine.Get_ren());
         
  #if DEBUG 
-        for(Sprite* s : sprites)
+        for(Sprite* s : currentLevel->GetSprites())
         {
             s->Draw();
             s->DEBUGDrawSpriteBounds();
         }
 
-        for(Sprite* s : colliderSprites)
+        for(Sprite* s : currentLevel->GetColliders())
         {
             // O(n^2) kollisionsdetektering just nu....
           
             bool didCollide = false;
             
-            for(Sprite* collider : colliderSprites)
+            for(Sprite* collider : currentLevel->GetColliders())
             {
                 if(s != collider)
                 {

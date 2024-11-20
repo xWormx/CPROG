@@ -7,7 +7,7 @@
 struct Collider2D
 {
     public:
-
+        Collider2D(const bool& colliderState, const SDL_Rect& bounds);
         void SetBounds(const SDL_Rect& bounds) {rect = bounds;} 
         void SetCollideState(const bool& collideState) { canCollide = collideState;}
 

@@ -49,17 +49,17 @@ const void Sprite::DEBUGDrawSpriteBounds() const
 
 const void Sprite::DEBUGDrawColliderBounds() const
 {
-    SDL_RenderDrawRect(engine.Get_ren(), &collider.GetBounds());
+    SDL_RenderDrawRect(engine.Get_ren(), &collider->GetBounds());
 }
 
 const bool Sprite::DEBUGDidCollide(const Sprite& other) const
 {
     // y goes downwards so bottom is y + h;
-    int left = collider.GetBounds().x, right = collider.GetBounds().x + collider.GetBounds().w,
-        top = collider.GetBounds().y, bottom = collider.GetBounds().y + collider.GetBounds().h;
+    int left = collider->GetBounds().x, right = collider->GetBounds().x + collider->GetBounds().w,
+        top = collider->GetBounds().y, bottom = collider->GetBounds().y + collider->GetBounds().h;
     
-    int otherLeft = other.collider.GetBounds().x, otherRight  = other.collider.GetBounds().x + other.collider.GetBounds().w,
-        otherTop  = other.collider.GetBounds().y, otherBottom = other.collider.GetBounds().y + other.collider.GetBounds().h;
+    int otherLeft = other.collider->GetBounds().x, otherRight  = other.collider->GetBounds().x + other.collider->GetBounds().w,
+        otherTop  = other.collider->GetBounds().y, otherBottom = other.collider->GetBounds().y + other.collider->GetBounds().h;
 
     if(left < otherRight && right > otherLeft &&
         top < otherBottom && bottom > otherTop )
@@ -92,6 +92,9 @@ Sprite::~Sprite()
 {
     if(texture != nullptr)
         SDL_DestroyTexture(texture);
+    
+    if(collider != nullptr)
+        delete collider;
 }
 
 void Sprite::SetTag(std::string tagName)
@@ -99,11 +102,33 @@ void Sprite::SetTag(std::string tagName)
     spriteTag = tagName;
 }
 
-void Sprite::SetCollider(const bool& colliderState, SDL_Rect bounds)
+void Sprite::InstallCollider2D(const bool& colliderState, const SDL_Rect& bounds)
 {
-    CanCollide(colliderState);
-    SetColliderBounds(bounds);
+    if(collider == nullptr)
+    {
+        collider = new Collider2D(colliderState, bounds);    
+    }
+    else
+    {
+        throw std::runtime_error("Collide2D was already installed"); 
+    }
 }
+
+void Sprite::SetColliderActive(const bool& state)
+{
+    if(collider == nullptr)
+        throw std::runtime_error("Collider2D must be installed before added to the system.\n");
+
+    collider->SetCollideState(state);
+}
+void Sprite::SetColliderBounds(const SDL_Rect& bounds)
+{
+    if(collider == nullptr)
+        throw std::runtime_error("Collider2D must be installed before added to the system.\n");
+    
+    collider->SetBounds(bounds);
+}
+    
 
 void Sprite::SetAlpha(Uint8 alpha) const
 {

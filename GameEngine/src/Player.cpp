@@ -89,10 +89,8 @@ void Player::Tick(System& system)
     Position p = {pos.x - size.w/4, pos.y};
     if(txtButtonRef != nullptr)
         txtButtonRef->SetPosition({p.x, p.y - txtButtonRef->GetSize().h});
-    if(system.GetKeyPressedOnce('a'))
-    {
-        std::cout << "ONCE\n";
-    }
+
+
     if(system.GetKeyPressed('p'))
     {
        
@@ -104,10 +102,10 @@ void Player::Tick(System& system)
             int sx = engine.GetRandomNumberInRange(-10, -5);
             int sy = engine.GetRandomNumberInRange(-3, 3);
             Particle* p = Particle::GetInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
-            p->SetCollider(true, {pos.x, pos.y, 30, 30});
+            p->InstallCollider2D(true, {pos.x, pos.y, 30, 30});
             p->SetMoveSpeed(sx, sy);
             p->SetTag("particle");
-            system.AddCollider(p);
+            
             system.AddSprite(p);
         
         }

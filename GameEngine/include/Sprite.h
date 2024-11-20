@@ -23,12 +23,14 @@ class Sprite
         const SDL_Rect& GetSrcRect() const;
         const SDL_Rect& GetDestRect() const;
         const SDL_Texture* getTexture() const;
-        const SDL_Rect& GetColliderBounds() {return collider.GetBounds();}
+        const SDL_Rect& GetColliderBounds() {return collider->GetBounds();}
+        const bool Collider2DIsValid() { return collider != nullptr; }
 
         void SetTag(std::string tagName);
-        void SetCollider(const bool& colliderState, SDL_Rect bounds);
-        void SetColliderBounds(const SDL_Rect& bounds){collider.SetBounds(bounds);}
-        void CanCollide(const bool& colliderState) { collider.SetCollideState(colliderState); }
+        void InstallCollider2D(const bool& colliderState, const SDL_Rect& bounds);
+        void SetColliderActive(const bool& state); 
+        void SetColliderBounds(const SDL_Rect& bounds);
+        
         virtual void OnCollision(Sprite* other, System& system){}
 
         const void DEBUGDrawSpriteBounds() const;
@@ -52,7 +54,7 @@ class Sprite
         SDL_Rect destRect; // Where to draw it
         SDL_Texture* texture = nullptr;     
 
-        Collider2D collider;
+        Collider2D *collider = nullptr;
 
         void setDestRect(int x, int y, int w, int h);
         void setSrcRect(int x, int y, int w, int h);

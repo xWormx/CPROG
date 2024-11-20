@@ -31,17 +31,28 @@ int main(int argv, char **argc)
     TextButton* textButton = TextButton::GetInstance(t, b);
 
     Player* player1 = Player::GetInstance(100, 200, 64, 100, "PersonIdle_Small.png", 20);
-    app.AddCollider(player1);
-    player1->SetCollider(true, {200, 200, 64, 100});
+    //app.AddCollider(player1);
+    player1->InstallCollider2D(true, {200, 200, 64, 100});
     player1->SetTextButtonRef(textButton);
     player1->setSpriteRegion(0, 0, 124, 124);
     player1->SetMoveSpeed(5);
     player1->SetTag("player");
 
     Enemy* enemy = Enemy::GetInstance(600, 200, 150, 150, "PersonIdle.png", 20);
-    app.AddCollider(enemy);
-    enemy->SetCollider(true, {200, 200, 300, 300});
+    //app.AddCollider(enemy);
+    enemy->InstallCollider2D(true, {200, 200, 300, 300});
     enemy->SetTag("enemySmall");
+    
+    TextField* textField = TextField::GetInstance(200, 200, {0xff, 0xff, 0xff, 0xff});
+    TextField* nameField = TextField::GetInstance(200, 250, {0xff, 0xff, 0xff, 0xff});
+
+  // Måste fixa så att två levelar inte kan ha samma index.
+    Level* level1 = Level::GetInstance(1,
+            {player1, textField, nameField, textButton, enemy} );
+    //level1.addSprite(player);
+
+    throw std::runtime_error("AKUT! nu kallar systems AddSprite på Levels AddSprite, detta är INTE BRA för Level måste läggas till innan Tilemap då den kallar på AddSprite men currentLevel är nullptr då!!");
+    app.AddLevel(level1);
 
     TileMap* map1 = TileMap::GetInstance(-50, 0, 60, 60);
     map1->SetAppRef(&app);
@@ -50,14 +61,25 @@ int main(int argv, char **argc)
 
     // Ska TextField ta emot Sprite för att rama in textfältet? eller
     // hur ska det lösas med inramningen?
-    TextField* textField = TextField::GetInstance(200, 200, {0xff, 0xff, 0xff, 0xff});
-    TextField* nameField = TextField::GetInstance(200, 250, {0xff, 0xff, 0xff, 0xff});
 
-    app.AddSprite(textField);
-    app.AddSprite(nameField);
-    app.AddSprite(textButton);
-    app.AddSprite(player1);
-    app.AddSprite(enemy);
+
+    /*
+    
+    Level* level1 = Level::GetInstance(1,
+    );
+    level1.addSprite(player);
+
+
+    app.AddLevel(level1);
+    */
+
+ 
+
+    //app.AddSprite(textField);
+    //app.AddSprite(nameField);
+    //app.AddSprite(textButton);
+    //app.AddSprite(player1);
+    //app.AddSprite(enemy);
 
     app.Run();
 

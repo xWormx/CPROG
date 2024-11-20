@@ -78,10 +78,9 @@ void Enemy::Tick(System& system)
         int sy = engine.GetRandomNumberInRange(-1, 1);
 
         Particle* p = Particle::GetInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
-        p->SetCollider(true, {pos.x, pos.y, 30, 30});
+        p->InstallCollider2D(true, {pos.x, pos.y, 30, 30});
         p->SetMoveSpeed(sx, sy);
         p->SetTag("enemyParticle");
-        system.AddCollider(p);
         system.AddSprite(p);
     }
 
