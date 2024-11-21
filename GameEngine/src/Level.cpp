@@ -1,16 +1,12 @@
 #include "Level.h"
 
-Level* Level::GetInstance(unsigned int index, std::initializer_list<Sprite*> sprites)
+Level* Level::GetInstance(unsigned int index)
 {
-    return new Level(index, sprites);
+    return new Level(index);
 }
 
-Level::Level(unsigned int index, std::initializer_list<Sprite*> sprites) : levelIndex(index)
+Level::Level(unsigned int index) : levelIndex(index)
 {
-    for(Sprite* s : sprites)
-    {
-        AddSprite(s);
-    }
 }
 
 void Level::Update(System& system)
@@ -80,6 +76,11 @@ void Level::AddSprite(Sprite *sprite)
             AddCollider(sprite);
         }
     }
+}
+void Level::AddSpriteList(std::initializer_list<Sprite*> sprites)
+{
+    for(Sprite* s : sprites)
+        AddSprite(s);
 }
 
 void Level::RemoveSprite(Sprite* sprite)

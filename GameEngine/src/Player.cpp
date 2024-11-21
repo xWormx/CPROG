@@ -110,6 +110,13 @@ void Player::Tick(System& system)
         
         }
     }
+
+    if(system.GetKeyPressedOnce('u'))
+        system.LoadLevel(2);
+
+    if(system.GetKeyPressedOnce('y'))
+        system.LoadLevel(1);
+
 }
 
 // Ge varje psrite en std::string tag, och så kan man kolla mot taggen i OnCollision, som i unity typ.

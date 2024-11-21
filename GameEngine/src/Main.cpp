@@ -16,7 +16,11 @@
 int main(int argv, char **argc)
 {
     System app(FPS, {255, 150, 70, 255});
-
+    Level* level1 = Level::GetInstance(1); 
+    app.AddLevel(level1);
+    Level* level2 = Level::GetInstance(2); 
+    app.AddLevel(level2);
+    
     int w = 100, h = 30;
     TextFragment* t = TextFragment::GetInstance(100, 100, w, h, "Test", {0xff,0,0xbb,0xff});
     Button* b = Button::GetInstance(100, 100, w, h, "UIButton.png");
@@ -31,7 +35,6 @@ int main(int argv, char **argc)
     TextButton* textButton = TextButton::GetInstance(t, b);
 
     Player* player1 = Player::GetInstance(100, 200, 64, 100, "PersonIdle_Small.png", 20);
-    //app.AddCollider(player1);
     player1->InstallCollider2D(true, {200, 200, 64, 100});
     player1->SetTextButtonRef(textButton);
     player1->setSpriteRegion(0, 0, 124, 124);
@@ -39,50 +42,23 @@ int main(int argv, char **argc)
     player1->SetTag("player");
 
     Enemy* enemy = Enemy::GetInstance(600, 200, 150, 150, "PersonIdle.png", 20);
-    //app.AddCollider(enemy);
     enemy->InstallCollider2D(true, {200, 200, 300, 300});
     enemy->SetTag("enemySmall");
     
+    // Ska TextField ta emot Sprite för att rama in textfältet? eller
+    // hur ska det lösas med inramningen?
     TextField* textField = TextField::GetInstance(200, 200, {0xff, 0xff, 0xff, 0xff});
     TextField* nameField = TextField::GetInstance(200, 250, {0xff, 0xff, 0xff, 0xff});
-
-  // Måste fixa så att två levelar inte kan ha samma index.
-    Level* level1 = Level::GetInstance(1,
-            {player1, textField, nameField, textButton, enemy} );
-    //level1.addSprite(player);
-
-    throw std::runtime_error("AKUT! nu kallar systems AddSprite på Levels AddSprite, detta är INTE BRA för Level måste läggas till innan Tilemap då den kallar på AddSprite men currentLevel är nullptr då!!");
-    app.AddLevel(level1);
 
     TileMap* map1 = TileMap::GetInstance(-50, 0, 60, 60);
     map1->SetAppRef(&app);
     map1->SetPlayerRef(player1);
     map1->InitializeTiles();
-
-    // Ska TextField ta emot Sprite för att rama in textfältet? eller
-    // hur ska det lösas med inramningen?
-
-
-    /*
     
-    Level* level1 = Level::GetInstance(1,
-    );
-    level1.addSprite(player);
-
-
-    app.AddLevel(level1);
-    */
-
+    level1->AddSpriteList({player1, textField, nameField, textButton, enemy});
+    level2->AddSprite(player1);
  
-
-    //app.AddSprite(textField);
-    //app.AddSprite(nameField);
-    //app.AddSprite(textButton);
-    //app.AddSprite(player1);
-    //app.AddSprite(enemy);
-
     app.Run();
 
- 
     return 0;
 }

@@ -11,23 +11,22 @@ class System;
 class Level
 {
     public:
-        static Level* GetInstance(unsigned int index, std::initializer_list<Sprite*> sprites); 
+        static Level* GetInstance(unsigned int index); 
+        
         const unsigned int& GetLevelIndex() const { return levelIndex; }
         void Update(System& system);
 
         void AddSprite(Sprite* sprite);
+        void AddSpriteList(std::initializer_list<Sprite*> sprites);
         void RemoveSprite(Sprite* sprite);
-        
-
         
         std::vector<Sprite*> GetSprites() { return sprites;}        
         std::vector<Sprite*> GetAdded() { return added;}
         std::vector<Sprite*> GetRemoved() { return removed;}
         std::vector<Sprite*> GetColliders() { return colliderSprites;}
 
-
     protected:
-        Level(unsigned int index, std::initializer_list<Sprite*> sprites);
+        Level(unsigned int index);
 
     private:
         unsigned int levelIndex;
@@ -35,7 +34,6 @@ class Level
         std::vector<Sprite*> added;
         std::vector<Sprite*> removed;
         std::vector<Sprite*> colliderSprites;
-        std::vector<Level*> levels;
 
         void UpdateSprites(System& system);
         void AddCollider(Sprite* sprite);
