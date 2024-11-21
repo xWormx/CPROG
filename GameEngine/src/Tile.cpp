@@ -34,6 +34,8 @@ void Tile::Tick(System& system)
             yPos -= 5;
             setPosition(xPos, yPos);
         }
+        if(Collider2DIsValid())
+            SetColliderBounds({xPos, yPos, width, height});
 
     }
 }

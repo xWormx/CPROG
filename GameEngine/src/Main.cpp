@@ -34,6 +34,7 @@ int main(int argv, char **argc)
     // har något internt beteende som borde hända där???
     TextButton* textButton = TextButton::GetInstance(t, b);
 
+    throw std::runtime_error("FIXA COLLISION RESOLVE");
     Player* player1 = Player::GetInstance(100, 200, 64, 100, "PersonIdle_Small.png", 20);
     player1->InstallCollider2D(true, {200, 200, 64, 100});
     player1->SetTextButtonRef(textButton);

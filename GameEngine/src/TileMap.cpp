@@ -26,7 +26,10 @@ void TileMap::InitializeTiles()
             {
                 case '0':
                     {
-                        t = Tile::GetInstance(mapPosition.x + (x * tileSize.w), mapPosition.y + (y * tileSize.h), tileSize.w, tileSize.h, "UIButton.png" ); 
+                        int xp = mapPosition.x + (x * tileSize.w);
+                        int yp = mapPosition.y + (y * tileSize.h);
+                        t = Tile::GetInstance(xp, yp, tileSize.w, tileSize.h, "UIButton.png" ); 
+                        t->InstallCollider2D(true,{xp, yp, tileSize.w, tileSize.h});
                     } break;
                 case '1':    
                     {
