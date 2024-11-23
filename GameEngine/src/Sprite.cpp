@@ -97,16 +97,17 @@ Sprite::~Sprite()
         delete collider;
 }
 
+
 void Sprite::SetTag(std::string tagName)
 {
     spriteTag = tagName;
 }
 
-void Sprite::InstallCollider2D(const bool& colliderState, const SDL_Rect& bounds)
+void Sprite::InstallCollider2D(const bool& colliderState, const SDL_Rect& bounds, const bool& _isTrigger, const bool& _isStatic)
 {
     if(collider == nullptr)
     {
-        collider = new Collider2D(colliderState, bounds);    
+        collider = new Collider2D(colliderState, bounds, _isTrigger, _isStatic);    
     }
     else
     {

@@ -17,7 +17,7 @@ void Player::Tick(System& system)
         {
             int hpW = 20, hpH = 12;
 
-            HPSlot* s = HPSlot::GetInstance(pos.x + (i*hpW), pos.y, hpW, hpH, "HPSlot.png");
+            HPSlot* s = HPSlot::GetInstance(GetDestRect().x + (i*hpW), GetDestRect().y, hpW, hpH, "HPSlot.png");
             
             healthBar.push_back(s);
             system.AddSprite(s);
@@ -29,15 +29,15 @@ void Player::Tick(System& system)
         int i = 0;
         int rows = 1;
         int offset = 100;
-        int startYPos = txtButtonRef->GetPosition().y;
+        int startYPos = txtButtonRef->GetDestRect().y;
         for(HPSlot* slot : healthBar)
         {
-            if((pos.x - offset) + (i * slot->GetSize().w) > ((pos.x + size.w) + offset))
+            if((GetDestRect().x - offset) + (i * slot->GetSize().w) > ((GetDestRect().x + size.w) + offset))
             {
                 rows++;
                 i = 0;
             }
-            slot->setPosition((pos.x - offset) + (i * slot->GetSize().w), startYPos - (rows * slot->GetSize().h));
+            slot->setPosition((GetDestRect().x - offset) + (i * slot->GetSize().w), startYPos - (rows * slot->GetSize().h));
             i++;
 
         }
@@ -49,44 +49,42 @@ void Player::Tick(System& system)
 
     if (system.GetKeyPressed('d') || system.GetMousePressed(SDL_BUTTON_LEFT))
     {
-        pos.x += moveSpeed;
+        Move(moveSpeed, 0);
         isMoving = true;
     }
     if (system.GetKeyPressed('a'))
     {
-        pos.x -= moveSpeed;
+        Move(-moveSpeed, 0);
         isMoving = true;
     }
     if (system.GetKeyPressed('w'))
     {
-        pos.y -= moveSpeed;
+        Move(0, -moveSpeed);
         isMoving = true;
     }
     if (system.GetKeyPressed('s'))
     {
-        pos.y += moveSpeed;
+        Move(0, moveSpeed);
         isMoving = true;
     }
 
     // Restric movment to be inside window
-    if ((pos.x + (size.w / 3)) < 0)
-        pos.x = -(size.w / 3);
-    if(pos.x + (size.w - size.w/3) > engine.GetWindowWidth())
-        pos.x = engine.GetWindowWidth() - (size.w - (size.w/3)); 
-    if((pos.y + 80) < 0)
-        pos.y = -80;
-    if(pos.y + size.h > engine.GetWindowHeight())
-        pos.y = engine.GetWindowHeight() - size.h;
+    if (GetColliderBounds().x < 5)
+        Move(5, 0);
+    if(GetColliderBounds().x + GetColliderBounds().w > engine.GetWindowWidth() - 5)
+        Move(-5, 0); 
+    if((GetColliderBounds().y - 5) < 0)
+        Move(0, 5);
+    if(GetColliderBounds().y + GetColliderBounds().h > engine.GetWindowHeight() - 5)
+        Move(0, -5);
 
 
     if(txtButtonRef != NULL)
         txtButtonRef->SetPosition(pos);
-    
-    MovableSprite::setPosition(pos.x, pos.y);
 
-    SetColliderBounds({pos.x, pos.y + (2 * size.h/3), size.w, size.h / 3});
+    SetColliderBounds({GetDestRect().x, GetDestRect().y + (2 * size.h/3), size.w, size.h / 3});
 
-    Position p = {pos.x - size.w/4, pos.y};
+    Position p = {GetDestRect().x - size.w/4, GetDestRect().y};
     if(txtButtonRef != nullptr)
         txtButtonRef->SetPosition({p.x, p.y - txtButtonRef->GetSize().h});
 
@@ -101,8 +99,8 @@ void Player::Tick(System& system)
 
             int sx = engine.GetRandomNumberInRange(-10, -5);
             int sy = engine.GetRandomNumberInRange(-3, 3);
-            Particle* p = Particle::GetInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
-            p->InstallCollider2D(true, {pos.x, pos.y, 30, 30});
+            Particle* p = Particle::GetInstance(GetDestRect().x + px, GetDestRect().y + py, 30 , 30, "Particle.png", 30);
+            p->InstallCollider2D(true, {GetDestRect().x, GetDestRect().y, 30, 30}, true, false);
             p->SetMoveSpeed(sx, sy);
             p->SetTag("particle");
             
@@ -119,7 +117,6 @@ void Player::Tick(System& system)
 
 }
 
-// Ge varje psrite en std::string tag, och så kan man kolla mot taggen i OnCollision, som i unity typ.
 void Player::OnCollision(Sprite* other, System& system)
 {
 

@@ -188,6 +188,67 @@ void System::AppendTextInput(std::string& str)
     str += strTextInput;
 }
 
+void System::ResolveCollision(Sprite* a, Sprite* b)
+{
+    int aX = a->GetColliderBounds().x;
+    int aY = a->GetColliderBounds().y;
+    int aW = a->GetColliderBounds().w;
+    int aH = a->GetColliderBounds().h;
+    
+    int bX = b->GetColliderBounds().x;
+    int bY = b->GetColliderBounds().y;
+    int bW = b->GetColliderBounds().w;
+    int bH = b->GetColliderBounds().h;
+    
+    int overlapX;
+    int overlapY;
+
+    if(aX < bX)
+        overlapX = (aX + aW) - bX;
+    else
+        overlapX = (bX + bW) - aX;
+
+    if(aY < bY)
+        overlapY = (aY + aH) - bY;
+    else
+        overlapY = (bY + bH) - aY;
+
+    int drX = a->GetDestRect().x;
+    int drY = a->GetDestRect().y;
+    int drW = a->GetDestRect().w;
+    int drH = a->GetDestRect().h;
+
+    if(overlapX < overlapY)
+    {
+        if(aX < bX)
+        {
+            a->SetColliderBounds({aX - overlapX, aY, aW, aH});
+            a->setDestRect(drX - overlapX, drY, drW, drH);
+        }
+        else
+        {
+            a->SetColliderBounds({aX + overlapX, aY, aW, aH});
+            a->setDestRect(drX + overlapX, drY, drW, drH);
+        }
+        
+    }
+    else
+    {
+        if(aY < bY)
+        {
+            a->SetColliderBounds({aX, aY - overlapY, aW, aH});
+            a->setDestRect(drX, drY - overlapY, drW, drH);    
+        }
+        else
+        {
+            a->SetColliderBounds({aX, aY + overlapY, aW, aH});
+            a->setDestRect(drX, drY + overlapY, drW, drH);    
+        }
+        
+    }
+        
+}
+
 void System::HandleKeyDownEvents(const SDL_Event& event)
 {
     inputComponent.setKeyCodePressed(inputComponent.getKeyCodeFromEvent(event));

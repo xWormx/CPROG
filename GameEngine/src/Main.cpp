@@ -34,16 +34,17 @@ int main(int argv, char **argc)
     // har något internt beteende som borde hända där???
     TextButton* textButton = TextButton::GetInstance(t, b);
 
-    throw std::runtime_error("FIXA COLLISION RESOLVE");
+   //throw std::runtime_error("FIXA COLLISION RESOLVE");
     Player* player1 = Player::GetInstance(100, 200, 64, 100, "PersonIdle_Small.png", 20);
-    player1->InstallCollider2D(true, {200, 200, 64, 100});
+    player1->InstallCollider2D(true, {200, 200, 64, 100}, false, false);
     player1->SetTextButtonRef(textButton);
     player1->setSpriteRegion(0, 0, 124, 124);
     player1->SetMoveSpeed(5);
     player1->SetTag("player");
 
     Enemy* enemy = Enemy::GetInstance(600, 200, 150, 150, "PersonIdle.png", 20);
-    enemy->InstallCollider2D(true, {200, 200, 300, 300});
+    enemy->InstallCollider2D(true, {200, 200, 300, 300}, false, false);
+    enemy->SetMoveSpeed(2);
     enemy->SetTag("enemySmall");
     
     // Ska TextField ta emot Sprite för att rama in textfältet? eller

@@ -26,22 +26,22 @@ void Enemy::Tick(System& system)
 
     if (system.GetKeyPressed('d') || system.GetMousePressed(SDL_BUTTON_LEFT))
     {
-        pos.x += moveSpeed;
+        Move(-moveSpeed, 0);
         isMoving = true;
     }
     if (system.GetKeyPressed('a'))
     {
-        pos.x -= moveSpeed;
+        Move(moveSpeed, 0);
         isMoving = true;
     }
     if (system.GetKeyPressed('w'))
     {
-        pos.y -= moveSpeed;
+        Move(0, -moveSpeed);
         isMoving = true;
     }
     if (system.GetKeyPressed('s'))
     {
-        pos.y += moveSpeed;
+        Move(0, moveSpeed);
         isMoving = true;
     }
 
@@ -59,9 +59,9 @@ void Enemy::Tick(System& system)
     if(txtButtonRef != NULL)
         txtButtonRef->SetPosition(pos);
     
-    MovableSprite::setPosition(pos.x, pos.y);
-    SetColliderBounds({pos.x, pos.y, size.w, size.h});
-    Position p = {pos.x + size.w/4, pos.y};
+    SetColliderBounds({GetDestRect().x, GetDestRect().y, size.w, size.h});
+
+    Position p = {GetDestRect().x + size.w/4, pos.y};
     if(txtButtonRef != nullptr)
         txtButtonRef->SetPosition(p);
 
@@ -77,8 +77,8 @@ void Enemy::Tick(System& system)
         int sx = engine.GetRandomNumberInRange(-8, -7);
         int sy = engine.GetRandomNumberInRange(-1, 1);
 
-        Particle* p = Particle::GetInstance(pos.x + px, pos.y + py, 30 , 30, "Particle.png", 30);
-        p->InstallCollider2D(true, {pos.x, pos.y, 30, 30});
+        Particle* p = Particle::GetInstance(GetDestRect().x + px, GetDestRect().y + py, 30 , 30, "Particle.png", 30);
+        p->InstallCollider2D(true, {GetDestRect().x, GetDestRect().y, 30, 30}, true, false);
         p->SetMoveSpeed(sx, sy);
         p->SetTag("enemyParticle");
         system.AddSprite(p);

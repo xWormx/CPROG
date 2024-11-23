@@ -26,12 +26,17 @@ class Sprite
         const SDL_Rect& GetColliderBounds() {return collider->GetBounds();}
         const bool Collider2DIsValid() { return collider != nullptr; }
 
+        
+
         void SetTag(std::string tagName);
-        void InstallCollider2D(const bool& colliderState, const SDL_Rect& bounds);
+        void InstallCollider2D(const bool& colliderState, const SDL_Rect& bounds, const bool& _isTrigger, const bool& _isStatic);
         void SetColliderActive(const bool& state); 
         void SetColliderBounds(const SDL_Rect& bounds);
-        
+    
+        const bool& IsTrigger() const { return collider->IsTrigger(); }
+        const bool& IsStatic() const { return collider->IsStatic(); }
         virtual void OnCollision(Sprite* other, System& system){}
+        virtual void OnTriggerEnter(Sprite* other, System& system){}
 
         const void DEBUGDrawSpriteBounds() const;
         const void DEBUGDrawColliderBounds() const;
@@ -44,6 +49,7 @@ class Sprite
         friend class TextField;
         friend class Button;
         friend class Particle;
+        friend class System;
     protected:
         Sprite(int x, int y, int w, int h, std::string srcImage);
         Sprite(int x, int y, int w, int h);
@@ -63,8 +69,7 @@ class Sprite
         Sprite(const Sprite&) = delete;
         const Sprite& operator=(const Sprite&) = delete;      
 
-        bool isColliding = false;
-        
+        bool isColliding = false;       
 };
 
 

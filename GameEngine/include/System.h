@@ -19,7 +19,7 @@ class System
         void Run();
         void AddSprite(Sprite* sprite);
         void RemoveSprite(Sprite* sprite);
-        
+        void ResolveCollision(Sprite* a, Sprite* b);
 
         void AddLevel(Level* level);
         void LoadLevel(unsigned int levelIndex);

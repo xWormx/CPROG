@@ -24,7 +24,20 @@ void Level::UpdateSprites(System& system)
             for(Sprite* other : colliderSprites)
             {
                 if(s != other && IsColliding(s->GetColliderBounds(), other->GetColliderBounds()))
-                    s->OnCollision(other, system);
+                {
+                    if(s->IsTrigger())
+                    {
+                        s->OnTriggerEnter(other, system);
+                    }
+                    else
+                    {
+                        if(!other->IsTrigger() && !s->IsStatic())
+                            system.ResolveCollision(s, other);
+
+                        s->OnCollision(other, system);
+                    }
+                }
+                    
             }
         }
 

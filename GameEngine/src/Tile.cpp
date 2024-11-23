@@ -10,32 +10,29 @@ void Tile::Tick(System& system)
     if(playerRef != nullptr)
     {
         Player* p = playerRef;
-        if ((p->GetPosition().x + (p->GetSize().w / 3)) < 5)
+        if (p->GetColliderBounds().x < 30)
         {
-            xPos += 5;
-            setPosition(xPos, yPos);
+            // Kan för flytta med player->GetMoveSpeed();
+            Move(5, 0);
         }
 
-        if(p->GetPosition().x + (p->GetSize().w - p->GetSize().w/3) > engine.GetWindowWidth() - 5)
+        if(p->GetColliderBounds().x + p->GetColliderBounds().w > engine.GetWindowWidth() - 30)
         {
-            xPos -= 5;
-            setPosition(xPos, yPos);
+            Move(-5, 0);
         }
 
-        if(p->GetPosition().y + 60 < 0)
+        if(p->GetColliderBounds().y < 30)
         {
-            yPos += 5;
-            setPosition(xPos, yPos);
+            Move(0, 5);
         }
 
-        if(p->GetPosition().y + p->GetSize().h > engine.GetWindowHeight() - 10)
+        if(p->GetColliderBounds().y + p->GetColliderBounds().h > engine.GetWindowHeight() - 30)
         {
-            
-            yPos -= 5;
-            setPosition(xPos, yPos);
+  
+            Move(0, -5);
         }
         if(Collider2DIsValid())
-            SetColliderBounds({xPos, yPos, width, height});
+            SetColliderBounds({GetDestRect().x, GetDestRect().y, width, height});
 
     }
 }
