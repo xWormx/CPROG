@@ -131,11 +131,6 @@ void Sprite::SetColliderBounds(const SDL_Rect& bounds)
 }
     
 
-void Sprite::SetAlpha(Uint8 alpha) const
-{
-    SDL_SetTextureAlphaMod(texture, alpha);
-}
-
 void Sprite::setSrcRect(int x, int y, int w, int h)
 {
     srcRect.x = x;
@@ -150,4 +145,16 @@ void Sprite::setDestRect(int x, int y, int w, int h)
     destRect.y = y;
     destRect.w = w;
     destRect.h = h;
+}
+
+void Sprite::SetAlpha(Uint8 alpha) const
+{
+    SDL_SetTextureAlphaMod(texture, alpha);
+}
+
+void Sprite::SetMovementDirection(int dX, int dY)
+{
+    // KANSKE BORDE SÄTTA RESRIKTION ATT dX o dY inte får vara 0 ??
+    dx = dX;
+    dy = dY;
 }

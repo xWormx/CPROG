@@ -24,7 +24,7 @@ void Enemy::Tick(System& system)
     }
     
 
-    if (system.GetKeyPressed('d') || system.GetMousePressed(SDL_BUTTON_LEFT))
+    /* if (system.GetKeyPressed('d') || system.GetMousePressed(SDL_BUTTON_LEFT))
     {
         Move(-moveSpeed, 0);
         isMoving = true;
@@ -43,7 +43,7 @@ void Enemy::Tick(System& system)
     {
         Move(0, moveSpeed);
         isMoving = true;
-    }
+    } */
 
     // Restric movment to be inside window
     if ((pos.x + (size.w / 3)) < 0)

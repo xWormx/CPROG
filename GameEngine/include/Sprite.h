@@ -20,6 +20,8 @@ class Sprite
      
         const bool CompareTag(const std::string& otherSpriteTag) const;
 
+        const int& GetDx() const {return dx;}
+        const int& GetDy() const {return dy;}
         const SDL_Rect& GetSrcRect() const;
         const SDL_Rect& GetDestRect() const;
         const SDL_Texture* getTexture() const;
@@ -54,6 +56,7 @@ class Sprite
         Sprite(int x, int y, int w, int h, std::string srcImage);
         Sprite(int x, int y, int w, int h);
     private:
+        int dx = 0, dy = 0;
         std::string spriteTag;
 
         SDL_Rect srcRect; // What part to draw
@@ -65,7 +68,7 @@ class Sprite
         void setDestRect(int x, int y, int w, int h);
         void setSrcRect(int x, int y, int w, int h);
         void SetAlpha(Uint8 alpha) const;
-
+        void SetMovementDirection(int dX, int dY);
         Sprite(const Sprite&) = delete;
         const Sprite& operator=(const Sprite&) = delete;      
 

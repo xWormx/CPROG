@@ -218,6 +218,18 @@ void System::ResolveCollision(Sprite* a, Sprite* b)
     int drW = a->GetDestRect().w;
     int drH = a->GetDestRect().h;
 
+    if(overlapX == overlapY)
+    {
+        // Detta är ett speciallfall som hindrar att man fastnar i tiles om man går emot en vägg av tiles
+        // uppåt och vänster samtidigt. Men vi kollar bara mot dy < 0 för att Move sätter dX eller dY till noll
+        // när vi anropar funktionen. VILKET KAN BLIR EN BUGG om Move anropas med både dx o dy större än 0 t ex:
+        // Move(5,5);
+        if(a->GetDy() < 0)
+        {
+                overlapY = 0;
+        }
+    }
+
     if(overlapX < overlapY)
     {
         if(aX < bX)
@@ -246,7 +258,8 @@ void System::ResolveCollision(Sprite* a, Sprite* b)
         }
         
     }
-        
+    std::cout << "OverlapX: " << overlapX << ", OverlapY: " << overlapY << "\n";
+    std::cout << "Adjusting position: (" << drX << ", " << drY << ")\n";  
 }
 
 void System::HandleKeyDownEvents(const SDL_Event& event)
