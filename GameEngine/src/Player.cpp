@@ -68,19 +68,15 @@ void Player::Tick(System& system)
         isMoving = true;
     }
 
-    if(system.GetKeyPressed('j'))
-    {
-        Move(-moveSpeed, -moveSpeed);
-    }
     // Restric movment to be inside window
-    if (GetColliderBounds().x < 5)
+    /* if (GetColliderBounds().x < 5)
         Move(5, 0);
     if(GetColliderBounds().x + GetColliderBounds().w > engine.GetWindowWidth() - 5)
         Move(-5, 0); 
     if((GetColliderBounds().y - 5) < 0)
         Move(0, 5);
     if(GetColliderBounds().y + GetColliderBounds().h > engine.GetWindowHeight() - 5)
-        Move(0, -5);
+        Move(0, -5); */
 
 
     if(txtButtonRef != NULL)
