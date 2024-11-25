@@ -20,7 +20,7 @@ class Level
         void AddSpriteList(std::initializer_list<Sprite*> sprites);
         void RemoveSprite(Sprite* sprite);
         
-        std::vector<Sprite*> GetSprites() { return sprites;}        
+        std::vector<Sprite*>& GetSprites() { return sprites;}        
         std::vector<Sprite*> GetAdded() { return added;}
         std::vector<Sprite*> GetRemoved() { return removed;}
         std::vector<Sprite*> GetColliders() { return colliderSprites;}

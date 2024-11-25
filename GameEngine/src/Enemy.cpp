@@ -14,15 +14,8 @@ void Enemy::Tick(System& system)
     
     static int frame = 0;
     
-    if (frameTick++ % 12 == 0)
-    {
-        frame++;
-        if (frame > 3)
-            frame = 0;
-        int size = 124;
-        setSpriteRegion(size * frame, 0, size, size);
-    }
-    
+
+    AnimateSprite({0,0}, {32, 80}, 3, 2);
 
     /* if (system.GetKeyPressed('d') || system.GetMousePressed(SDL_BUTTON_LEFT))
     {
@@ -59,7 +52,7 @@ void Enemy::Tick(System& system)
     if(txtButtonRef != NULL)
         txtButtonRef->SetPosition(pos);
     
-    SetColliderBounds({GetDestRect().x, GetDestRect().y, size.w, size.h});
+    SetColliderBounds({GetDestRect().x, GetDestRect().y + (2 * size.h/3), size.w, size.h / 3});
 
     Position p = {GetDestRect().x + size.w/4, pos.y};
     if(txtButtonRef != nullptr)

@@ -32,7 +32,7 @@ void Tile::Tick(System& system)
             Move(0, -5);
         }
         if(Collider2DIsValid())
-            SetColliderBounds({GetDestRect().x, GetDestRect().y, width, height});
+            SetColliderBounds({GetDestRect().x, GetDestRect().y + GetColliderBounds().h, width, GetColliderBounds().h});
 
     }
 }

@@ -90,6 +90,7 @@ void Level::AddSprite(Sprite *sprite)
         }
     }
 }
+
 void Level::AddSpriteList(std::initializer_list<Sprite*> sprites)
 {
     for(Sprite* s : sprites)

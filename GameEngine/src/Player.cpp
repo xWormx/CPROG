@@ -68,6 +68,10 @@ void Player::Tick(System& system)
         isMoving = true;
     }
 
+    if(system.GetKeyPressed('j'))
+    {
+        Move(-moveSpeed, -moveSpeed);
+    }
     // Restric movment to be inside window
     if (GetColliderBounds().x < 5)
         Move(5, 0);
@@ -103,6 +107,7 @@ void Player::Tick(System& system)
             p->InstallCollider2D(true, {GetDestRect().x, GetDestRect().y, 30, 30}, true, false);
             p->SetMoveSpeed(sx, sy);
             p->SetTag("particle");
+            p->SetLayerTag("foreGround");
             
             system.AddSprite(p);
         
@@ -129,7 +134,6 @@ void Player::OnCollision(Sprite* other, System& system)
     {
         TakeDamage(1);
         system.RemoveSprite(other);
-
     }
 }
 

@@ -22,6 +22,8 @@ class Sprite
 
         const int& GetDx() const {return dx;}
         const int& GetDy() const {return dy;}
+        const std::string& GetLayerTag() const { return layerTag; }
+        const std::string& GetTagName() const { return spriteTag; }
         const SDL_Rect& GetSrcRect() const;
         const SDL_Rect& GetDestRect() const;
         const SDL_Texture* getTexture() const;
@@ -31,6 +33,7 @@ class Sprite
         
 
         void SetTag(std::string tagName);
+        void SetLayerTag(std::string tagName);
         void InstallCollider2D(const bool& colliderState, const SDL_Rect& bounds, const bool& _isTrigger, const bool& _isStatic);
         void SetColliderActive(const bool& state); 
         void SetColliderBounds(const SDL_Rect& bounds);
@@ -58,6 +61,7 @@ class Sprite
     private:
         int dx = 0, dy = 0;
         std::string spriteTag;
+        std::string layerTag;
 
         SDL_Rect srcRect; // What part to draw
         SDL_Rect destRect; // Where to draw it

@@ -1,6 +1,6 @@
 #include "System.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 System::System(int fps, SDL_Color bg)
 {
@@ -143,14 +143,59 @@ void System::DrawLevel()
     
     SDL_RenderClear(engine.Get_ren());
 
-#if DEBUG 
+
+    size_t n = currentLevel->GetSprites().size();
     
+    // Bubble Sort algorithm
+    for (size_t i = 0; i < n - 1; ++i) {
+        for (size_t j = 0; j < n - i - 1; ++j) {
+            // Check if pointers are valid before comparing
+            Sprite* a = currentLevel->GetSprites()[j];
+            Sprite* b = currentLevel->GetSprites()[j + 1];
+
+            if (a == nullptr) {
+                std::cerr << "Warning: Invalid pointer at index " << j << " (a is nullptr)" << std::endl;
+                continue;  // Skip this comparison
+            }
+            if (b == nullptr) {
+                std::cerr << "Warning: Invalid pointer at index " << j + 1 << " (b is nullptr)" << std::endl;
+                continue;  // Skip this comparison
+            }
+
+            // Compare first by layerTagName
+            if(a->GetLayerTag() != "ground" && b->GetLayerTag() == "ground")
+            {
+                std::swap(currentLevel->GetSprites()[j], currentLevel->GetSprites()[j+1]);
+                continue;
+            }
+            
+            if(b->GetLayerTag() != "ground" && a->GetLayerTag() == "ground")
+                continue;
+
+            // Compare y-values of valid sprites
+            if(a->GetLayerTag() != "ground" && b->GetLayerTag() != "ground")
+            {
+                if (a->GetDestRect().y > b->GetDestRect().y) 
+                {
+                    // Swap sprites if a->getY() > b->getY()
+                    std::swap(currentLevel->GetSprites()[j], currentLevel->GetSprites()[j + 1]);
+                }
+            }
+            
+        }
+
+
+    }
+
     for(Sprite* s : currentLevel->GetSprites())
     {
         s->Draw();
+#if DEBUG 
         s->DEBUGDrawSpriteBounds();
+#endif
     }
-    
+
+#if DEBUG    
     for(Sprite* s : currentLevel->GetColliders())
     {
         // O(n^2) kollisionsdetektering just nu....
@@ -258,8 +303,6 @@ void System::ResolveCollision(Sprite* a, Sprite* b)
         }
         
     }
-    std::cout << "OverlapX: " << overlapX << ", OverlapY: " << overlapY << "\n";
-    std::cout << "Adjusting position: (" << drX << ", " << drY << ")\n";  
 }
 
 void System::HandleKeyDownEvents(const SDL_Event& event)

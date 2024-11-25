@@ -103,6 +103,11 @@ void Sprite::SetTag(std::string tagName)
     spriteTag = tagName;
 }
 
+void Sprite::SetLayerTag(std::string tagName)
+{
+    layerTag = tagName;
+}
+
 void Sprite::InstallCollider2D(const bool& colliderState, const SDL_Rect& bounds, const bool& _isTrigger, const bool& _isStatic)
 {
     if(collider == nullptr)
