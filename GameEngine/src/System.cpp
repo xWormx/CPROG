@@ -118,7 +118,32 @@ void System::Run()
                     break;
             }
         }
+        
+        std::string targetString = "player";
 
+        // Sorterar för att spelaren skall uppdateras först så att ALLA tiles flyttas om player befinner sig i 
+        // windowBounds, annars så uppdateras bara de tiles som kommer efter player i vectorn och då sker tearing mellan tilesen
+        // så de separeras.
+        auto it = std::find_if(currentLevel->GetSprites().begin(), currentLevel->GetSprites().end(), [targetString](Sprite* s)
+        {
+            return s->GetTagName() == targetString;
+        });
+
+
+        Sprite* s = nullptr;
+        if (it != currentLevel->GetSprites().end()) {
+            s = *it;  // Get the sprite that matches the target string
+
+            // Step 2: Get the first sprite in the sprite list
+            Sprite* firstSprite = currentLevel->GetSprites().front();
+
+            // Step 3: Swap the found sprite with the first sprite in the list
+            if (firstSprite != s) {  // Only swap if it's not already the first sprite
+                // Swap the two sprites in the list
+                std::iter_swap(it, currentLevel->GetSprites().begin());
+            }
+        }
+        
         currentLevel->Update(*this); 
         DrawLevel();
  
@@ -265,35 +290,7 @@ void System::ResolveCollision(Sprite* a, Sprite* b)
 
     if(a->GetDy() != 0 && a->GetDx() != 0)
         std::cout << "diagonal movement!\n";
-
-    if(overlapX == overlapY)
-    {
-        std::cout << "OVERLAP EQUAL!\n";
-        if(a->GetDx() < 0)
-        {
-            a->SetColliderBounds({aX + overlapX, aY, aW, aH});
-            a->setDestRect(drX + overlapX, drY, drW, drH);
-            return;
-        }
-        else if(a->GetDx() > 0)
-        {
-            a->SetColliderBounds({aX - overlapX, aY, aW, aH});
-            a->setDestRect(drX - overlapX, drY, drW, drH);
-            return;
-        }
-        if(a->GetDy() < 0)
-        {
-            a->SetColliderBounds({aX, aY + overlapY, aW, aH});
-            a->setDestRect(drX, drY + overlapY, drW, drH);    
-        }
-        else if(a->GetDy() > 0)
-        {
-            a->SetColliderBounds({aX, aY - overlapY, aW, aH});
-            a->setDestRect(drX, drY - overlapY, drW, drH); 
-        }
-    }
         
-
     if(overlapX < overlapY)
     {
         if(a->GetDx() < 0)
@@ -322,69 +319,20 @@ void System::ResolveCollision(Sprite* a, Sprite* b)
         
     }
     
-    if(overlapY > 0)
+    if(a->GetDy() < 0)
     {
-        
-        if(a->GetDy() < 0)
-        {
-            a->SetColliderBounds({aX, aY + overlapY, aW, aH});
-            a->setDestRect(drX, drY + overlapY, drW, drH);    
-        }
-        else if(a->GetDy() > 0)
-        {
-            a->SetColliderBounds({aX, aY - overlapY, aW, aH});
-            a->setDestRect(drX, drY - overlapY, drW, drH); 
-        }
-
-        //std::cout << "OverlapX: " << overlapX << ", OverlapY: " << overlapY << "\n";
-        //std::cout << "dX: " << a->GetDx() << ", dY: " << a->GetDy() << "\n";
-    }
-    
-    /* 
-    if(overlapX == overlapY)
-    {
-        // Detta är ett speciallfall som hindrar att man fastnar i tiles om man går emot en vägg av tiles
-        // uppåt och vänster samtidigt. Men vi kollar bara mot dy < 0 för att Move sätter dX eller dY till noll
-        // när vi anropar funktionen. VILKET KAN BLIR EN BUGG om Move anropas med både dx o dy större än 0 t ex:
-        // Move(5,5);
-        if(a->GetDy() > 0 || a->GetDy() < 0)
-        {
-            overlapY = 0;
-        }
-        else if(a->GetDx() > 0 || a->GetDx() < 0)
-        {
-            overlapX = 0;
-        }
-    } 
-
-    if(overlapX < overlapY)
-    {
-        if(aX < bX)
-        {
-            a->SetColliderBounds({aX - overlapX, aY, aW, aH});
-            a->setDestRect(drX - overlapX, drY, drW, drH);
-        }
-        else
-        {
-            a->SetColliderBounds({aX + overlapX, aY, aW, aH});
-            a->setDestRect(drX + overlapX, drY, drW, drH);
-        }
-        
+        a->SetColliderBounds({aX, aY + overlapY, aW, aH});
+        a->setDestRect(drX, drY + overlapY, drW, drH);
     }
     else
     {
-        if(aY < bY)
-        {
-            a->SetColliderBounds({aX, aY - overlapY, aW, aH});
-            a->setDestRect(drX, drY - overlapY, drW, drH);    
-        }
-        else
-        {
-            a->SetColliderBounds({aX, aY + overlapY, aW, aH});
-            a->setDestRect(drX, drY + overlapY, drW, drH);    
-        }
-        
-    } */
+        a->SetColliderBounds({aX, aY - overlapY, aW, aH});
+        a->setDestRect(drX, drY - overlapY, drW, drH);
+    }
+    //std::cout << "OverlapX: " << overlapX << ", OverlapY: " << overlapY << "\n";
+    //std::cout << "dX: " << a->GetDx() << ", dY: " << a->GetDy() << "\n";
+    
+
 }
 
 void System::HandleKeyDownEvents(const SDL_Event& event)

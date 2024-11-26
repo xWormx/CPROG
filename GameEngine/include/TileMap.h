@@ -5,6 +5,8 @@
 #include "Position.h"
 #include "Dimension.h"
 #include <fstream>
+
+class Tile;
 class TileMap
 {
     public:
@@ -17,6 +19,8 @@ class TileMap
         void Draw();
         ~TileMap();
 
+        const Dimension& GetSize() const { return mapDimension; }
+        const std::vector<Tile*>& GetTiles() const {return tiles;}
     protected:
         TileMap(int x, int y, int tileW, int tileH);
     
@@ -25,6 +29,7 @@ class TileMap
         Dimension mapDimension;
         Dimension tileSize;
         std::vector<unsigned char> tileImageIndex;
+        std::vector<Tile*> tiles;
         System* appRef = nullptr;
         Player* playerRef = nullptr;
 

@@ -45,15 +45,16 @@ void TileMap::InitializeTiles(const System& system)
                         t->setSpriteRegion(regionX * 64, 0, 64, 64);
                         t->SetLayerTag("ground");
                     } break;
-                case 'b':
-                    {   
 
-                    } break;
             }
             
+            t->SetmapSize(mapDimension);
+            t->SetMapIndex(x + (y * mapDimension.w));
             t->SetTag("tile");
             t->SetPlayerReference(playerRef);
+            t->SetMapRef(this);
             appRef->AddSprite(t);
+            tiles.push_back(t);
 
         }
     }
