@@ -38,7 +38,8 @@ class Player : public MovableSprite
         Position pos;
         Dimension size;
         int maxHealth;
-        int moveSpeed = 0;   
+        int moveSpeed = 0; 
+        int dx, dy;  
 
         // Animation
         unsigned int animationFrame = 0;

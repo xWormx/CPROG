@@ -290,49 +290,40 @@ void System::ResolveCollision(Sprite* a, Sprite* b)
 
     if(a->GetDy() != 0 && a->GetDx() != 0)
         std::cout << "diagonal movement!\n";
-        
+    if(overlapX == overlapY)
+        std::cout << "EQUAL!\n";
+
+    int pushBackX = std::abs(a->GetDx()); 
+    int pushBackY = std::abs(a->GetDy()); 
     if(overlapX < overlapY)
     {
-        if(a->GetDx() < 0)
-        {
-            a->SetColliderBounds({aX + overlapX, aY, aW, aH});
-            a->setDestRect(drX + overlapX, drY, drW, drH);
-            return;
-        }
-        else if(a->GetDx() > 0)
-        {
-            a->SetColliderBounds({aX - overlapX, aY, aW, aH});
-            a->setDestRect(drX - overlapX, drY, drW, drH);
-            return;
-        }
-
         if(aX < bX)
         {
-            a->SetColliderBounds({aX - overlapX, aY, aW, aH});
-            a->setDestRect(drX - overlapX, drY, drW, drH);
-            return;
+            pushBackX += std::abs(b->GetDx());
+            a->SetColliderBounds({aX - pushBackX, aY, aW, aH});
+            a->setDestRect(drX - pushBackX, drY, drW, drH);
+            
         }
-        
-        a->SetColliderBounds({aX + overlapX, aY, aW, aH});
-        a->setDestRect(drX + overlapX, drY, drW, drH);
+        else
+        {
+            a->SetColliderBounds({aX + pushBackX, aY, aW, aH});
+            a->setDestRect(drX + pushBackX, drY, drW, drH);
+        }
         return;
-        
     }
     
-    if(a->GetDy() < 0)
+    if(aY > bY)
     {
-        a->SetColliderBounds({aX, aY + overlapY, aW, aH});
-        a->setDestRect(drX, drY + overlapY, drW, drH);
+        a->SetColliderBounds({aX, aY + pushBackY, aW, aH});
+        a->setDestRect(drX, drY + pushBackY, drW, drH);
     }
     else
     {
-        a->SetColliderBounds({aX, aY - overlapY, aW, aH});
-        a->setDestRect(drX, drY - overlapY, drW, drH);
+        a->SetColliderBounds({aX, aY - pushBackY, aW, aH});
+        a->setDestRect(drX, drY - pushBackY, drW, drH);
     }
     //std::cout << "OverlapX: " << overlapX << ", OverlapY: " << overlapY << "\n";
     //std::cout << "dX: " << a->GetDx() << ", dY: " << a->GetDy() << "\n";
-    
-
 }
 
 void System::HandleKeyDownEvents(const SDL_Event& event)

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <initializer_list>
+#include <algorithm>
 #include "Sprite.h"
 #include "System.h"
 
@@ -25,6 +26,7 @@ class Level
         std::vector<Sprite*> GetRemoved() { return removed;}
         std::vector<Sprite*> GetColliders() { return colliderSprites;}
 
+        int CalculateOverlap(Sprite* a, Sprite* b);
     protected:
         Level(unsigned int index);
 

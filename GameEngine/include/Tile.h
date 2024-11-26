@@ -30,6 +30,7 @@ class Tile : public MovableSprite
     private:
         int xPos, yPos, width, height;
         int mapIndex;
+        int frameTick;
         Dimension mapSize;
         TileMap* tileMap;
         Player* playerRef = nullptr;

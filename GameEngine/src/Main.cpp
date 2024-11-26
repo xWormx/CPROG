@@ -66,7 +66,8 @@ int main(int argv, char **argc)
     map1->SetPlayerRef(player1);
     map1->InitializeTiles(app);
     
-    level1->AddSpriteList({player1, textField, nameField, textButton, enemy});
+    //level1->AddSpriteList({player1, textField, nameField, textButton, enemy});
+    level1->AddSpriteList({player1, textButton, enemy});
     level2->AddSprite(player1);
  
     app.Run();

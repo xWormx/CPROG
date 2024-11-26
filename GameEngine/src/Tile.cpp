@@ -34,9 +34,12 @@ void Tile::Tick(System& system)
     }
 
 
-    if(topRightTile->GetDestRect().x + topRightTile->GetDestRect().w >= engine.GetWindowWidth())
-        Move(-1, 0);
-    
+    if(frameTick++ % 4 == 0)
+    {
+        if(topRightTile->GetDestRect().x + topRightTile->GetDestRect().w >= engine.GetWindowWidth())
+            Move(-1, 0);
+    }
+
     if(Collider2DIsValid())
         SetColliderBounds({GetDestRect().x, GetDestRect().y + GetColliderBounds().h, width, GetColliderBounds().h});
     

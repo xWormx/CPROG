@@ -46,27 +46,31 @@ void Player::Tick(System& system)
     isMoving = false;
     UpdateHealth(system);
     AnimateSprite({0,0}, {32, 80}, 3, 2);
-
+    dx = 0;
+    dy = 0;
     if (system.GetKeyPressed('d') || system.GetMousePressed(SDL_BUTTON_LEFT))
     {
-        Move(moveSpeed, 0);
         isMoving = true;
+        dx = moveSpeed;
     }
     if (system.GetKeyPressed('a'))
     {
-        Move(-moveSpeed, 0);
+        dx = -moveSpeed;
         isMoving = true;
     }
     if (system.GetKeyPressed('w'))
     {
-        Move(0, -moveSpeed);
+        dy = -moveSpeed;
         isMoving = true;
     }
     if (system.GetKeyPressed('s'))
     {
-        Move(0, moveSpeed);
+        dy = moveSpeed;
         isMoving = true;
     }
+
+    if(isMoving)
+        Move(dx, dy);
 
     // Restric movment to be inside window
     /* if (GetColliderBounds().x < 5)

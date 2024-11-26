@@ -14,6 +14,7 @@ void Level::Update(System& system)
     UpdateSprites(system);
 }
 
+
 void Level::UpdateSprites(System& system)
 {
     for(Sprite* s : sprites)
@@ -32,12 +33,14 @@ void Level::UpdateSprites(System& system)
                     else
                     {
                         if(!other->IsTrigger() && !s->IsStatic())
+                        {
                             system.ResolveCollision(s, other);
+                        }
+                            
 
                         s->OnCollision(other, system);
                     }
-                }
-                    
+                }   
             }
         }
 

@@ -36,6 +36,9 @@ void MovableSprite::AnimateSprite(Position frameStart, Dimension frameSize, unsi
 
 void MovableSprite::Move(int dx, int dy)
 {
+    if(dy == 0 && dx == 0)
+        int i = 0;
+        
     SetMovementDirection(dx, dy);
     destRect.x += dx;
     destRect.y += dy;
