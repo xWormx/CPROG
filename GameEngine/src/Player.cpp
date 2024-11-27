@@ -48,7 +48,7 @@ void Player::Tick(System& system)
     AnimateSprite({0,0}, {32, 80}, 3, 2);
     dx = 0;
     dy = 0;
-    
+
     if (system.GetKeyPressed('d') || system.GetMousePressed(SDL_BUTTON_LEFT))
     {
         isMoving = true;
