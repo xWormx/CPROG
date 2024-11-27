@@ -14,7 +14,9 @@ class Button : public MovableSprite
 
         const Position& GetPosition() { return pos; } 
         const Dimension& GetSize() { return size; } 
-
+        virtual void OnMouseHover(System& system){}
+        virtual void OnMousePress(System& system){}
+        virtual void OnMouseRelease(System& system){}
         void SetPosition(Position p);
 
     protected:

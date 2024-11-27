@@ -13,6 +13,62 @@
 
 #define FPS 60
 
+class StartGameButton : public Button
+{
+    public:
+        StartGameButton(int x, int y, int w, int h, std::string srcImage) : Button(x,y,w,h,srcImage){}
+        void OnMouseHover(System& system)
+        {
+
+            int mx = system.GetMousePosition().x;
+            int my = system.GetMousePosition().y;
+
+            if(mx > GetDestRect().x && mx < GetDestRect().x+GetDestRect().w &&
+                my > GetDestRect().y && my < GetDestRect().y+GetDestRect().h)
+            {
+                setSpriteRegion(800, 0, 800, 600);
+                mouseHover = true;
+            }
+            else
+            {
+                setSpriteRegion(0, 0, 800, 600);
+                mouseHover = false;
+            }
+            
+        }
+
+        void OnMousePress(System& system)
+        {
+            if(mouseHover)
+            {
+                if(system.GetMousePressed(SDL_BUTTON_LEFT))
+                {
+                    wasPressed = true;
+                    setSpriteRegion(800*2, 0, 800, 600);
+                    
+                }
+                else
+                {
+                    if(wasPressed)
+                    {
+                        wasPressed = false;
+                        system.LoadLevel(1);
+                    }
+                        
+                }
+            }
+        }
+
+        void OnMouseRelease(System& system)
+        {
+        }
+        
+    private:
+        bool mouseHover, wasPressed = false;
+        
+
+};
+
 int main(int argv, char **argc)
 {
     System app(FPS, {255, 150, 70, 255});
@@ -68,8 +124,14 @@ int main(int argv, char **argc)
     
     //level1->AddSpriteList({player1, textField, nameField, textButton, enemy});
     level1->AddSpriteList({player1, textButton, enemy});
-    level2->AddSprite(player1);
- 
+
+    StaticSprite* mainMenuBackground = StaticSprite::GetInstance(0, 0, engine.GetWindowWidth(), engine.GetWindowHeight(), "MainmenuBackground.png"); 
+    level2->AddSprite(mainMenuBackground);
+
+    Button* startGameButton = new StartGameButton((engine.GetWindowWidth()/2) - 100, (engine.GetWindowHeight() / 2), 200, 100, "StartGameButton.png");
+    level2->AddSpriteList({startGameButton, nameField});
+    app.LoadLevel(level2->GetLevelIndex());
+    
     app.Run();
 
     return 0;

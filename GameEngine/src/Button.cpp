@@ -13,7 +13,9 @@ Button::Button(int x, int y, int w, int h, std::string srcImage) : MovableSprite
 
 void Button::Tick(System& system)
 {
-    
+    OnMouseHover(system);
+    OnMousePress(system);
+    OnMouseRelease(system);
 }
 
 void Button::SetPosition(Position p)

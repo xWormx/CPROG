@@ -7,7 +7,9 @@
 class StaticSprite : public Sprite
 {
     public:
+        static StaticSprite* GetInstance(int x, int y, int w, int h, std::string srcImage);
         void Draw() const;
+        void Tick(System& system);
     protected:
         StaticSprite(int x, int y, int w, int h, std::string srcImage);
     private:

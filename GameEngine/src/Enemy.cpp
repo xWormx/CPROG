@@ -14,7 +14,6 @@ void Enemy::Tick(System& system)
     
     static int frame = 0;
     
-
     AnimateSprite({0,0}, {32, 80}, 3, 2);
 
     /* if (system.GetKeyPressed('d') || system.GetMousePressed(SDL_BUTTON_LEFT))

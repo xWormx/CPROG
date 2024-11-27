@@ -34,7 +34,7 @@ void Tile::Tick(System& system)
     }
 
 
-    if(frameTick++ % 4 == 0)
+    if(frameTick++ % 2 == 0)
     {
         if(topRightTile->GetDestRect().x + topRightTile->GetDestRect().w >= engine.GetWindowWidth())
             Move(-1, 0);

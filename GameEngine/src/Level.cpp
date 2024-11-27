@@ -14,7 +14,9 @@ void Level::Update(System& system)
     UpdateSprites(system);
 }
 
-
+std::vector<Sprite*> currentColliders;
+Sprite* firstCollider;
+CollisionResolveInfo cri = {};
 void Level::UpdateSprites(System& system)
 {
     for(Sprite* s : sprites)
@@ -22,10 +24,25 @@ void Level::UpdateSprites(System& system)
 
         for(Sprite* s : colliderSprites)
         {
+            int nc = 1;
+            currentColliders.clear();
             for(Sprite* other : colliderSprites)
             {
+                
                 if(s != other && IsColliding(s->GetColliderBounds(), other->GetColliderBounds()))
                 {
+                    if(s->GetTagName() == "player")
+                    {
+                        if(nc == 1)
+                            firstCollider = other;
+                        else
+                            std::cout << "nc: " << nc << "\n";
+
+                        currentColliders.push_back(other);
+
+                        nc++;     
+                    }
+
                     if(s->IsTrigger())
                     {
                         s->OnTriggerEnter(other, system);
@@ -34,10 +51,8 @@ void Level::UpdateSprites(System& system)
                     {
                         if(!other->IsTrigger() && !s->IsStatic())
                         {
-                            system.ResolveCollision(s, other);
+                            cri = system.ResolveCollision(s, other);
                         }
-                            
-
                         s->OnCollision(other, system);
                     }
                 }   

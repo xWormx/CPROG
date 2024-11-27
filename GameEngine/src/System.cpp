@@ -116,6 +116,13 @@ void System::Run()
                 case SDL_KEYUP:
                     HandleKeyUpEvents(event);
                     break;
+
+                case SDL_MOUSEMOTION:
+                {
+                    mousePosition.x = event.button.x;
+                    mousePosition.y = event.button.y;
+                } break;
+                    
             }
         }
         
@@ -258,8 +265,9 @@ void System::AppendTextInput(std::string& str)
     str += strTextInput;
 }
 
-void System::ResolveCollision(Sprite* a, Sprite* b)
+CollisionResolveInfo System::ResolveCollision(Sprite* a, Sprite* b)
 {
+    CollisionResolveInfo cri = {};
     int aX = a->GetColliderBounds().x;
     int aY = a->GetColliderBounds().y;
     int aW = a->GetColliderBounds().w;
@@ -293,8 +301,10 @@ void System::ResolveCollision(Sprite* a, Sprite* b)
     if(overlapX == overlapY)
         std::cout << "EQUAL!\n";
 
-    int pushBackX = std::abs(a->GetDx()); 
-    int pushBackY = std::abs(a->GetDy()); 
+    //int pushBackX = std::abs(a->GetDx()); 
+    //int pushBackY = std::abs(a->GetDy()); 
+    int pushBackX = overlapX; 
+    int pushBackY = overlapY; 
     if(overlapX < overlapY)
     {
         if(aX < bX)
@@ -309,7 +319,8 @@ void System::ResolveCollision(Sprite* a, Sprite* b)
             a->SetColliderBounds({aX + pushBackX, aY, aW, aH});
             a->setDestRect(drX + pushBackX, drY, drW, drH);
         }
-        return;
+        cri.overlapX = overlapX;
+        return cri;
     }
     
     if(aY > bY)
@@ -322,6 +333,9 @@ void System::ResolveCollision(Sprite* a, Sprite* b)
         a->SetColliderBounds({aX, aY - pushBackY, aW, aH});
         a->setDestRect(drX, drY - pushBackY, drW, drH);
     }
+
+    cri.overlapY = overlapY;
+    return cri;
     //std::cout << "OverlapX: " << overlapX << ", OverlapY: " << overlapY << "\n";
     //std::cout << "dX: " << a->GetDx() << ", dY: " << a->GetDy() << "\n";
 }

@@ -12,6 +12,11 @@
 
 class Sprite;
 class Level;
+struct CollisionResolveInfo
+{
+    int overlapX;
+    int overlapY;
+};
 class System
 {
     public:
@@ -20,7 +25,7 @@ class System
         void Run();
         void AddSprite(Sprite* sprite);
         void RemoveSprite(Sprite* sprite);
-        void ResolveCollision(Sprite* a, Sprite* b);
+        CollisionResolveInfo ResolveCollision(Sprite* a, Sprite* b);
 
         void AddLevel(Level* level);
         void LoadLevel(unsigned int levelIndex);
@@ -28,6 +33,7 @@ class System
         bool GetKeyPressedOnce(const int keyCode) const { return inputComponent.GetKeyPressedOnce(keyCode); }
         bool GetKeyPressed(const int keyCode) const { return inputComponent.GetKeyPressed(keyCode); }
         bool GetMousePressed(const int keyCode) const { return inputComponent.getMousePressed(keyCode); }
+        const SDL_Point& GetMousePosition() const { return mousePosition; }
 
         void AppendTextInput(std::string& str);
         const bool& TextInputRecieved() {return textInputRecieved; }
@@ -48,7 +54,7 @@ class System
         unsigned int levelIndexToLoad;
         bool loadLevelRequested = false;
         int framesPerSecond;
-
+        SDL_Point mousePosition;
         bool textInputRecieved;
         std::string strTextInput;
 
