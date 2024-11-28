@@ -1,6 +1,6 @@
 #include "System.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 System::System(int fps, SDL_Color bg)
 {

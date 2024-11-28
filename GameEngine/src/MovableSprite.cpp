@@ -21,17 +21,27 @@ void MovableSprite::setSpriteRegion(int x, int y, int w, int h)
     setSrcRect(x, y, w, h);
 }
 
-void MovableSprite::AnimateSprite(Position frameStart, Dimension frameSize, unsigned int maxFrames, unsigned int animSpeed)
+int MovableSprite::AnimateSprite(Position frameStart, Dimension frameSize, unsigned int maxFrames, unsigned int animSpeed)
 {
+    if(frameStart.x != lastAnimationFrameStart.x || frameStart.y != lastAnimationFrameStart.y)
+    {
+        animationTick = 0;
+        animationFrame = 0;
+    }
+
     if(animationTick++ % animSpeed == 0)
     {
-        setSpriteRegion((frameStart.x * frameSize.w) + (animationFrame * frameSize.w), 0, frameSize.w, frameSize.h);
-        animationFrame++;
-        if(animationFrame > maxFrames)
+        if(animationFrame >= maxFrames)
         {
             animationFrame = 0;
         }
+
+        setSpriteRegion((frameStart.x * frameSize.w) + (animationFrame * frameSize.w), 0, frameSize.w, frameSize.h);
+        animationFrame++;
+
     }
+    lastAnimationFrameStart = frameStart;
+    return animationFrame;
 }
 
 void MovableSprite::Move(int dx, int dy)

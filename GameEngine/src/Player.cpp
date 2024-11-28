@@ -45,7 +45,7 @@ void Player::Tick(System& system)
 
     isMoving = false;
     UpdateHealth(system);
-    AnimateSprite({0,0}, {32, 80}, 3, 2);
+    AnimateSprite({0,0}, {32, 80}, 4, 2);
     dx = 0;
     dy = 0;
 

@@ -14,7 +14,43 @@ void Enemy::Tick(System& system)
     
     static int frame = 0;
     
-    AnimateSprite({0,0}, {32, 80}, 3, 2);
+    int maxFramesShooting = 4;
+    static int shootFrame = 0;
+    static bool shooting = false;
+    if(system.GetKeyPressed('k') && shooting == false)
+    {
+        shooting = true;
+        // Behövs bara om partiklarna ska spawna av sig självt?
+        if(particleSpawnTick++ % 5 == 0)
+        {
+            
+        }
+        int px = engine.GetRandomNumberInRange(-12, 12);
+        int py = engine.GetRandomNumberInRange(-12, 12);
+        int sx = engine.GetRandomNumberInRange(-8, -7);
+        int sy = engine.GetRandomNumberInRange(-1, 1);
+
+        Particle* p = Particle::GetInstance((GetDestRect().x - 20) + px, (GetDestRect().y + (GetDestRect().h/2) + 10) + py, 30, 10, "BulletTest.png", 30);
+        p->InstallCollider2D(true, {GetDestRect().x, GetDestRect().y, 30, 30}, true, false);
+        p->SetMoveSpeed(sx, sy);
+        p->SetTag("enemyParticle");
+        system.AddSprite(p);
+    }
+
+    if(shooting)
+    {
+        shootFrame = AnimateSprite({5,0}, {100, 100}, 4, 2);
+        if(shootFrame == maxFramesShooting)
+        {
+            shootFrame = 0;
+            shooting = false;
+        }    
+    }
+    else
+    {
+        AnimateSprite({9,0}, {100, 100}, 5, 4);
+    }
+    
 
     /* if (system.GetKeyPressed('d') || system.GetMousePressed(SDL_BUTTON_LEFT))
     {
@@ -59,21 +95,7 @@ void Enemy::Tick(System& system)
 
     if(system.GetKeyPressedOnce('o'))
     {
-        // Behövs bara om partiklarna ska spawna av sig självt?
-        if(particleSpawnTick++ % 5 == 0)
-        {
-            
-        }
-        int px = engine.GetRandomNumberInRange(-12, 12);
-        int py = engine.GetRandomNumberInRange(-12, 12);
-        int sx = engine.GetRandomNumberInRange(-8, -7);
-        int sy = engine.GetRandomNumberInRange(-1, 1);
 
-        Particle* p = Particle::GetInstance(GetDestRect().x + px, GetDestRect().y + py, 30 , 30, "Particle.png", 30);
-        p->InstallCollider2D(true, {GetDestRect().x, GetDestRect().y, 30, 30}, true, false);
-        p->SetMoveSpeed(sx, sy);
-        p->SetTag("enemyParticle");
-        system.AddSprite(p);
     }
 
 }

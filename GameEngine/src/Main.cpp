@@ -101,7 +101,7 @@ int main(int argv, char **argc)
     player1->SetTag("player");
     player1->SetLayerTag("foreGround");
 
-    Enemy* enemy = Enemy::GetInstance(600, 200, 64, 100, "PersonIdle_Small.png", 20);
+    Enemy* enemy = Enemy::GetInstance(600, 200, 200, 200, "EnemySheet.png", 20);
     enemy->InstallCollider2D(true, {200, 200, 300, 300}, false, false);
     player1->setSpriteRegion(0, 0, 124, 124);
     enemy->SetMoveSpeed(2);

@@ -12,13 +12,14 @@ class MovableSprite : public Sprite
         void Draw() const;
         void setPosition(int x, int y);
         void Move(int dx, int dy);
-        void AnimateSprite(Position frameStart, Dimension frameSize, unsigned int maxFrames, unsigned int animSpeed);
+        int AnimateSprite(Position frameStart, Dimension frameSize, unsigned int maxFrames, unsigned int animSpeed);
         void setSpriteRegion(int x, int y, int w, int h);
         virtual const bool CheckCollision(Sprite* other) const { return false; }
     protected:
         MovableSprite(int x, int y, int w, int h, std::string srcImage);
         MovableSprite(int x, int y, int w, int h);
     private:
+        Position lastAnimationFrameStart = {};
         unsigned int animationFrame = 0;
         unsigned int animationTick = 0;
 };
