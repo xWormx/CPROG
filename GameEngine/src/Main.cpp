@@ -101,13 +101,22 @@ int main(int argv, char **argc)
     player1->SetTag("player");
     player1->SetLayerTag("foreGround");
 
-    Enemy* enemy = Enemy::GetInstance(600, 200, 200, 200, "EnemySheet.png", 20);
+    Enemy* enemy = Enemy::GetInstance(1200, 200, 200, 200, "EnemySheet.png", 20);
     enemy->InstallCollider2D(true, {200, 200, 300, 300}, false, false);
-    player1->setSpriteRegion(0, 0, 124, 124);
+    enemy->setSpriteRegion(0, 0, 124, 124);
     enemy->SetMoveSpeed(2);
     enemy->SetTag("enemySmall");
     enemy->SetLayerTag("foreGround");
-    
+    enemy->SetPlayerRef(player1);
+
+
+    Enemy* enemy2 = Enemy::GetInstance(1400, 400, 200, 200, "EnemySheet.png", 20);
+    enemy2->InstallCollider2D(true, {200, 200, 300, 300}, false, false);
+    enemy2->setSpriteRegion(0, 0, 124, 124);
+    enemy2->SetMoveSpeed(2);
+    enemy2->SetTag("enemySmall");
+    enemy2->SetLayerTag("foreGround");
+    enemy2->SetPlayerRef(player1);
     // Ska TextField ta emot Sprite för att rama in textfältet? eller
     // hur ska det lösas med inramningen?
     TextField* textField = TextField::GetInstance(200, 200, {0xff, 0xff, 0xff, 0xff});
@@ -123,7 +132,7 @@ int main(int argv, char **argc)
     map1->InitializeTiles(app);
     
     //level1->AddSpriteList({player1, textField, nameField, textButton, enemy});
-    level1->AddSpriteList({player1, textButton, enemy});
+    level1->AddSpriteList({player1, textButton, enemy, enemy2});
 
     StaticSprite* mainMenuBackground = StaticSprite::GetInstance(0, 0, engine.GetWindowWidth(), engine.GetWindowHeight(), "MainmenuBackground.png"); 
     level2->AddSprite(mainMenuBackground);

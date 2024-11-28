@@ -102,7 +102,7 @@ void Player::Tick(System& system)
             int px = engine.GetRandomNumberInRange(-8, 8);
             int py = engine.GetRandomNumberInRange(-5, 5);
 
-            int sx = engine.GetRandomNumberInRange(-10, -5);
+            int sx = engine.GetRandomNumberInRange(5, 10);
             int sy = engine.GetRandomNumberInRange(-3, 3);
             Particle* p = Particle::GetInstance(GetDestRect().x + px, GetDestRect().y + py, 30 , 30, "Particle.png", 30);
             p->InstallCollider2D(true, {GetDestRect().x, GetDestRect().y, 30, 30}, true, false);

@@ -46,6 +46,11 @@ void Enemy::Tick(System& system)
             shooting = false;
         }    
     }
+    else if((std::abs(playerRef->GetDestRect().x - GetDestRect().x)) > 200)
+    {
+        Move(-1,0);
+        AnimateSprite({0,0}, {100, 100}, 5, 4);
+    }
     else
     {
         AnimateSprite({9,0}, {100, 100}, 5, 4);
