@@ -39,7 +39,9 @@ void Enemy::Tick(System& system)
 
     if(shooting)
     {
-        shootFrame = AnimateSprite({5,0}, {100, 100}, 4, 2);
+        if(frameTick++ % 2 == 0)
+            shootFrame = AnimateSprite({5,0}, {100, 100}, 4, 2);
+
         if(shootFrame == maxFramesShooting)
         {
             shootFrame = 0;
@@ -53,6 +55,10 @@ void Enemy::Tick(System& system)
     }
     else
     {
+        
+        if(frameTick++ % 2 == 0)
+            Move(-1,0);
+
         AnimateSprite({9,0}, {100, 100}, 5, 4);
     }
     
